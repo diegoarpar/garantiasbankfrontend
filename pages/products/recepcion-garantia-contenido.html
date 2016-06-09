@@ -1,0 +1,96 @@
+<div id="page-wrapper">
+    <div>
+        
+        Precinto: 
+    <input ng-model="tula" />  
+    <button class="btn btn-default" ng-click="catchGarantias()">Consultar Garantias</button>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-12" >
+            <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
+          <div id="demo" class="collapse">
+          <div ng-repeat="c in all_columns" >
+            <label>
+                <input type="checkbox" ng-model="c.checked">{{c.title}} 
+            </label>
+          </div>
+              <div>
+                  <input type="text" ng-model="columnName">{{c.title}} 
+              <button class="btn btn-default" ng-click="addColumn(columnName)">Agregar Columna</button>
+              </div>
+        </div>
+      </div>
+    </div>
+  <h3>VERIFICAR CONTENIDO GARANTIA</h3>
+    
+
+    <table  ng-table="tablaGarantias" show-filter="true"   export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
+        <th ng-repeat="d in columns">{{d.title}}</th>
+        <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
+            <!--td data-title="'r0'"  sortable="'r0'" filter="{ 'r0': 'text'}">{{ c.r0 }}</td>
+            <td data-title="'r0'"  sortable="'r1'" filter="{ 'r2': 'text'}">{{ c.r1 }}</td>
+            <td data-title="'r0'"  sortable="'r2'" filter="{ 'r1': 'text'}">{{ c.r2 }}</td>
+            <td><button class="btn btn-danger" ng-click="removeRow($index)">del</button></td>
+            <td><button ng-click="editRow(c)">Edit</button></td-->
+            
+        </tr>
+    </table>
+    
+     <script type="text/ng-template" id="display">
+        
+        <td ng-repeat="d in columns">{{c[d.title]}}</td>
+        <td>
+            <button ng-click="completeInfo($index,c)" class="btn btn-primary" data-toggle="modal" data-target="#myModal" contenteditable="false">Verificar Contenido</button>
+            <button ng-click="removeRow($index)" class="btn btn-primary">Remove</button>
+        </td>
+    </script>
+    <script type="text/ng-template" id="edit">
+        <td>{{c.id}}</td>
+        <td>{{tula}}</td>
+        <td><input type="text" ng-model="digital.selected.r0" /></td>
+        <td><input type="text" ng-model="digital.selected.r1" /></td>
+        <td><input type="text" ng-model="digital.selected.r2" /></td>
+        <td>
+            <button ng-click="saveRow($index)" class="btn btn-primary">Save</button>
+            <button ng-click="reset()" class="btn btn-primary">Cancel</button>
+        </td>
+    </script>
+      
+</div>
+
+
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>
+
+                </button>
+                 <h4 class="modal-title" id="myModalLabel">DETALLE DE LA GARANTIA</h4>
+                 <div class="content">
+                     <div ng-repeat="d in rowDetail"> <input readonly="true" ng-model="d.key" />:<input readonly="true" ng-model="d.value" /> </div>
+                </div>
+                <div class="content">
+                     <div ng-repeat="d in datosCoplementarios"> <input readonly="true" ng-model="d.key" />:<input type="checkbox"  ng-model="d.value" /> </div>
+                </div> 
+                
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn btn-primary">Guardar Información</button>
+            </div>
+        </div>
+    </div>
+</div>

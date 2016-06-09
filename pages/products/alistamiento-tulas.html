@@ -1,0 +1,85 @@
+<div id="page-wrapper">
+    <div>
+        <span>Regional </span>
+    <select name="Regional" ng-model="regional" >
+      <option value="ANTIOQUIA">ANTIOQUIA</option>
+      <option value="BOGOTA">BOGOTA</option>
+      <option value="CAFETERA">CAFETERA</option>
+      <option value="COSTA">COSTA</option>
+      <option value="OCCIDENTE">OCCIDENTE</option>
+      <option value="ORIENTE">ORIENTE</option>
+      <option value="SANTANDERES">SANTANDERES</option>
+      <option value="SUR">SUR</option>
+    </select>
+    
+    </div>
+    <div>
+        <span>Oficina </span>
+    <input type="text" ng-model="oficina" />
+    
+    </div>
+    <button class="btn btn-default" ng-click="loadPlanillaToTula()">Cargar Planilla</button>
+    <div>
+        Precinto: 
+    <input ng-model="tula" />  
+    <button class="btn btn-default" ng-click="sendTula()">Send Tula</button>
+    </div>
+
+     <div class="form-group">
+        <div class="col-sm-12" >
+            <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
+          <div id="demo" class="collapse">
+          <div ng-repeat="c in all_columns" >
+            <label>
+                <input type="checkbox" ng-model="c.checked">{{c.title}} 
+            </label>
+          </div>
+              <div>
+                  <input type="text" ng-model="columnName">{{c.title}} 
+              <button class="btn btn-default" ng-click="addColumn(columnName)">Agregar Columna</button>
+              </div>
+        </div>
+      </div>
+    </div>
+  <h3>ENVIO DE LA TULA DE LA REGIONAL {{regional}} / Oficina {{oficina}} CON PRECINTO {{tula}}</h3>
+    
+
+    <table  ng-table="tablaGarantias" show-filter="true"   export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
+        <th> Enviar en Tula</th>
+        <th ng-repeat="d in columns">{{d.title}}</th>
+           <th> opciones </th>
+        <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
+            <!--td data-title="'r0'"  sortable="'r0'" filter="{ 'r0': 'text'}">{{ c.r0 }}</td>
+            <td data-title="'r0'"  sortable="'r1'" filter="{ 'r2': 'text'}">{{ c.r1 }}</td>
+            <td data-title="'r0'"  sortable="'r2'" filter="{ 'r1': 'text'}">{{ c.r2 }}</td>
+            <td><button class="btn btn-danger" ng-click="removeRow($index)">del</button></td>
+            <td><button ng-click="editRow(c)">Edit</button></td-->
+            
+        </tr>
+    </table>
+    
+     <script type="text/ng-template" id="display">
+        
+        <td><input type="checkbox" ng-model="c.enviadoTula" /></td>
+        <td ng-repeat="d in columns">{{c[d.title]}}</td>
+        <td>
+            <button ng-click="editRow(c)" class="btn btn-primary">Edit</button>
+            <button ng-click="removeRow($index)" class="btn btn-primary">Remove</button>
+        </td>
+    </script>
+    <script type="text/ng-template" id="edit">
+        <td>{{c.id}}</td>
+        <td>{{tula}}</td>
+        <td><input type="text" ng-model="digital.selected.r0" /></td>
+        <td><input type="text" ng-model="digital.selected.r1" /></td>
+        <td><input type="text" ng-model="digital.selected.r2" /></td>
+        <td>
+            <button ng-click="saveRow($index)" class="btn btn-primary">Save</button>
+            <button ng-click="reset()" class="btn btn-primary">Cancel</button>
+        </td>
+    </script>
+      
+</div>
+
+
+

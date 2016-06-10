@@ -14,19 +14,19 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/bootstrap/bootstrap-responsive.css" >
         <link rel="stylesheet" href="assets/css/bootstrap/bootstrap-responsive.min.css" >
         <link rel="stylesheet" href="assets/css/bootstrap/xeditable.css" >
-        <link rel="stylesheet" href="assets/app/css/app.css" >
-  
+        <link rel="stylesheet" href="assets/css/app.css" >
+
     </head>
     <body>
         <div class="slide-animate-container">
-        <div  class="slide-animate" ng-include src="'pages/login/navbar.html'"></div>
+        <div  class="slide-animate" ng-include src="'assets/app/authentication/navbar.html'"></div>
         </div>
     <div ng-view></div>
-    
 
 
-       
-        
+
+
+
         <script type="text/javascript" src="assets/js/angular/angular.js"></script>
         <script type="text/javascript" src="assets/js/angular/angular.min.js"></script>
         <script type="text/javascript" src="assets/js/angular/angular-route.js"></script>
@@ -42,16 +42,37 @@ and open the template in the editor.
         <script type="text/javascript" src="assets/js/sha2/sha256.js"></script>
         <script type="text/javascript" src="assets/js/fileserver/FileSaver.js"></script>
         <script type="text/javascript" src="assets/js/fileserver/FileSaver.min.js"></script>
-        
-        
-        
-        
-        <script  src="assets/app/js/app/server.js"></script>
-        <script  src="assets/app/js/app/app.js"></script>
-        <script  src="assets/app/js/app/controller.js"></script>
-        <script  src="assets/app/js/app/controllerSedeElectronica.js"></script>
-        <script  src="assets/app/js/app/services.js"></script>
-        
-        
+
+
+
+
+        <script  src="assets/app/config/server.js"></script>
+        <script  src="assets/app/app.js"></script>
+
+        <script  src="assets/app/category.service.js"></script>
+        <script  src="assets/app/main.controller.js"></script>
+        <script  src="assets/app/nav-bar.controller.js"></script>
+        <script  src="assets/app/on-read-file.directive.js"></script>
+
+        <script  src="assets/app/authentication/authentication.service.js"></script>
+        <script  src="assets/app/authentication/login.controller.js"></script>
+
+        <script  src="assets/app/entities/user/user-list.controller.js"></script>
+        <script  src="assets/app/entities/user/user-detail.controller.js"></script>
+        <script  src="assets/app/entities/user/user-creation.controller.js"></script>
+        <script  src="assets/app/entities/user/user-factory.service.js"></script>
+
+        <script  src="assets/app/entities/product/product-sede-electronica.controller.js"></script>
+        <script  src="assets/app/entities/product/product.service.js"></script>
+        <script  src="assets/app/entities/product/product.controller.js"></script>
+        <script  src="assets/app/entities/product/report-services-telefonica.service.js"></script>
+
+
+        <script  src="assets/app/entities/garantias/garantias-service-get-garantias.service.js"></script>
+        <script  src="assets/app/entities/garantias/garantias-service.service.js"></script>
+        <script  src="assets/app/entities/garantias/garantias.service.js"></script>
+        <script  src="assets/app/entities/garantias/garantias-service-update-garantias.service.js"></script>
+
+
     </body>
 </html>

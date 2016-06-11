@@ -10,7 +10,15 @@
 
         function ReportServicesTelefonica($resource,ApiApp,$rootScope,$window) {
             return $resource(ApiApp.url+'getAllDigitalizacionByProcessAndDate', {}, {
-                show: { method: 'GET', isArray:true, params: {processName: '@processName',dateStart:'@dateEnd',dateEnd:'@dateEnd'}, headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')},
+                show: { 
+                    method: 'GET', 
+                    isArray:true, 
+                    params: {
+                        processName: '@processName',
+                        dateStart:'@dateEnd',
+                        dateEnd:'@dateEnd'
+                    }, 
+                    headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')},
                     transformResponse: function(res, headers) {
                         //var data = angular.fromJson(res).data;
                         var data = angular.fromJson(res);

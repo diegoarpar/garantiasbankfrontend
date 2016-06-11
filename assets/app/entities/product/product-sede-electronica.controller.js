@@ -154,7 +154,6 @@
                 alert("REGISTRO REALIZADO CON EL ACUSE "+$scope.numero[0].number) ;
                 $scope.numero=[];
                 $scope.digital=[];
-
             };
 
             $scope.showContent = function($fileContent){

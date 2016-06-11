@@ -62,6 +62,8 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'assets/app/entities/product/recepcion-garantia-contenido.html',
             controller: 'ProductSedeElectronicaController'}
         );
+    
+    
 
         $routeProvider.otherwise({redirectTo: '/'});
             }

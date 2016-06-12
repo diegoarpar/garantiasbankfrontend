@@ -68,3 +68,36 @@ form[editable-form] > div {margin: 10px 0;}
     
 }
 
+.navbar-inner{
+    background-image: url(../image/logos/bg-header.gif) !important;
+}
+
+.btn-primary {
+    background-color:#72B324! important;
+}
+button>*{
+    background-color:#72B324! important;
+}
+
+.green{
+background-color:#72B324! important;
+color:white !important;
+background-image: none! important;
+}
+
+.navbar .nav > li > a{
+color:white !important;
+}
+
+.table th{
+background-color:#72B324! important;
+color:white !important;
+}
+
+h3, h2, h1 {
+    background-color:#72B324! important;
+    color:white !important;
+    text-align:center !important;
+    font-family:'Signika', Arial, Helvetica, sans-serif !important;
+    border-radius: 10px !important;
+}

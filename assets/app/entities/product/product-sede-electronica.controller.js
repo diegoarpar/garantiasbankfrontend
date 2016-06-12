@@ -147,11 +147,17 @@
                 $scope.digitalu=[];
             };
             $scope.createPlanilla = function () {
-                concatNumber($scope);
-                GarantiasServices.create($scope.digital);
-                alert("REGISTRO REALIZADO CON EL ACUSE "+$scope.numero[0].number) ;
-                $scope.numero=[];
-                $scope.digital=[];
+                $scope.numero=GarantiasService.getNumber('');
+                $scope.numero.$promise.then(function(data) {
+                                                    $scope.numero=data;
+                                                    concatNumber($scope);
+                                                    GarantiasServices.create($scope.digital);
+                                                    alert("REGISTRO REALIZADO CON EL ACUSE "+$scope.numero[0].number) ;
+                                                    $scope.numero=[];
+                                                    $scope.digital=[];
+
+                                });
+
             };
 
             $scope.showContent = function($fileContent){

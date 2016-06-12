@@ -15,8 +15,8 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
-                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn btn-primary">Guardar Información</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Regresar</button>
+                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn green">Guardar Información</button>
             </div>
         </div>
     </div>
@@ -37,14 +37,14 @@
                         Lista de Roles : <select name="selectedFacilityId" ng-model="selectedRole">
                         <option ng:repeat="r in roles" value="{{r.roleName}}">{{r.roleName}}</option>
                     </select>
-                        <button ng-click="saveRole()" type="button" class="btn btn-primary">Agregar Role</button>
+                        <button ng-click="saveRole()" type="button" class="btn green">Agregar Role</button>
 
                     </div>
                     <div ng-repeat="d in permission">{{d.roleName}} </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
-                    <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn btn-primary">Guardar Información</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Regresar</button>
+                    <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn green">Guardar Información</button>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <span>Contraseña</span><input type="password" ng-model="contrasena" class="span2" placeholder="Contaseña">
 
 
-            <input type="submit" value="Agregar"  ng-click="addUser()" class="btn"/>
+            <input type="submit" value="Agregar"  ng-click="addUser()" class="btn green"/>
 
             <h3>USUARIOS</h3>
 
@@ -76,8 +76,8 @@
                         <td>{{c.user}}</td>
                         <td>{{c.completeName}}</td>
                         <td><button class="btn btn-danger" ng-click="removeUser($index)">Desactivar Usuario</button>
-                        <button class="btn btn-primary" ng-click="editPermission(c)" data-toggle="modal" data-target="#modalRoles">Modificar Roles</button>
-                        <button  class="btn btn-primary" ng-click="editInformation(c)" data-toggle="modal" data-target="#modalUser" >Modificar Informacion</button></td>
+                        <button class="btn green" ng-click="editPermission(c)" data-toggle="modal" data-target="#modalRoles">Modificar Roles</button>
+                        <button  class="btn green" ng-click="editInformation(c)" data-toggle="modal" data-target="#modalUser" >Modificar Informacion</button></td>
 
                 </tr>
             </table>

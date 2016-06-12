@@ -15,16 +15,19 @@
                 
                 $window.localStorage.setItem('token',sha256(pass));
                 var rta = AuthenticationFactory.show({user: user, password:sha256(pass)});
-                $scope.token=rta.token;
-                ///$route.reload();
-                //$uibModalInstance.close($scope.selected.item);
+                $scope.token=rta;
+                $scope.token.$promise.then(function(data) {
+                                    if(!data.token){
+                                    alert("Usuario o Contraseña incorrecto");
 
-                //$location.attr('href', '/encargos');
-                //$window.localStorage.removeItem('token');
-                $uibModalInstance.dismiss('cancel');
-                $location.path('/encargos');
-                $route.reload();
-                $scope.$apply();
+                                    }
+                                    else{
+                                        $scope.token=data.token;
+                                        $uibModalInstance.dismiss('cancel');
+                                        $window.location.reload();
+                                    }
+
+                                });
             };
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');

@@ -67,3 +67,7 @@ form[editable-form] > div {margin: 10px 0;}
     overflow-y: scroll !important;
     
 }
+
+.modal {
+    top: 10% !important;
+}

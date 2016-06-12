@@ -94,8 +94,6 @@
                     fillColumns(data, $scope);
 
                 });
-
-
             };
             $scope.catchTula = function () {
                 $scope.mapColumns=[];

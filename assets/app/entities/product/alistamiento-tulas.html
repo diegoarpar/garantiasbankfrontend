@@ -50,16 +50,14 @@
            <th> opciones </th>
         <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
             <!--td data-title="'r0'"  sortable="'r0'" filter="{ 'r0': 'text'}">{{ c.r0 }}</td>
-            <td data-title="'r0'"  sortable="'r1'" filter="{ 'r2': 'text'}">{{ c.r1 }}</td>
-            <td data-title="'r0'"  sortable="'r2'" filter="{ 'r1': 'text'}">{{ c.r2 }}</td>
             <td><button class="btn btn-danger" ng-click="removeRow($index)">del</button></td>
             <td><button ng-click="editRow(c)">Edit</button></td-->
-            
+
         </tr>
     </table>
     
      <script type="text/ng-template" id="display">
-        
+
         <td><input type="checkbox" ng-model="c.enviadoTula" /></td>
         <td ng-repeat="d in columns">{{c[d.title]}}</td>
         <td>

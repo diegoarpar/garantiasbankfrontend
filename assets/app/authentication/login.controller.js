@@ -25,6 +25,7 @@
                                         $scope.token=data.token;
                                         $uibModalInstance.dismiss('cancel');
                                         $window.location.reload();
+                                        $window.localStorage.setItem('token',$scope.token);
                                     }
 
                                 });

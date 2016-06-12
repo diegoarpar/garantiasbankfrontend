@@ -120,10 +120,16 @@
             };
 
             $scope.sendTula = function () {
-                concatTula($scope);
-                GarantiasServiceUpdateGarantias.create($scope.digitalu);
-                $scope.digital=[];
-                $scope.digitalu=[];
+                $scope.numero=GarantiasService.getNumber('');
+                $scope.numero.$promise.then(function(data) {
+                                        $scope.numero=data;
+                                        concatTula($scope);
+                                        GarantiasServiceUpdateGarantias.create($scope.digitalu);
+                                        alert("REGISTRO REALIZADO CON EL ID "+$scope.numero[0].number) ;
+                                        $scope.digital=[];
+                                        $scope.digitalu=[];
+
+                });
             };
             $scope.saveCompleteInfoRow = function () {
                 completeRowDetail($scope);
@@ -141,10 +147,17 @@
             };
 
             $scope.sendGarantia = function () {
-                concatTula($scope);
-                GarantiasServiceUpdateGarantias.create($scope.digitalu);
-                $scope.digital=[];
-                $scope.digitalu=[];
+                $scope.numero=GarantiasService.getNumber('');
+                $scope.numero.$promise.then(function(data) {
+                                        $scope.numero=data;
+                                        concatNumber($scope);
+                                        GarantiasServices.create($scope.digital);
+                                        alert("REGISTRO REALIZADO CON EL ACUSE "+$scope.numero[0].number) ;
+                                        $scope.numero=[];
+                                        $scope.digital=[];
+
+                });
+
             };
             $scope.createPlanilla = function () {
                 $scope.numero=GarantiasService.getNumber('');
@@ -221,19 +234,7 @@
             var cont=0;
             for(var i=0;i<$scope.digital.length;i++){
                 if($scope.digital[i].enviadoTula){
-
-                    $scope.digital[i].tula=$scope.tula;
-                    $scope.digital[i].fechaEnvioTula=new Date();
-                    $scope.digitalu[cont]=($scope.digital[i]);
-                    cont++;
-                }
-            }
-        }
-        function concatTula($scope){
-            var cont=0;
-            for(var i=0;i<$scope.digital.length;i++){
-                if($scope.digital[i].enviadoTula){
-
+                    $scope.digital[i].numberoIdTula=$scope.numero[0].number;
                     $scope.digital[i].tula=$scope.tula;
                     $scope.digital[i].fechaEnvioTula=new Date();
                     $scope.digitalu[cont]=($scope.digital[i]);

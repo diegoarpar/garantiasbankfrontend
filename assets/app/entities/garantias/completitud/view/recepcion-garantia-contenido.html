@@ -1,9 +1,10 @@
 <div id="page-wrapper">
+    <h3>VALIDACIÓN DE COMPLETITUD </h3>
     <div>
         
         Precinto: 
     <input ng-model="tula" />  
-    <button class="btn btn-default" ng-click="catchGarantias()">Consultar Garantias</button>
+    <button class="btn green" ng-click="catchGarantias()">Consultar Garantias</button>
 
     </div>
 
@@ -18,7 +19,7 @@
           </div>
               <div>
                   <input type="text" ng-model="columnName">{{c.title}} 
-              <button class="btn btn-default" ng-click="addColumn(columnName)">Agregar Columna</button>
+              <button class="btn green" ng-click="addColumn(columnName)">Agregar Columna</button>
               </div>
         </div>
       </div>
@@ -42,8 +43,7 @@
         
         <td ng-repeat="d in columns">{{c[d.title]}}</td>
         <td>
-            <button ng-click="completeInfo($index,c)" class="btn btn-primary" data-toggle="modal" data-target="#myModal" contenteditable="false">Verificar Contenido</button>
-            <button ng-click="removeRow($index)" class="btn btn-primary">Remove</button>
+            <button ng-click="completeInfo($index,c)" class="btn green" data-toggle="modal" data-target="#myModal" contenteditable="false">Verificar Contenido</button>
         </td>
     </script>
     <script type="text/ng-template" id="edit">
@@ -88,8 +88,8 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
-                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn btn-primary">Guardar Información</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Regresar</button>
+                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn green">Guardar Información</button>
             </div>
         </div>
     </div>

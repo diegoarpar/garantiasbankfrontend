@@ -15,18 +15,8 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'LoginController'}
         );
 
-        $routeProvider.when('/user-detail/:id', {
-            templateUrl: 'assets/app/user/user-details.html',
-            controller: 'ProductController'}
-        );
-
         $routeProvider.when('/product-list-portales', {
             templateUrl: 'assets/app/entities/product/list-portales.html',
-            controller: 'ProductController'}
-        );
-
-        $routeProvider.when('/product-list-portal-funcionario', {
-            templateUrl: 'assets/app/entities/product/portal-funcionario.html',
             controller: 'ProductController'}
         );
 
@@ -34,34 +24,30 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'assets/app/entities/product/portal-consulta-expediente-digital.html',
             controller: 'ProductController'}
         );
-        $routeProvider.when('/product-list-corporativo', {
-            templateUrl: 'assets/app/entities/product/listCorporativo.html',
-            controller: 'ProductController'}
-        );
-        $routeProvider.when('/product-list-garantias', {
-            templateUrl: 'assets/app/entities/product/list-garantias.html',
-            controller: 'ProductController'}
-        );
         $routeProvider.when('/product-list-completitud', {
             templateUrl: 'assets/app/entities/product/list-completitud.html',
             controller: 'ProductController'}
         );
         $routeProvider.when('/product-list-alistamiento-tulas', {
-            templateUrl: 'assets/app/entities/product/alistamiento-tulas.html',
+            templateUrl: 'assets/app/entities/garantias/envio-tula-bodega/view/alistamiento-tulas.html',
             controller: 'ProductSedeElectronicaController'}
         );
         $routeProvider.when('/product-list-acuse-recibido-garantia', {
-            templateUrl: 'assets/app/entities/product/acuse-recibido-garantias.html',
+            templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/acuse-recibido-garantias.html',
             controller: 'ProductSedeElectronicaController'}
         );
         $routeProvider.when('/product-list-recepcion-tulas-bodega', {
-            templateUrl: 'assets/app/entities/product/recepcion-tulas-bodega.html',
+            templateUrl: 'assets/app/entities/garantias/recepcion-tula-bodega/view/recepcion-tulas-bodega.html',
             controller: 'ProductSedeElectronicaController'}
         );
         $routeProvider.when('/product-list-recepcion-garantia-contenido', {
-            templateUrl: 'assets/app/entities/product/recepcion-garantia-contenido.html',
+            templateUrl: 'assets/app/entities/garantias/completitud/view/recepcion-garantia-contenido.html',
             controller: 'ProductSedeElectronicaController'}
         );
+        $routeProvider.when('/product-list-recepcion-garantia-idoneidad', {
+                    templateUrl: 'assets/app/entities/garantias/idoneidad/view/recepcion-garantia-idoneidad.html',
+                    controller: 'ProductSedeElectronicaController'}
+                );
         $routeProvider.when('/administrador-usuarios', {
                 templateUrl: 'assets/app/authentication/administrador-usuarios.html',
                 controller: 'AdministradorUsuariosController'}

@@ -8,19 +8,38 @@
     angular.module('wpc')
         .factory('DynamicSearch', DynamicSearch);
 
-    DynamicSearch.$inject = ['$resource', 'ApiGarantias', '$window'];
+    DynamicSearch.$inject = ['$http', 'ApiGarantias', '$window'];
 
-    function DynamicSearch($resource, ApiGarantias, $window) {
-        console.log('/api/batch/:id');
-        var resource = $resource(ApiGarantias.url + 'search/getMetadata',{}, {
-            show: {
-                method: 'GET',
-                isArray: true,
-                headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+    function DynamicSearch($http, ApiGarantias, $window) {
+        var baseUrl = ApiGarantias.url + 'search';
+        return {
+            getMetaData: function (id, date) {
+                var config = {
+                    method: 'GET',
+                    url: baseUrl + '/getMetadata',
+                    isArray: true,
+                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                };
+
+                return $http(config);
+            },
+            searchWithMetadata: function (metadata) {
+                var url = baseUrl + '/searchWithMetadata';
+                var config = {
+                    isArray: true,
+                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                };
+                return $http.post(url, metadata, config);
+
             }
-        });
-	    return resource;
+
+
+        };
+
     }
+
+
+
 })();
 
 

@@ -18,8 +18,11 @@
             var user={user:$scope.nombre, pass:$scope.contrasena, completeName:$scope.nombreCompleto};
 
 
-            AuthenticationGetUserServices.create({user:$scope.nombre, pass:sha256($scope.contrasena), completeName:$scope.nombreCompleto});
-            $scope.users=AuthenticationGetUserServices.show();
+            AuthenticationGetUserServices.create({user:$scope.nombre, pass:sha256($scope.contrasena), completeName:$scope.nombreCompleto})
+                .$promise.then(function(){
+                    $scope.users=AuthenticationGetUserServices.show();
+                });
+            
         };
         $scope.editPermission=function(c){
                     $scope.selectedUser=c;

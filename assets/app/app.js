@@ -52,7 +52,14 @@ app.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'assets/app/authentication/administrador-usuarios.html',
                 controller: 'AdministradorUsuariosController'}
          );
-    
+        $routeProvider.when('/administrador-camposGenericos', {
+                    templateUrl: 'assets/app/entities/garantias/campos/genericos/view/administrador-camposgenericos.html',
+                    controller: 'CamposGenericosController'}
+        );
+        $routeProvider.when('/administrador-camposEspecificos', {
+                        templateUrl: 'assets/app/entities/garantias/campos/especificos/view/administrador-camposespecificos.html',
+                        controller: 'CamposEspecificosController'}
+        );
 
         $routeProvider.otherwise({redirectTo: '/'});
             }

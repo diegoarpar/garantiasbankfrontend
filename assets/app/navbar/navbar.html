@@ -20,7 +20,7 @@
   </div>
 </div>
 
-    <aside class="rightbar" ng-show="menu" id="rightMenu" ng-class="{'noneStyle' : noneStyle}"  ng-mouseleave="subMenu = false">
+    <aside class="rightbar" ng-show="menu" ng-mouseleave="toggleStyle()" id="rightMenu" ng-class="{'noneStyle' : noneStyle}"  ng-mouseleave="subMenu = false">
 
         <ul>
             <uib-accordion close-others="oneAtATime" class="verticalmenubar">
@@ -52,7 +52,8 @@
                         Administración <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open4, 'glyphicon-chevron-right': !status.open4}"></i>
                     </uib-accordion-heading>
                     <li><a href="#/administrador-usuarios">Gestión de Usuarios</a></li>
-
+                    <li><a href="#/administrador-camposGenericos">Gestión de Campos Generales</a></li>
+                    <li><a href="#/administrador-camposEspecificos">Gestión de Campos Tipo Garantía</a></li>
                 </uib-accordion-group>
             </uib-accordion>
 

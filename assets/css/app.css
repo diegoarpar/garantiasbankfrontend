@@ -85,6 +85,10 @@ color:white !important;
 background-image: none! important;
 }
 
+.navbar{
+    margin-bottom:0px !important;
+    border:none !important;
+}
 .navbar .nav > li > a{
 color:white !important;
 }
@@ -96,8 +100,120 @@ color:white !important;
 
 h3, h2, h1 {
     background-color:#72B324! important;
-    color:white !important;
+    color: white !important;
     text-align:center !important;
     font-family:'Signika', Arial, Helvetica, sans-serif !important;
     border-radius: 10px !important;
+}
+
+
+
+
+
+h4.panel-title{
+font-family:'Signika', Arial, Helvetica, sans-serif !important;
+}
+aside{
+ background-color:#72B324! important;
+ color: white !important;
+}
+
+
+
+li{
+
+    list-style:none;
+}
+.rightbar {
+    background: none repeat scroll 0 0 #fff;
+    border-right: 5px solid #ccc;
+    height: 100%;
+    border-top: none !important;
+    position: fixed;
+    left: 0;
+    width: 50px;
+    z-index: 200;
+}
+
+.rightbar ul li {
+    font-family:'Signika', Arial, Helvetica, sans-serif !important;
+    color: white !important;
+    font-weight: 100;
+    /*padding: 16px 0 21px;*/
+    /*width: 0;*/
+    transition:all 0.3s ease;
+        -webkit-transition:all 0.3s ease;
+        -moz-transition:all 0.3s ease;
+        -o-transition:all 0.3s ease;
+        transition:all 0.3s ease;
+
+}
+.rightbar ul li:hover {
+  width:100%;
+
+}
+.rightbar li:hover >*{
+  background-color: black !important;
+
+}
+.rightbar ul li a {
+    color: white !important;
+    float: right;
+    font-size: 0px;
+    width: 150px !important;
+    line-height: 23px;
+    padding-right: 10px !important;
+    transition: all 0.2s ease 0s;
+        -webkit-transition:all 0.1s ease;
+        -moz-transition:all 0.1s ease;
+        -o-transition:all 0.1s ease;
+        transition:all 0.1s ease;
+}
+.accordion-heading .accordion-toggle{
+    padding:0;
+    color: white !important;
+}
+
+
+
+.rightbar ul li a i{
+  color: #8b8b8b;
+    float: right;
+    font-size: 12px;
+    position: absolute;
+    right: 15px;
+       transition:all 0.3s ease;
+        -webkit-transition:all 0.3s ease;
+        -moz-transition:all 0.3s ease;
+        -o-transition:all 0.3s ease;
+        transition:all 0.3s ease;
+}
+
+.accordion-group{
+    border:medium none;
+}
+
+.accordion-inner ul li{
+    padding:10px 0;
+    list-style:none;
+}
+    .rightbar ul li:hover a,
+    .rightbar ul li:hover a i {
+        color: #23b7e5;
+        text-decoration: none;
+    }
+
+.noneStyle a{
+    font-size:13px !important;
+}
+.noneStyle {
+     width: 220px;
+     z-index: 1000;
+     font-size: 12px;
+     transition:all 0.3s ease;
+        -webkit-transition:all 0.3s ease;
+        -moz-transition:all 0.3s ease;
+        -o-transition:all 0.3s ease;
+        transition:all 0.3s ease;
+
 }

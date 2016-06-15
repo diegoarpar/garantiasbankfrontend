@@ -1,0 +1,69 @@
+<div ng-controller="NavBarController">
+<div class='navbar'>
+ <div class='navbar-inner'>
+    <div class='container-fluid'>
+        <!--<a class='brand' href="/encargos">Encargos</a>-->
+        <ul class='nav'>
+            <li>
+                <a href="" ng-click="toggleStyle()">
+
+                    <img src="./assets/image/logos/menu.png" height="20px" width="20px"/>
+                </a>
+            </li>
+            <li><a href="#/product-list-portales"><img src="./assets/image/logos/logo-banagrario.png" height="100px" width="150px"/> </a></li>
+            <li><a href="#/product-list-portales">PORTALES</a></li>
+
+            <li><a href="" ng-click="open('lg')">Ingresar</a></li>
+
+        </ul>
+     </div>
+  </div>
+</div>
+
+    <aside class="rightbar" ng-show="menu" id="rightMenu" ng-class="{'noneStyle' : noneStyle}"  ng-mouseleave="subMenu = false">
+
+        <ul>
+            <uib-accordion close-others="oneAtATime" class="verticalmenubar">
+                <uib-accordion-group is-open="status.open">
+                    <uib-accordion-heading>
+                        Recepción <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                        <li><a href="#/product-list-acuse-recibido-garantia">Recibir Garantías</a></li>
+                        <li><a href="#/product-list-alistamiento-tulas">Alistar unidades de carga selladas </a></li>
+                </uib-accordion-group>
+                <uib-accordion-group is-open="status.open2">
+                    <uib-accordion-heading>
+                        Bodega <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open2, 'glyphicon-chevron-right': !status.open2}"></i>
+                    </uib-accordion-heading>
+                        <li><a href="#/product-list-recepcion-tulas-bodega">Recepción unidades de carga</a></li>
+                        <li><a href="#/product-list-recepcion-garantia-contenido">Validación de Completitud</a></li>
+                        <li><a href="#/product-list-recepcion-garantia-idoneidad">Validación de Idoneidad</a></li>
+                </uib-accordion-group>
+                <uib-accordion-group is-open="status.open3">
+                    <uib-accordion-heading>
+                        Consultas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open3, 'glyphicon-chevron-right': !status.open3}"></i>
+                    </uib-accordion-heading>
+                    <li><a href="#/product-list-consultaExpedienteDigital">Consulta 1</a></li>
+                    <li><a href="#/dynamic-search">Consulta 2</a></li>
+
+                </uib-accordion-group>
+                <uib-accordion-group is-open="status.open4">
+                    <uib-accordion-heading>
+                        Administración <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open4, 'glyphicon-chevron-right': !status.open4}"></i>
+                    </uib-accordion-heading>
+                    <li><a href="#/administrador-usuarios">Gestión de Usuarios</a></li>
+
+                </uib-accordion-group>
+            </uib-accordion>
+
+
+
+
+
+        </ul>
+    </aside>
+</div>
+
+
+
+

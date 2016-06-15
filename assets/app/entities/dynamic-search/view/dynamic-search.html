@@ -9,6 +9,7 @@
         <tr ng-repeat="c in lista track by $index">
             <td>{{c}}</td>
             <td><input type="text" ng-model="listaBusqueda[$index]"></td></td>
+            <td><button ng-click="removeRow($index)" class="btn btn-danger ng-scope">Quitar</button></td>
         </tr>
     </table>
 
@@ -18,7 +19,7 @@
             Agregar Campo <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button" >
-            <li role="menuitem" ng-repeat="col in columnsMetadata"><span ng-click="addColumn(col)">{{col}}</span></li>
+            <li role="menuitem" ng-repeat="col in columnsMetadata track by $index"><span ng-click="addColumn($index)">{{col}}</span></li>
         </ul>
     </div>
     <button ng-click="buscar()" class="btn btn-primary">Busqueda</button>

@@ -13,14 +13,15 @@
             $scope.listaBusqueda = [];
             $scope.addColumn = addColumn;
             $scope.buscar = buscar;
+            $scope.removeRow = removeRow;
 
             DynamicSearch.getMetaData().success(function(data){
-                alert(data);
                 $scope.columnsMetadata = data;
             })
 
             function addColumn(col){
-                $scope.lista.push(col);
+                $scope.lista.push($scope.columnsMetadata[col]);
+                $scope.columnsMetadata.splice(col,1);
             }
 
             function buscar(){
@@ -31,11 +32,23 @@
                         value: $scope.listaBusqueda[i]
                     };
                 }
-                
+
                 DynamicSearch.searchWithMetadata(searchVector).success(function(data){
                     alert(data);
                     $scope.searchResults = data;
                 })
+            }
+
+            function removeRow(index){
+                if(index==0){
+                    $scope.lista.shift();
+                    $scope.listaBusqueda.shift();
+                }
+                else {
+                    $scope.columnsMetadata[$scope.columnsMetadata.length] = $scope.lista[index];
+                    $scope.lista.splice(index, 1);
+                    $scope.listaBusqueda.splice(index, 1);
+                }
             }
         }
 

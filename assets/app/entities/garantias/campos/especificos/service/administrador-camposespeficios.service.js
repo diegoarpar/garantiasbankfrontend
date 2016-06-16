@@ -1,19 +1,32 @@
-/**
- * Created by joag on 9/06/16.
- */
 (function(){
         'use strict';
         angular.module("wpc")
-            .factory('CamposEspecificosServices', AuthenticationGetUserServices);
+            .factory('CamposEspecificosServices', CamposEspecificosServices);
 
-        AuthenticationGetUserServices.$inject =  ['$resource','ApiAuth','$window','$route'];
+        CamposEspecificosServices.$inject =  ['$resource','ApiGarantias','$window','$route'];
 
-        function AuthenticationGetUserServices($resource,ApiAuth,$window,$route) {
-            return $resource(ApiAuth.url+'getUsers', {}, {
-                create: { method: 'POST', isArray:false, data:'@data'},
-                show: { method: 'GET', isArray:true },
-                update: { method: 'PUT', params: {id: '@id'} },
-                delete: { method: 'DELETE', params: {id: '@id'} }
+        function CamposEspecificosServices($resource,ApiGarantias,$window,$route) {
+            return $resource(ApiGarantias.url+'config/garantias-field', {}, {
+                create: { method: 'POST', isArray:false, data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')}},
+                show: { method: 'GET', isArray:true,data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} },
+                update: { method: 'PUT',data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} },
+                remove: { method: 'DELETE',isArray:false, data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} }
+            })
+        }
+
+    }
+)();
+
+(function(){
+        'use strict';
+        angular.module("wpc")
+            .factory('CamposEspecificosRemoveServices', CamposEspecificosRemoveServices);
+
+        CamposEspecificosRemoveServices.$inject =  ['$resource','ApiGarantias','$window','$route'];
+
+        function CamposEspecificosRemoveServices($resource,ApiGarantias,$window,$route) {
+            return $resource(ApiGarantias.url+'config/garantias-field/{id}', {}, {
+                remove: { method: 'DELETE',isArray:false, params:{id:'@id'}, headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} }
             })
         }
 

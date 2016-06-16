@@ -4,42 +4,36 @@
 (function(){
    'use strict';
     angular.module("wpc")
-            .controller('CamposEspecificosController', AdministradorUsuariosController);
+            .controller('CamposEspecificosController', CamposEspecificosController);
 
-    AdministradorUsuariosController.$inject = ['$scope', 'AuthenticationGetUserServices','AuthenticationGetRolesServices','AuthenticationGetPermissionServices', '$location','$rootScope','$window','$route'];
+    CamposEspecificosController.$inject = ['$scope', 'CamposParametricosServices','CamposEspecificosServices','CamposEspecificosRemoveServices', '$location','$rootScope','$window','$route'];
 
-    function AdministradorUsuariosController($scope, AuthenticationGetUserServices,AuthenticationGetRolesServices,AuthenticationGetPermissionServices, $location,$rootScope,$window,$route) {
-        $scope.users=AuthenticationGetUserServices.show();
-        $scope.roles=AuthenticationGetRolesServices.show();
-        $scope.permission=[];
-        $scope.selectedUser={};
-        $scope.selectedRole={};
-        $scope.addUser=function(){
-            var user={user:$scope.nombre, pass:$scope.contrasena, completeName:$scope.nombreCompleto};
+    function CamposEspecificosController($scope, CamposParametricosServices,CamposEspecificosServices,CamposEspecificosRemoveServices, $location,$rootScope,$window,$route) {
+        $scope.garantiaType=CamposParametricosServices.show({nombreparametrica:"tipogarantia"});
+        $scope.campo={};
+        $scope.parametrics=[];
+        $scope.parametricst=[];
+        $scope.loadGenericos=function(value){
+         $scope.parametrics=CamposEspecificosServices.show({garantiaType:value, fieldType:$scope.campo.fieldType});
+        }
+        $scope.loadGenericos2=function(value){
+                 $scope.parametrics=CamposEspecificosServices.show({garantiaType:$scope.campo.garantiaType, fieldType:value});
+        }
+        $scope.add= function(){
+                    $scope.parametricst.push($scope.campo);
+                    $scope.rta=CamposEspecificosServices.create($scope.parametricst);
+                    $scope.parametrics=[];
+                    $scope.parametricst=[];
+                    $scope.campo={};
+        }
+        $scope.remove= function(idx){
+            $scope.parametricst.push($scope.parametrics[idx]);
+            CamposEspecificosRemoveServices.remove({garantiaType:$scope.parametrics[idx].garantiaType,key:$scope.parametrics[idx].key});
+            $scope.parametrics=[];
+            $scope.parametricst=[];
+            $scope.campo={};
+        }
 
-
-            AuthenticationGetUserServices.create({user:$scope.nombre, pass:sha256($scope.contrasena), completeName:$scope.nombreCompleto})
-                .$promise.then(function(){
-                    $scope.users=AuthenticationGetUserServices.show();
-                });
-            
-        };
-        $scope.editPermission=function(c){
-                    $scope.selectedUser=c;
-                    $scope.permission=AuthenticationGetPermissionServices.show({user:$scope.selectedUser.user});
-        };
-        $scope.editInformation=function(c){
-                    $scope.selectedUser=c;
-
-        };
-        $scope.removeUser=function(idx){
-                    $scope.users.splice(idx, 1);
-        };
-        $scope.saveRole=function(){
-                        var permission={user:$scope.selectedUser.user,roleName:$scope.selectedRole};
-                        AuthenticationGetPermissionServices.create({user:$scope.selectedUser.user,roleName:$scope.selectedRole});
-                         $scope.permission=AuthenticationGetPermissionServices.show({user:$scope.selectedUser.user});
-        };
     }
     }
 )();

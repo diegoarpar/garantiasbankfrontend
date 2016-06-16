@@ -4,11 +4,11 @@
 (function(){
    'use strict';
     angular.module("wpc")
-            .controller('CamposEspecificosController', AdministradorUsuariosController);
+            .controller('CamposParametricosController', CamposParametricosController);
 
-    AdministradorUsuariosController.$inject = ['$scope', 'CamposParametricosServices','CamposParametricosRemoveServices', '$location','$rootScope','$window','$route'];
+    CamposParametricosController.$inject = ['$scope', 'CamposParametricosServices','CamposParametricosRemoveServices', '$location','$rootScope','$window','$route'];
 
-    function AdministradorUsuariosController($scope, CamposParametricosServices,CamposParametricosRemoveServices, $location,$rootScope,$window,$route) {
+    function CamposParametricosController($scope, CamposParametricosServices,CamposParametricosRemoveServices, $location,$rootScope,$window,$route) {
         $scope.campo={};
         $scope.parametrics=CamposParametricosServices.show();
         $scope.parametricst=[];

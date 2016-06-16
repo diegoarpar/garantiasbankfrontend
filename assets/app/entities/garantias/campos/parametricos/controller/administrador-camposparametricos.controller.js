@@ -6,40 +6,34 @@
     angular.module("wpc")
             .controller('CamposEspecificosController', AdministradorUsuariosController);
 
-    AdministradorUsuariosController.$inject = ['$scope', 'AuthenticationGetUserServices','AuthenticationGetRolesServices','AuthenticationGetPermissionServices', '$location','$rootScope','$window','$route'];
+    AdministradorUsuariosController.$inject = ['$scope', 'CamposParametricosServices','CamposParametricosRemoveServices', '$location','$rootScope','$window','$route'];
 
-    function AdministradorUsuariosController($scope, AuthenticationGetUserServices,AuthenticationGetRolesServices,AuthenticationGetPermissionServices, $location,$rootScope,$window,$route) {
-        $scope.users=AuthenticationGetUserServices.show();
-        $scope.roles=AuthenticationGetRolesServices.show();
-        $scope.permission=[];
-        $scope.selectedUser={};
-        $scope.selectedRole={};
-        $scope.addUser=function(){
-            var user={user:$scope.nombre, pass:$scope.contrasena, completeName:$scope.nombreCompleto};
+    function AdministradorUsuariosController($scope, CamposParametricosServices,CamposParametricosRemoveServices, $location,$rootScope,$window,$route) {
+        $scope.campo={};
+        $scope.parametrics=CamposParametricosServices.show();
+        $scope.parametricst=[];
+        $scope.add= function(){
+            $scope.parametricst.push($scope.campo);
+            $scope.rta=CamposParametricosServices.create($scope.parametricst);
+            $scope.parametrics=CamposParametricosServices.show();
+            $scope.parametrics.$promise.then(function(data){
+                $scope.parametrics=CamposParametricosServices.show();
+            });
 
+            $scope.parametricst=[];
+            $scope.campo={};
+        }
+        $scope.remove= function(idx){
+                    $scope.parametricst.push($scope.parametrics[idx]);
+                    CamposParametricosRemoveServices.remove({nombreparametrica:$scope.parametrics[idx].nombreparametrica,key:$scope.parametrics[idx].key});
+                    $scope.parametrics=CamposParametricosServices.show();
+                    $scope.parametrics.$promise.then(function(data){
+                        $scope.parametrics=data;
+                    });
 
-            AuthenticationGetUserServices.create({user:$scope.nombre, pass:sha256($scope.contrasena), completeName:$scope.nombreCompleto})
-                .$promise.then(function(){
-                    $scope.users=AuthenticationGetUserServices.show();
-                });
-            
-        };
-        $scope.editPermission=function(c){
-                    $scope.selectedUser=c;
-                    $scope.permission=AuthenticationGetPermissionServices.show({user:$scope.selectedUser.user});
-        };
-        $scope.editInformation=function(c){
-                    $scope.selectedUser=c;
-
-        };
-        $scope.removeUser=function(idx){
-                    $scope.users.splice(idx, 1);
-        };
-        $scope.saveRole=function(){
-                        var permission={user:$scope.selectedUser.user,roleName:$scope.selectedRole};
-                        AuthenticationGetPermissionServices.create({user:$scope.selectedUser.user,roleName:$scope.selectedRole});
-                         $scope.permission=AuthenticationGetPermissionServices.show({user:$scope.selectedUser.user});
-        };
+                    $scope.parametricst=[];
+                    $scope.campo={};
+                }
     }
-    }
+   }
 )();

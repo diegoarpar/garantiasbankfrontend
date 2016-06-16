@@ -217,3 +217,10 @@ li{
         transition:all 0.3s ease;
 
 }
+
+
+.columnstwo{
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+}

@@ -4,16 +4,32 @@
 (function(){
         'use strict';
         angular.module("wpc")
-            .factory('CamposEspecificosServices', AuthenticationGetUserServices);
+            .factory('CamposParametricosServices', CamposParametricosServices);
 
-        AuthenticationGetUserServices.$inject =  ['$resource','ApiAuth','$window','$route'];
+        CamposParametricosServices.$inject =  ['$resource','ApiGarantias','$window','$route'];
 
-        function AuthenticationGetUserServices($resource,ApiAuth,$window,$route) {
-            return $resource(ApiAuth.url+'getUsers', {}, {
-                create: { method: 'POST', isArray:false, data:'@data'},
-                show: { method: 'GET', isArray:true },
-                update: { method: 'PUT', params: {id: '@id'} },
-                delete: { method: 'DELETE', params: {id: '@id'} }
+        function CamposParametricosServices($resource,ApiGarantias,$window,$route) {
+            return $resource(ApiGarantias.url+'config/garantias-parametricvalues', {}, {
+                create: { method: 'POST', isArray:false, data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')}},
+                show: { method: 'GET', isArray:true,data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} },
+                update: { method: 'PUT',data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} },
+                remove: { method: 'DELETE',isArray:false, data:'@data', headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} }
+            })
+        }
+
+    }
+)();
+
+(function(){
+        'use strict';
+        angular.module("wpc")
+            .factory('CamposParametricosRemoveServices', CamposParametricosRemoveServices);
+
+        CamposParametricosRemoveServices.$inject =  ['$resource','ApiGarantias','$window','$route'];
+
+        function CamposParametricosRemoveServices($resource,ApiGarantias,$window,$route) {
+            return $resource(ApiGarantias.url+'config/garantias-parametricvalues/{id}', {}, {
+                remove: { method: 'DELETE',isArray:false, params:{id:'@id'}, headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} }
             })
         }
 

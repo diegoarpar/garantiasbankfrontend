@@ -50,6 +50,14 @@
                 </uib-accordion-group>
                 <uib-accordion-group is-open="status.open4">
                     <uib-accordion-heading>
+                        Archivos <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open3, 'glyphicon-chevron-right': !status.open3}"></i>
+                    </uib-accordion-heading>
+                    <li><a href="#/upload-files">Subir Archivos</a></li>
+                    <li><a href="#/upload-files/view">Visualizar Archivos</a></li>
+                </uib-accordion-group>
+
+                <uib-accordion-group is-open="status.open5">
+                    <uib-accordion-heading>
                         Administración <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open4, 'glyphicon-chevron-right': !status.open4}"></i>
                     </uib-accordion-heading>
                     <li><a href="#/administrador-usuarios">Gestión de Usuarios</a></li>

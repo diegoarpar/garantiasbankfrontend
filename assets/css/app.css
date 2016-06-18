@@ -18,7 +18,7 @@ body {
 .logoImageCerti{
     width: 20%;
     height: 20%;
-    
+
 }
 
 .consulta{
@@ -26,8 +26,8 @@ body {
     -webkit-column-count: 3;
     -moz-column-count: 3;
     -o-column-count: 3;
-    
-    
+
+
 }
 
 .column2{
@@ -35,27 +35,27 @@ body {
     -webkit-column-count: 4;
     -moz-column-count: 4;
     -o-column-count: 4;
-    
-    
-    
+
+
+
 }
 iframe{
     padding-bottom: 0px !important;
     padding-top: 0px !important;
     border-image-source:none !important;
-    border-width:0px !important;    
+    border-width:0px !important;
     border-style:none !important;
     border-image-outset:inherit !important;
-        border-image-width:0px !important;    
+        border-image-width:0px !important;
 }
 
 body>div{
-    
+
     display: inherit !important;
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     border : none !important;
-    
+
 }
 
 div[ng-app] { margin: 10px; }
@@ -65,7 +65,7 @@ form[editable-form] > div {margin: 10px 0;}
 .modal-dialog{
     max-height: 500px;
     overflow-y: scroll !important;
-    
+
 }
 
 .navbar-inner{
@@ -223,4 +223,21 @@ li{
     -webkit-column-count: 2; /* Chrome, Safari, Opera */
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
+}
+
+
+
+/*upload-files*/
+
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
 }

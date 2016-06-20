@@ -1,6 +1,6 @@
 <div id="page-wrapper">
 
-   
+    <div id="bcTarget" ng-show="false"></div>
   <h2>RECIBIR GARANTIAS CLIENTE</h2>
   <div data-toggle="collapse" data-target="#desdeArchivo" class="ui-content">Desde archivo</div>
   <div id="desdeArchivo" class="collapse">
@@ -66,7 +66,6 @@
     </script>
     <script type="text/ng-template" id="edit">
         <td>{{c.id}}</td>
-        <td>{{numero[0].number }}</td>
         <td ng-repeat="e in columns"><input type="text" ng-model="digital.selected[e.title]" /></td>
         <td>
             <button ng-click="saveRow($index)" class="btn btn-primary">Guardar</button>

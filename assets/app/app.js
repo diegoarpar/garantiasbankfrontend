@@ -34,7 +34,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         );
         $routeProvider.when('/product-list-acuse-recibido-garantia', {
             templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/acuse-recibido-garantias.html',
-            controller: 'ProductSedeElectronicaController'}
+            controller: 'AcuseRecibidoGarantiasController'}
         );
         $routeProvider.when('/product-list-recepcion-tulas-bodega', {
             templateUrl: 'assets/app/entities/garantias/recepcion-tula-bodega/view/recepcion-tulas-bodega.html',

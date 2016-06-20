@@ -17,6 +17,12 @@
                         }
                         },
                 show: { method: 'GET', isArray:true, params: {processName: '@processName',dateStart:'@dateEnd',dateEnd:'@dateEnd'}, headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')}},
+                update: { method: 'PUT', isArray:false, params: {}, headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')},
+                        transformResponse: function(res, headers) {
+                            //var data = angular.fromJson(res);
+                            return res;
+                        }
+                },
                 delete: { method: 'DELETE', params: {id: '@id'} }
             })
         }

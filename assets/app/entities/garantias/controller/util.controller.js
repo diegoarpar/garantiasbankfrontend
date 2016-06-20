@@ -50,11 +50,14 @@ var generateBarCodePDF= function(code, document, text){
         //htmlBarcode.barcode(code, "code128",{output:"svg"});
         $("#bcTarget").barcode(code, "code128",{output:"svg"});
         var canvas = document.createElement('canvas');
+        //var canvas = $('micanvas');
         var imgData = $("#bcTarget")[0].childNodes[0].data;
         temp_img2 = new Image();
         temp_img2.src = imgData;
         //temp_img2.src = htmlBarcode.childNodes[0].data;
         canvas.id = 'canvas'
+        canvas.visible=false;
+        //canvas.display="none";
         document.body.appendChild(canvas);
         canvas.width = 500;
         canvas.height = 500;
@@ -71,4 +74,5 @@ var generateBarCodePDF= function(code, document, text){
             }
         );
          $("#bcTarget").barcode("", "code128",{output:"svg"});
+
 };

@@ -4,13 +4,13 @@
 (function(){
         'use strict';
         angular.module("wpc")
-            .controller('CompletitudController', CompletitudController);
+            .controller('AlistamientoTulaController', AlistamientoTulaController);
 
-        CompletitudController.$inject =
+        AlistamientoTulaController.$inject =
                     ['$scope', 'GarantiasServices','NumberService','CamposGenericosServices',
                     'GarantiasServiceUpdateGarantias' ,'$location','ngTableParams','$filter','$window'];
 
-        function CompletitudController($scope, GarantiasServices,NumberService,CamposGenericosServices,
+        function AlistamientoTulaController($scope, GarantiasServices,NumberService,CamposGenericosServices,
                                                   GarantiasServiceUpdateGarantias, $location,ngTableParams,$filter,$window) {
             $scope.all_columns=[];
             $scope.columns=[];

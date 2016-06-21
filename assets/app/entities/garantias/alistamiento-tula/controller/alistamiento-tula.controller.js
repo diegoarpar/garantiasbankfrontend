@@ -8,16 +8,16 @@
 
         AlistamientoTulaController.$inject =
                     ['$scope', 'GarantiasServices','NumberService','CamposGenericosServices',
-                    'GarantiasServiceUpdateGarantias' ,'$location','ngTableParams','$filter','$window'];
+                    'CamposParametricosServices' ,'$location','ngTableParams','$filter','$window'];
 
         function AlistamientoTulaController($scope, GarantiasServices,NumberService,CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location,ngTableParams,$filter,$window) {
+                                                  CamposParametricosServices, $location,ngTableParams,$filter,$window) {
             $scope.all_columns=[];
             $scope.columns=[];
             $scope.digital=[];
             $scope.digitalu=[];
             $scope.numero=[];
-            $scope.fields=CamposGenericosServices.show({fieldType:"datos",garantiaType:"-1"});
+            $scope.regionales=CamposParametricosServices.show({nombreparametrica:"regional"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };

@@ -4,19 +4,20 @@
 (function(){
         'use strict';
         angular.module("wpc")
-            .controller('RecepcionTulaBodegaController', RecepcionTulaBodegaController);
+            .controller('DatosController', DatosController);
 
-        RecepcionTulaBodegaController.$inject =
+        DatosController.$inject =
                     ['$scope', 'GarantiasServices','NumberService','CamposGenericosServices',
-                    'GarantiasServiceUpdateGarantias' ,'$location','ngTableParams','$filter','$window'];
+                    'CamposEspecificosServices' ,'$location','ngTableParams','$filter','$window'];
 
-        function RecepcionTulaBodegaController($scope, GarantiasServices,NumberService,CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location,ngTableParams,$filter,$window) {
+        function DatosController($scope, GarantiasServices,NumberService,CamposGenericosServices,
+                                                  CamposEspecificosServices, $location,ngTableParams,$filter,$window) {
             $scope.all_columns=[];
             $scope.columns=[];
             $scope.digital=[];
             $scope.digitalu=[];
             $scope.numero=[];
+            $scope.showmodal=false;
             $scope.fields=CamposGenericosServices.show({fieldType:"datos",garantiaType:"-1"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
@@ -63,17 +64,11 @@
                 $scope.reset();
             };
 
-            $scope.checkInTula = function () {
-                concatGarantia($scope);
-                GarantiasServices.update($scope.digitalu);
-                $scope.digital=[];
-                $scope.digitalu=[];
-            };
-            $scope.catchTula = function () {
+            $scope.catchGarantias = function () {
                 $scope.mapColumns=[];
                 $scope.columns=[];
                 $scope.all_columns=[];
-                $scope.digital= GarantiasServices.show({tula:$scope.tula,enviadoTula:"true",idtula:$scope.idtula ,garantiaRecibida:"null"});
+                $scope.digital= GarantiasServices.show({tula:$scope.tula,enviadoTula:"true",garantiaRecibida:"true",validaciondatos:"false"});
                 $scope.digital.$promise.then(function(data) {
                     $scope.digital=data;
                     fillColumns(data, $scope);
@@ -81,6 +76,45 @@
                 });
             };
 
+            $scope.saveCompleteInfoRow = function () {
+                completeRowDetail($scope);
+                concatGontenido($scope);
+                GarantiasServices.update($scope.digitalu);
+                $scope.digital=[];
+                $scope.digitalu=[];
+                $scope.showmodal=false;
+            };
+
+            $scope.completeInfo = function (idx,c) {
+                $scope.showmodal=true;
+                $scope.selectedRow = c;
+                $scope.selectedRowIndex = idx;
+                $scope.rowDetails=[];
+                $scope.rowDetail=[];
+                datosFillComplementarios($scope,$scope.selectedRow.tipogarantia,CamposEspecificosServices );
+                for(var key in c){
+                    if(!$scope.rowDetails[key] && key.indexOf("$")===-1&&key!=="toJSON"){
+                        $scope.rowDetails[key]=key;
+                        $scope.rowDetail.push({key:key,value:c[key]});
+                    }
+                }
+
+            };
+            function datosFillComplementarios($scope,gt, service){
+                $scope.datoscomplementariosgenericos=[];
+                $scope.datoscomplementariosgenericosTemp=service.show({fieldType:"datos",garantiaType:"-1"});
+                $scope.datoscomplementariosgenericosTemp.$promise.then(function (data){
+                    for(var i=0;i<data.length;i++){
+                        if(!$scope.rowDetails[data[i].key]){
+                                data[i].value="";
+                             $scope.datoscomplementariosgenericos.push(data[i]);
+                        }
+                    }
+                });
+                //$scope.datoscomplementariosgenericos=service.show({fieldType:"datos",garantiaType:"-1"});
+                $scope.datoscomplementariosespecificos=service.show({fieldType:"datos",garantiaType:gt});
+
+            }
             $scope.showContent = function($fileContent){
                 var jsontext = $fileContent.split('\n');
                 jsontext=txtToJson(jsontext, $scope);
@@ -101,20 +135,20 @@
         }
 
 
-
-        function concatGarantia($scope){
+        function concatGontenido($scope){
             var cont=0;
-            for(var i=0;i<$scope.digital.length;i++){
-                if($scope.digital[i].garantiaRecibida){
-                    $scope.digital[i].fechaRecepcionGarantia=new Date();
-                    $scope.digital[i].validacionidoneidad="false";
-                    $scope.digital[i].validacioncompletitud="false";
-                    $scope.digital[i].validaciondatos="false";
-                    $scope.digitalu[cont]=($scope.digital[i]);
+            $scope.selectedRow.fechavalidaciondatos=new Date();
+            $scope.selectedRow.validaciondatos=true;
+            $scope.digitalu[cont]=$scope.selectedRow;
+            $scope.selectedRow={};
 
-                    cont++;
-                }
-            }
+        }
+        function completeRowDetail($scope){
+            for(var i=0;i<$scope.datoscomplementariosespecificos.length;i++)
+                $scope.selectedRow[$scope.datoscomplementariosespecificos[i].key]=$scope.datoscomplementariosespecificos[i].value;
+            for(var i=0;i<$scope.datoscomplementariosgenericos.length;i++)
+                            $scope.selectedRow[$scope.datoscomplementariosgenericos[i].key]=$scope.datoscomplementariosgenericos[i].value;
+
         }
         function construirTabla($scope, digital,ngTableParams,$filter){
             $scope.data = digital;

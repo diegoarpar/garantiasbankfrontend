@@ -45,9 +45,13 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'CompletitudController'}
         );
         $routeProvider.when('/product-list-recepcion-garantia-idoneidad', {
-                    templateUrl: 'assets/app/entities/garantias/idoneidad/view/recepcion-garantia-idoneidad.html',
-                    controller: 'ProductSedeElectronicaController'}
-                );
+            templateUrl: 'assets/app/entities/garantias/idoneidad/view/recepcion-garantia-idoneidad.html',
+            controller: 'IdoneidadController'}
+        );
+        $routeProvider.when('/product-list-recepcion-garantia-datos', {
+            templateUrl: 'assets/app/entities/garantias/datos/view/recepcion-garantia-datos.html',
+            controller: 'DatosController'}
+        );
         $routeProvider.when('/administrador-usuarios', {
                 templateUrl: 'assets/app/authentication/administrador-usuarios.html',
                 controller: 'AdministradorUsuariosController'}

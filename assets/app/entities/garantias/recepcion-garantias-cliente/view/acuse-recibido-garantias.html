@@ -75,8 +75,8 @@
         <td>{{c.id}}</td>
         <td ng-repeat="e in columns"><input type="text" ng-model="digital.selected[e.title]" /></td>
         <td>
-            <button ng-click="saveRow($index)" class="btn btn-primary">Guardar</button>
-            <button ng-click="reset()" class="btn btn-primary">Cancelar</button>
+            <button ng-click="saveRow($index)" class="btn green">Guardar</button>
+            <button ng-click="reset()" class="btn btn-danger">Cancelar</button>
         </td>
     </script>
       <button class="btn green" ng-click="addRow()">Agregar Registro</button>

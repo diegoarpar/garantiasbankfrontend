@@ -8,15 +8,16 @@
 
         CompletitudController.$inject =
                     ['$scope', 'GarantiasServices','NumberService','CamposGenericosServices',
-                    'GarantiasServiceUpdateGarantias' ,'$location','ngTableParams','$filter','$window'];
+                    'CamposEspecificosServices' ,'$location','ngTableParams','$filter','$window'];
 
         function CompletitudController($scope, GarantiasServices,NumberService,CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location,ngTableParams,$filter,$window) {
+                                                  CamposEspecificosServices, $location,ngTableParams,$filter,$window) {
             $scope.all_columns=[];
             $scope.columns=[];
             $scope.digital=[];
             $scope.digitalu=[];
             $scope.numero=[];
+            $scope.showmodal=false;
             $scope.fields=CamposGenericosServices.show({fieldType:"datos",garantiaType:"-1"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
@@ -67,7 +68,7 @@
                 $scope.mapColumns=[];
                 $scope.columns=[];
                 $scope.all_columns=[];
-                $scope.digital= GarantiasServices.show({tula:$scope.tula,enviadoTula:"true",garantiaRecibida:"true",garantiaIngresada:"null"});
+                $scope.digital= GarantiasServices.show({tula:$scope.tula,enviadoTula:"true",garantiaRecibida:"true",validacioncompletitud:"false"});
                 $scope.digital.$promise.then(function(data) {
                     $scope.digital=data;
                     fillColumns(data, $scope);
@@ -78,12 +79,32 @@
             $scope.saveCompleteInfoRow = function () {
                 completeRowDetail($scope);
                 concatGontenido($scope);
-                GarantiasServiceUpdateGarantias.create($scope.digitalu);
+                GarantiasServices.update($scope.digitalu);
                 $scope.digital=[];
                 $scope.digitalu=[];
+                $scope.showmodal=false;
             };
 
+            $scope.completeInfo = function (idx,c) {
+                $scope.showmodal=true;
+                $scope.selectedRow = c;
+                $scope.selectedRowIndex = idx;
+                $scope.rowDetails=[];
+                $scope.rowDetail=[];
+                datosFillComplementarios($scope,$scope.selectedRow.tipogarantia,CamposEspecificosServices );
+                for(var key in c){
+                    if(!$scope.rowDetails[key] && key.indexOf("$")===-1&&key!=="toJSON"){
+                        $scope.rowDetails[key]=key;
+                        $scope.rowDetail.push({key:key,value:c[key]});
+                    }
+                }
 
+            };
+            function datosFillComplementarios($scope,gt, service){
+                $scope.datoscomplementariosgenericos=service.show({fieldType:"completitud",garantiaType:"-1"});
+                $scope.datoscomplementariosespecificos=service.show({fieldType:"completitud",garantiaType:gt});
+
+            }
             $scope.showContent = function($fileContent){
                 var jsontext = $fileContent.split('\n');
                 jsontext=txtToJson(jsontext, $scope);
@@ -104,17 +125,20 @@
         }
 
 
-        function concatTula($scope){
+        function concatGontenido($scope){
             var cont=0;
-            for(var i=0;i<$scope.digital.length;i++){
-                if($scope.digital[i].enviadoTula){
-                    $scope.digital[i].idtula=$scope.idtula[0].number;
-                    $scope.digital[i].tula=$scope.tula;
-                    $scope.digital[i].fechaEnvioTula=new Date();
-                    $scope.digitalu[cont]=($scope.digital[i]);
-                    cont++;
-                }
-            }
+            $scope.selectedRow.fechavalidacioncompletitud=new Date();
+            $scope.selectedRow.validacioncompletitud=true;
+            $scope.digitalu[cont]=$scope.selectedRow;
+            $scope.selectedRow={};
+
+        }
+        function completeRowDetail($scope){
+            for(var i=0;i<$scope.datoscomplementariosespecificos.length;i++)
+                $scope.selectedRow[$scope.datoscomplementariosespecificos[i].key]=$scope.datoscomplementariosespecificos[i].value;
+            for(var i=0;i<$scope.datoscomplementariosgenericos.length;i++)
+                            $scope.selectedRow[$scope.datoscomplementariosgenericos[i].key]=$scope.datoscomplementariosgenericos[i].value;
+
         }
         function construirTabla($scope, digital,ngTableParams,$filter){
             $scope.data = digital;

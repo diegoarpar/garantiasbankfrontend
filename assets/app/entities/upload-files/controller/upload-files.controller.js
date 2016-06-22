@@ -9,28 +9,28 @@
     UploadFilesController.$inject = ['$scope', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias'];
 
     function UploadFilesController($scope, UploadFilesService, Upload, $timeout, ApiGarantias) {
-            $scope.model = {
-                   name: "",
-                   comments: ""
-           };
+            $scope.model = "Garantia20";
+
 
            //an array of files selected
            $scope.files = [];
 
            $scope.$on("fileSelected", function (event, args) {
                    $scope.$apply(function () {
-                        alert("fileselect");
-
                        //add the file object to the scope's files collection
                        $scope.files.push(args.file);
-                       UploadFilesService.create({files:$scope.files,model:$scope.model});
+                       for(var i=0; i<$scope.files.length;i++)
+                            UploadFilesService.create({files:$scope.files[i],model:$scope.model, garid:$scope.garanatiaid});
                    });
                });
 
 
             $scope.log = [];
             $scope.$watch('files', function () {
-                    $scope.upload($scope.files);
+                   // $scope.upload($scope.files);
+
+                    for(var i=0; i<$scope.files.length;i++)
+                                  UploadFilesService.create({files:$scope.files[i],model:$scope.model, garid:$scope.garanatiaid});
             });
             $scope.$watch('file', function () {
                     if ($scope.file != null) {

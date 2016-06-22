@@ -16,11 +16,12 @@
                             transformRequest: function(data) {
                                 var formData = new FormData();
 
-                                formData.append("fileName", angular.toJson(data.model));
-
-                                 for (var i = 0; i < data.files.length; i++) {
-                                    formData.append("file" , data.files[i]);
-                                }
+                                formData.append("fileName", data.model);
+//                                formData.append("garid", angular.toJson(data.garid));
+                                formData.append("garid", data.garid);
+//                                 for (var i = 0; i < data.files.length; i++) {
+                                    formData.append("file" , data.files);
+//                                }
                                 return formData;
                             }
                             },

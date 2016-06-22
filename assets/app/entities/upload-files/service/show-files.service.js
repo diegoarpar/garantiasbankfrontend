@@ -15,17 +15,17 @@
         return {
             retrieve: function (name) {
                 var params = {
-                    name: name 
+                    name: name
                 };
                 var config = {
                     method: 'GET',
                     url: baseUrl + '/retrieve',
                     params: params,
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
                 };
 
                 return $http(config);
-            } 
+            }
 
 
         };

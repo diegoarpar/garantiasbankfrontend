@@ -29,25 +29,29 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'ProductController'}
         );
         $routeProvider.when('/product-list-alistamiento-tulas', {
-            templateUrl: 'assets/app/entities/garantias/envio-tula-bodega/view/alistamiento-tulas.html',
-            controller: 'ProductSedeElectronicaController'}
+            templateUrl: 'assets/app/entities/garantias/alistamiento-tula/view/alistamiento-tulas.html',
+            controller: 'AlistamientoTulaController'}
         );
         $routeProvider.when('/product-list-acuse-recibido-garantia', {
             templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/acuse-recibido-garantias.html',
-            controller: 'ProductSedeElectronicaController'}
+            controller: 'AcuseRecibidoGarantiasController'}
         );
         $routeProvider.when('/product-list-recepcion-tulas-bodega', {
             templateUrl: 'assets/app/entities/garantias/recepcion-tula-bodega/view/recepcion-tulas-bodega.html',
-            controller: 'ProductSedeElectronicaController'}
+            controller: 'RecepcionTulaBodegaController'}
         );
         $routeProvider.when('/product-list-recepcion-garantia-contenido', {
             templateUrl: 'assets/app/entities/garantias/completitud/view/recepcion-garantia-contenido.html',
-            controller: 'ProductSedeElectronicaController'}
+            controller: 'CompletitudController'}
         );
         $routeProvider.when('/product-list-recepcion-garantia-idoneidad', {
-                    templateUrl: 'assets/app/entities/garantias/idoneidad/view/recepcion-garantia-idoneidad.html',
-                    controller: 'ProductSedeElectronicaController'}
-                );
+            templateUrl: 'assets/app/entities/garantias/idoneidad/view/recepcion-garantia-idoneidad.html',
+            controller: 'IdoneidadController'}
+        );
+        $routeProvider.when('/product-list-recepcion-garantia-datos', {
+            templateUrl: 'assets/app/entities/garantias/datos/view/recepcion-garantia-datos.html',
+            controller: 'DatosController'}
+        );
         $routeProvider.when('/administrador-usuarios', {
                 templateUrl: 'assets/app/authentication/administrador-usuarios.html',
                 controller: 'AdministradorUsuariosController'}

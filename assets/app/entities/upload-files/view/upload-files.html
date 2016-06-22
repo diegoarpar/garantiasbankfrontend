@@ -2,8 +2,13 @@
 
 
   <h2>Subir archivos</h2>
-  Username
-  <input type="text" ng-model="username"><br/><br/>
+
+  <input type="file" file-upload multiple/>
+  <ul>
+    <li ng-repeat="file in files">{{file.name}}</li>
+  </ul>
+  Id Garantia
+  <input type="text" ng-model="garanatiaid"><br/><br/>
     Drop File:
     <div ngf-drop ngf-select ng-model="files" class="drop-box"
          ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
@@ -12,6 +17,11 @@
 
   Upload Log:
   <pre>{{log[0]}}</pre>
+
+
+
+
+
 </div>
 
 

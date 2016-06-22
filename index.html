@@ -35,16 +35,18 @@ and open the template in the editor.
         <script type="text/javascript" src="assets/js/angular/ng-table-to-csv.min.js"></script>
         <script type="text/javascript" src="assets/js/angular/xeditable.js"></script>
         <script type="text/javascript" src="assets/js/angular/angular-mocks.js"></script>
-        <script type="text/javascript" src="assets/js/angular/jspdf.js"></script>
+
         <script type="text/javascript" src="assets/js/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap/ui-bootstrap-tpls-1.0.0.min.js"></script>
         <script type="text/javascript" src="assets/js/sha2/sha256.js"></script>
         <script type="text/javascript" src="assets/js/fileserver/FileSaver.js"></script>
         <script type="text/javascript" src="assets/js/fileserver/FileSaver.min.js"></script>
-
         <script type="text/javascript" src="assets/js/angular/ng-file-upload-shim.min.js"></script>
         <script type="text/javascript" src="assets/js/angular/ng-file-upload.min.js"></script>
+        <script type="text/javascript" src="assets/js/pdf/jspdf.min.js"></script>
+        <script type="text/javascript" src="assets/js/html2canvas/html2canvas.js"></script>
+        <script type="text/javascript" src="assets/js/barcode/jquery-barcode.min.js"></script>
 
         <script  src="assets/app/config/server.js"></script>
         <script  src="assets/app/app.js"></script>
@@ -53,6 +55,7 @@ and open the template in the editor.
         <script  src="assets/app/main.controller.js"></script>
         <script  src="assets/app/navbar/nav-bar.controller.js"></script>
         <script  src="assets/app/on-read-file.directive.js"></script>
+        <script  src="assets/app/upload-file.directive.js"></script>
 
         <script  src="assets/app/authentication/authentication.service.js"></script>
         <script  src="assets/app/authentication/authentication-getUsers.service.js"></script>
@@ -67,16 +70,25 @@ and open the template in the editor.
         <script  src="assets/app/entities/user/user-creation.controller.js"></script>
         <script  src="assets/app/entities/user/user-factory.service.js"></script>
 
+        <script  src="assets/app/entities/garantias/recepcion-tula-bodega/controller/recepcion-tula-bodega.controller.js"></script>
+        <script  src="assets/app/entities/garantias/alistamiento-tula/controller/alistamiento-tula.controller.js"></script>
+        <script  src="assets/app/entities/garantias/completitud/controller/completitud.controller.js"></script>
+        <script  src="assets/app/entities/garantias/idoneidad/controller/idoneidad.controller.js"></script>
+        <script  src="assets/app/entities/garantias/datos/controller/datos.controller.js"></script>
+
         <script  src="assets/app/entities/product/product-sede-electronica.controller.js"></script>
         <script  src="assets/app/entities/product/product.service.js"></script>
         <script  src="assets/app/entities/product/product.controller.js"></script>
         <script  src="assets/app/entities/product/report-services-telefonica.service.js"></script>
 
 
-        <script  src="assets/app/entities/garantias/garantias-service-get-garantias.service.js"></script>
-        <script  src="assets/app/entities/garantias/garantias-service.service.js"></script>
-        <script  src="assets/app/entities/garantias/garantias.service.js"></script>
-        <script  src="assets/app/entities/garantias/garantias-service-update-garantias.service.js"></script>
+        <script  src="assets/app/entities/garantias/services/garantias.service.js"></script>
+        <script  src="assets/app/entities/garantias/controller/util.controller.js"></script>
+        <script  src="assets/app/entities/garantias/services/garantias-service-get-garantias.service.js"></script>
+        <script  src="assets/app/entities/garantias/services/number.service.js"></script>
+        <script  src="assets/app/entities/garantias/services/garantias-service-update-garantias.service.js"></script>
+
+        <script  src="assets/app/entities/garantias/recepcion-garantias-cliente/controller/acuse-recibido-garantias.controller.js"></script>
 
         <script  src="assets/app/entities/garantias/campos/especificos/controller/administrador-camposespeficios.controller.js"></script>
         <script  src="assets/app/entities/garantias/campos/especificos/service/administrador-camposespeficios.service.js"></script>

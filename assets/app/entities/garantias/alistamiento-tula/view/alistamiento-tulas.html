@@ -1,17 +1,11 @@
 <div id="page-wrapper">
+    <div id="bcTarget" ng-show="false"></div>
     <h3>ALISTAMIENTO UNIDADES DE CARGA SELLADA</h3>
     <div>
         <span>Regional </span>
-    <select name="Regional" ng-model="regional" >
-      <option value="ANTIOQUIA">ANTIOQUIA</option>
-      <option value="BOGOTA">BOGOTA</option>
-      <option value="CAFETERA">CAFETERA</option>
-      <option value="COSTA">COSTA</option>
-      <option value="OCCIDENTE">OCCIDENTE</option>
-      <option value="ORIENTE">ORIENTE</option>
-      <option value="SANTANDERES">SANTANDERES</option>
-      <option value="SUR">SUR</option>
-    </select>
+        <select id="pname"  ng-model="regional" >
+            <option ng:repeat="r in regionales" value="{{r.key}}">{{r.value}}</option>
+        </select>
     
     </div>
     <div>
@@ -23,7 +17,7 @@
     <div>
         Precinto: 
     <input ng-model="tula" />  
-    <button class="btn green" ng-click="sendTula()">Send Tula</button>
+    <button class="btn green" ng-click="sendTula()">Enviar Tula</button>
     </div>
 
      <div class="form-group">
@@ -35,10 +29,7 @@
                 <input type="checkbox" ng-model="c.checked">{{c.title}} 
             </label>
           </div>
-              <div>
-                  <input type="text" ng-model="columnName">{{c.title}} 
-              <button class="btn green" ng-click="addColumn(columnName)">Agregar Columna</button>
-              </div>
+
         </div>
       </div>
     </div>

@@ -3,15 +3,8 @@
 
   <h2>Subir archivos</h2>
   Username
-  <input type="text" ng-model="username"><br/><br/>
-    Drop File:
-    <div ngf-drop ngf-select ng-model="files" class="drop-box"
-         ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
-         >Drop pdfs or images here or click to upload</div>
-    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-
-  Upload Log:
-  <pre>{{log[0]}}</pre>
+  <input type="text" ng-model="name"><br/><br/>
+  <button class="btn-default" ng-click="retrieve()">Buscar</button>
 </div>
 
 

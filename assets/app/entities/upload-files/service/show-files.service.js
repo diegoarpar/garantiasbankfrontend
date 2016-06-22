@@ -6,18 +6,21 @@
 (function() {
     'use strict';
     angular.module('wpc')
-        .factory('UploadFiles', UploadFiles);
+        .factory('ShowFiles', ShowFiles);
 
-    UploadFiles.$inject = ['$http', 'ApiGarantias', '$window'];
+    ShowFiles.$inject = ['$http', 'ApiGarantias', '$window'];
 
-    function UploadFiles($http, ApiGarantias, $window) {
-        var baseUrl = ApiGarantias.url + 'search';
+    function ShowFiles($http, ApiGarantias, $window) {
+        var baseUrl = ApiGarantias.url + 'upload';
         return {
-            getMetaData: function (id, date) {
+            retrieve: function (name) {
+                var params = {
+                    name: name 
+                };
                 var config = {
                     method: 'GET',
-                    url: baseUrl + '/getMetadata',
-                    isArray: true,
+                    url: baseUrl + '/retrieve',
+                    params: params,
                     headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
                 };
 

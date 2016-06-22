@@ -6,9 +6,28 @@
     angular.module("wpc")
         .controller('UploadFilesController', UploadFilesController);
 
-    UploadFilesController.$inject = ['$scope', 'UploadFiles', 'Upload', '$timeout', 'ApiGarantias'];
+    UploadFilesController.$inject = ['$scope', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias'];
 
-    function UploadFilesController($scope, UploadFiles, Upload, $timeout, ApiGarantias) {
+    function UploadFilesController($scope, UploadFilesService, Upload, $timeout, ApiGarantias) {
+            $scope.model = {
+                   name: "",
+                   comments: ""
+           };
+
+           //an array of files selected
+           $scope.files = [];
+
+           $scope.$on("fileSelected", function (event, args) {
+                   $scope.$apply(function () {
+                        alert("fileselect");
+
+                       //add the file object to the scope's files collection
+                       $scope.files.push(args.file);
+                       UploadFilesService.create({files:$scope.files,model:$scope.model});
+                   });
+               });
+
+
             $scope.log = [];
             $scope.$watch('files', function () {
                     $scope.upload($scope.files);

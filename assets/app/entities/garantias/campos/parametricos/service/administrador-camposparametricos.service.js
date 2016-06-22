@@ -33,7 +33,7 @@
         CamposParametricosRemoveServices.$inject =  ['$resource','ApiGarantias','$window','$route'];
 
         function CamposParametricosRemoveServices($resource,ApiGarantias,$window,$route) {
-            return $resource(ApiGarantias.url+'config/garantias-parametricvalues/{id}', {}, {
+            return $resource(ApiGarantias.url+'config/garantias-parametricvalues/delete/', {}, {
                 remove: { method: 'DELETE',isArray:false, params:{id:'@id'}, headers:{'Authorization':'Bearer '+$window.localStorage.getItem('token')} }
             })
         }

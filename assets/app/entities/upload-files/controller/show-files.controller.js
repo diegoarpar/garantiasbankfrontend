@@ -6,9 +6,9 @@
     angular.module("wpc")
         .controller('ShowFilesController', ShowFilesController);
 
-        ShowFilesController.$inject = ['$scope', 'UploadFiles', 'ShowFiles', '$timeout', 'ApiGarantias'];
+        ShowFilesController.$inject = ['$scope',  'ShowFiles', '$timeout', 'ApiGarantias'];
 
-    function ShowFilesController($scope, UShFiles, ShowFiles, $timeout, ApiGarantias) {
+    function ShowFilesController($scope,  ShowFiles, $timeout, ApiGarantias) {
             $scope.log = [];
             $scope.retrieve = retrieve;
 

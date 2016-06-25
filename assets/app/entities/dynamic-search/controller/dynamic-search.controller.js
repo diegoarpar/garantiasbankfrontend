@@ -6,9 +6,10 @@
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-            DynamicSearchController.$inject = ['$scope', 'DynamicSearch'];
+            DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices' ];
 
-        function DynamicSearchController($scope, DynamicSearch) {
+        function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices) {
+            $scope.data= {};
             $scope.lista = [];
             $scope.listaBusqueda = [];
             $scope.addColumn = addColumn;
@@ -16,10 +17,31 @@
             $scope.removeRow = removeRow;
             $scope.generateColumns = generateColumns;
             $scope.filterSearchResult = filterSearchResult;
+            $scope.openStartDate = openStartDate;
+            $scope.openEndDate = openEndDate;
 
-            DynamicSearch.getMetaData().success(function(data){
+            CamposGenericosServices.show({fieldType:'datos'}).$promise.then(function(data){
                 $scope.columnsMetadata = data;
             });
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+            $scope.popupStartDate = {
+                opened: false
+            };
+            $scope.popupEndDate = {
+                opened: false
+            };
+
+
+            function openStartDate() {
+                $scope.popupStartDate.opened = true;
+            };
+            function openEndDate() {
+                $scope.popupEndDate.opened = true;
+            };
 
             function addColumn(col){
                 $scope.lista.push($scope.columnsMetadata[col]);
@@ -30,15 +52,32 @@
                 var searchVector = [];
                 for(var i = 0; i< $scope.lista.length; i++){
                     searchVector[i]={
-                        key: $scope.lista[i],
+                        key: $scope.lista[i].key,
                         value: $scope.listaBusqueda[i]
                     };
                 }
 
-                DynamicSearch.searchWithMetadata(searchVector).success(function(data){
+                var search = {
+                    queryString : searchVector
+                };
+
+                if(angular.isDefined($scope.data.word)){
+                    search.word = $scope.data.word;
+                }
+
+                if(angular.isDefined($scope.data.startDate)){
+                    search.startDate = $scope.data.startDate.getTime();
+                }
+                if(angular.isDefined($scope.data.endDate)){
+                    search.endDate = $scope.data.endDate.getTime();
+                }
+                
+                DynamicSearch.searchWithMetadata(search).success(function(data){
                     alert(data);
                     $scope.searchResults = data;
                     generateColumns(data);
+                }).error(function(error){
+                    alert(error)
                 })
             }
 
@@ -69,13 +108,13 @@
                     })
                 })
             }
-            
+
             function filterSearchResult(){
                 $scope.copySearchResult = [];
                 angular.forEach(vector, function(object, key){
-                    
+
                 })
-            } 
+            }
         }
 
 

@@ -10,12 +10,24 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css" >
-        <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css" >
         <link rel="stylesheet" href="assets/css/bootstrap/bootstrap-responsive.css" >
-        <link rel="stylesheet" href="assets/css/bootstrap/bootstrap-responsive.min.css" >
         <link rel="stylesheet" href="assets/css/bootstrap/xeditable.css" >
         <link rel="stylesheet" href="assets/css/app.css" >
+        <style type="text/css">
+            .collapse {
+                position: inherit;
+            }
+            .collapse.in {
+                height: auto;  /* this style already exists in bootstrap.css */
+                overflow: visible;  /* this one doesn't. Add it! */
 
+            }
+
+            .panel-group .panel
+            {
+                overflow: visible;
+            }
+        </style>
     </head>
     <body>
         <div class="slide-animate-container">

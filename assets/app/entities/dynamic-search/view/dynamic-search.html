@@ -1,30 +1,56 @@
 <div id="page-wrapper">
 
-
   <h2>Busqueda Avanzada</h2>
+    <uib-accordion close-others="oneAtATime">
+        <div class="col-md-12">
+            <uib-accordion-group heading="Busqueda Por Rango de Fechas" is-open="false">
+                <p class="input-group">
+                    Fecha Inicial: <input type="text" class="form-control" uib-datepicker-popup ng-model="data.startDate" is-open="popupStartDate.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openStartDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                    Fecha Final: <input type="text" class="form-control" uib-datepicker-popup ng-model="data.endDate" is-open="popupEndDate.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openEndDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                </p>
+            </uib-accordion-group>
+        </div>
+        <div class="col-md-12">
+            <uib-accordion-group heading="Busqueda Por Palabra" is-open="false">
+                <div>
+                    Palabra: <input type="text" ng-model="data.word">
+                </div>
+            </uib-accordion-group>
+        </div>
+        <div class="col-md-12">
+            <uib-accordion-group heading="Busqueda Por Campo General" is-open="false">
+                <table  ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
+                    <th>Columna</th>
+                    <th>Valor</th>
+                    <tr ng-repeat="c in lista track by $index">
+                        <td>{{c.value}}</td>
+                        <td><input type="text" ng-model="listaBusqueda[$index]"></td></td>
+                        <td><button ng-click="removeRow($index)" class="btn btn-danger ng-scope">Quitar</button></td>
+                    </tr>
+                </table>
+                <!-- Single button -->
+                <div class="btn-group" uib-dropdown is-open="status.isopen">
+                    <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                        Agregar Campo <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button" >
+                        <li role="menuitem" ng-repeat="col in columnsMetadata track by $index"><span ng-click="addColumn($index)">{{col.value}}</span></li>
+                    </ul>
+                </div>
 
-    <table  ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
-        <th>Columna</th>
-        <th>Valor</th>
-        <tr ng-repeat="c in lista track by $index">
-            <td>{{c}}</td>
-            <td><input type="text" ng-model="listaBusqueda[$index]"></td></td>
-            <td><button ng-click="removeRow($index)" class="btn btn-danger ng-scope">Quitar</button></td>
-        </tr>
-    </table>
 
-    <!-- Single button -->
-    <div class="btn-group" uib-dropdown is-open="status.isopen">
-        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-            Agregar Campo <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button" >
-            <li role="menuitem" ng-repeat="col in columnsMetadata track by $index"><span ng-click="addColumn($index)">{{col}}</span></li>
-        </ul>
-    </div>
+            </uib-accordion-group>
+        </div>
+    </uib-accordion>
     <button ng-click="buscar()" class="btn btn-primary">Busqueda</button>
 
-    {{listaBusqueda}}
+
 
 
 

@@ -31,7 +31,8 @@
                 };
                 return $http.post(url, metadata, config);
 
-            }
+            },
+            
 
 
         };

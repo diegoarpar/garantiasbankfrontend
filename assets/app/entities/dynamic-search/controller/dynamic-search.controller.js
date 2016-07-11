@@ -94,16 +94,14 @@
             }
 
             function generateColumns(vector){
-                $scope.allColumns = [];
-                $scope.allColumnsName = [];
+                $scope.allColumns = {};
                 angular.forEach(vector, function(object, key){
                     angular.forEach(object, function(object2, key2){
-                        if($scope.allColumnsName.indexOf(key2) == -1){
-                            $scope.allColumnsName.push(key2);
-                            var columnObject = new Object();
-                            columnObject.title =  key2;
-                            columnObject.checked = true;
-                            $scope.allColumns.push(columnObject);
+                        if(key2 != '_id') {
+                            $scope.allColumns[key2] =  true;
+                        }
+                        else{
+                            $scope.allColumns[key2] = false;
                         }
                     })
                 })

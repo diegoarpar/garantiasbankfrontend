@@ -19,9 +19,12 @@
 
 
             AuthenticationGetUserServices.create({user:$scope.nombre, pass:sha256($scope.contrasena), completeName:$scope.nombreCompleto})
-                .$promise.then(function(){
+                .$promise.then(function(data){
                     $scope.users=AuthenticationGetUserServices.show();
-                });
+                },
+                function(error){
+                 alert(error);
+            });
             
         };
         $scope.editPermission=function(c){

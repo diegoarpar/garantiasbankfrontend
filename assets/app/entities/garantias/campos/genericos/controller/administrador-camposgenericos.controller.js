@@ -21,7 +21,14 @@
         }
         $scope.add= function(){
                     $scope.parametricst.push($scope.campo);
-                    $scope.rta=CamposGenericosServices.create($scope.parametricst);
+                    $scope.rta=CamposGenericosServices.create($scope.parametricst).$promise.then(
+                        function(datos){
+                            $scope.parametrics=CamposGenericosServices.show({garantiaType:$scope.campo.garantiaType, fieldType:value});
+                        },
+                        function(error){
+                            alert(error);
+                        }
+                    );
                     $scope.parametrics=[];
                     $scope.parametricst=[];
                     $scope.campo={};

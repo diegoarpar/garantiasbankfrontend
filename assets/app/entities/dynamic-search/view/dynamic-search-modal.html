@@ -1,0 +1,25 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLearningResultLabel">Ver estado de la garantia</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group" ng-repeat="(key,value) in entity" >
+            <label for="{{key}}">{{key}}</label>
+            <input type="text" class="form-control" id="{{key}}" name="{{key}}"
+                   ng-model="entity[key]" readonly />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancelar</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Guardar</span>
+        </button>
+    </div>
+</form>

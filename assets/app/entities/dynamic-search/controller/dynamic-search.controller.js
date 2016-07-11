@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-            DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices' ];
+            DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal'];
 
-        function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices) {
+        function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices, $uibModal) {
             $scope.data= {};
             $scope.lista = [];
             $scope.listaBusqueda = [];
@@ -19,6 +19,7 @@
             $scope.filterSearchResult = filterSearchResult;
             $scope.openStartDate = openStartDate;
             $scope.openEndDate = openEndDate;
+            $scope.openModal = openModal;
 
             CamposGenericosServices.show({fieldType:'datos'}).$promise.then(function(data){
                 $scope.columnsMetadata = data;
@@ -113,6 +114,23 @@
 
                 })
             }
+
+            function openModal(entity, size) {
+                var modalInstance = $uibModal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',
+                        controller: 'DynamicSearchModalController',
+                        size: size,
+                        resolve: {
+                            entity: function () {
+                                return entity;
+                            }
+                        }
+
+                    }
+                );
+            }
+            
         }
 
 

@@ -80,7 +80,7 @@
             <th> opciones </th>
         </tr>
         </thead>
-        <tr ng-repeat="row in searchResults">
+        <tr ng-repeat="row in searchResults" ng-click="openModal(row, 'lg')">
             <td ng-repeat="(key, value) in allColumns" ng-show="value">{{row[key]}}</td>
         </tr>
     </table>

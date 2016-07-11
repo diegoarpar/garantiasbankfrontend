@@ -13,6 +13,11 @@
                         templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search.html',
                         controller: 'DynamicSearchController'}
                 );
+                $routeProvider.when('/dynamic-search-details', {
+                        templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',
+                        controller: 'DynamicSearchModalController'}
+                );
+                
         }
 
 

@@ -14,12 +14,25 @@
         </div>
 
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancelar</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Guardar</span>
-        </button>
-    </div>
+
+
+
+
+    <h2>Subir archivos</h2>
+
+    <input type="file" file-upload multiple/>
+    <ul>
+        <li ng-repeat="file in files">{{file.name}}</li>
+    </ul>
+    Id Garantia
+    <input type="text" ng-model="garanatiaid"><br/><br/>
+    Drop File:
+    <div ngf-drop ngf-select ng-model="files" class="drop-box"
+         ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+    >Drop pdfs or images here or click to upload</div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+
+    Upload Log:
+    <pre>{{log[0]}}</pre>
+
 </form>

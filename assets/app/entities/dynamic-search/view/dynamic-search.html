@@ -61,11 +61,12 @@
                 <div class="col-sm-12" >
                     <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
                     <div id="demo" class="collapse">
-                        <div ng-repeat="(key, value) in allColumns" >
-                            <label>
-                                <input type="checkbox" ng-model="allColumns[key]">{{key}}
-                            </label>
-                        </div>
+                            <button type="button" class="btn btn-info marginated ng-binding ng-scope"
+                                    ng-repeat="(key, value) in allColumns" ui-draggable="true" drag="m"
+                                    on-drop-success="dropSuccessHandler($event,$index,availableMetadata)"
+                                    draggable="true">
+                                {{key}}
+                            </button>
                         <div>
                             <input type="text" ng-model="columnName">{{c.title}}
                             <button class="btn green" ng-click="addColumn(columnName)">Agregar Columna</button>
@@ -73,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <table  ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";" class="table" >
+            <table  ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";" class="table table-condensed table-bordered table-striped ng-scope ng-table" >
                 <thead>
                 <tr>
                     <th ng-repeat="(key, value) in allColumns" ng-show="value">{{ key }}
@@ -81,7 +82,7 @@
                     <th> opciones </th>
                 </tr>
                 </thead>
-                <tr ng-repeat="row in searchResults" ng-click="openModal(row, 'lg')">
+                <tr ng-repeat="row in searchResults" ng-click="go('/dynamic-search-details')">
                     <td ng-repeat="(key, value) in allColumns" ng-show="value">{{row[key]}}</td>
                 </tr>
             </table>

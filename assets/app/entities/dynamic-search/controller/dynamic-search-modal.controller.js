@@ -88,12 +88,13 @@
             }
 
 
-            function retrieve() {
-                ShowFiles.retrieve($scope.name).success(function (data) {
+            function retrieve(url) {
+                ShowFiles.retrieve(url).success(function (data) {
                     var file = new Blob([data], {type: 'application/pdf'});
                     $scope.pdfUrl = URL.createObjectURL(file);
                 });
             }
+
             $scope.pdfName = 'Relativity: The Special and General Theory by Albert Einstein';
             $scope.scroll = 0;
             $scope.loading = 'loading';

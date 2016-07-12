@@ -32,7 +32,7 @@
             <td>{{getDate(row.garid.date) | date:'short'}}</td>
             <td>
                 <button type="submit"
-                        ng-click="openModal(row)"
+                        ng-click="retrieve(row.fileName)"
                         class="btn btn-info btn-sm">
                     <span class="glyphicon glyphicon-eye-open"></span>
                     <span class="hidden-xs hidden-sm"></span>
@@ -43,29 +43,10 @@
 
     <uib-tabset active="activeJustified" justified="true">
         <uib-tab index="0" heading="Justified">
-            <nav ng-class="getNavStyle(scroll)">
-                <button ng-click="goPrevious()"><</span></button>
-                <button ng-click="goNext()">></span></button>
-
-                <button ng-click="zoomIn()">+</span></button>
-                <button ng-click="fit()">100%</span></button>
-                <button ng-click="zoomOut()">-</span></button>
-
-                <button ng-click="rotate()">90</span></button>
-
-                <span>Page: </span>
-                <input type="text" min=1 ng-model="pageNum">
-                <span> / {{pageCount}}</span>
-
-                &nbsp;&nbsp;
-                <span>Document URL: </span>
-                <input type="text" ng-model="pdfUrl">
-            </nav>
-
-            <hr>
-
-            {{loading}}
-            <canvas id="pdf" class="rotate0"></canvas>
+            <div class="wrapper">
+                <h1>{{row.fileName}}</h1>
+                <ng-pdf template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="pdf" scale="page-fit" page=1></ng-pdf>
+            </div>
 
 
         </uib-tab>

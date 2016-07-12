@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['$scope', 'ShareService',  'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles'];
+        DynamicSearchModalController.$inject = ['$scope', 'ShareService',  'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce'];
 
-        function DynamicSearchModalController($scope, ShareService,  UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles) {
+        function DynamicSearchModalController($scope, ShareService,  UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce) {
             
             $scope.entity = ShareService.get();
             $scope.garantiaid = $scope.entity._id;
@@ -116,6 +116,7 @@
                 console.log(progress);
             }
 
+            $scope.content = $sce.trustAsResourceUrl($scope.pdfUrl);
 
         }
 

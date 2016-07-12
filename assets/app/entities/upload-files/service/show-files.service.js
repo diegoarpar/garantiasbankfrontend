@@ -21,6 +21,7 @@
                     method: 'GET',
                     url: baseUrl + '/retrieve',
                     params: params,
+                    responseType:'arraybuffer',
                     headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
                 };
 

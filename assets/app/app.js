@@ -1,4 +1,4 @@
-var app= angular.module('wpc', ['xeditable', 'ngRoute','ui.bootstrap','ngTable','ngTableToCsv','ngResource','ngFileUpload', 'pdf']);
+var app= angular.module('wpc', ['xeditable', 'ngRoute','ui.bootstrap','ngTable','ngTableToCsv','ngResource','ngFileUpload', 'pdf', 'ui.router']);
 
 app.constant('ApiApp', {
   url: 'http://institucion.certicamara.co/reports/api/insert-database/'

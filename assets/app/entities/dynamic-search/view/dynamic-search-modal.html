@@ -7,18 +7,75 @@
     </div>
 
     <div class="modal-body">
-        <div class="form-group" ng-repeat="(key,value) in entity" >
-            <label for="{{key}}">{{key}}</label>
-            <input type="text" class="form-control" id="{{key}}" name="{{key}}"
-                   ng-model="entity[key]" readonly />
-        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6" ng-repeat="(key,value) in entity" >
+                <div class="form-group"  >
+                    <label for="{{key}}">{{key}}</label>
+                    <input type="text" class="form-control" id="{{key}}" name="{{key}}"
+                           ng-model="entity[key]" readonly />
+                </div>
 
+            </div>
+        </div>
     </div>
 
+    <table  ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";" class="table table-condensed table-bordered table-striped ng-scope ng-table" >
+        <thead>
+        <tr>
+            <th> Nombre del archivo </th>
+            <th> Fecha de apertura </th>
+            <th> Visualizar </th>
+        </tr>
+        </thead>
+        <tr ng-repeat="row in listOfFiles" ng-click="openModal(row)">
+            <td>{{row.fileName}}</td>
+            <td>{{getDate(row.garid.date) | date:'short'}}</td>
+            <td>
+                <button type="submit"
+                        ng-click="openModal(row)"
+                        class="btn btn-info btn-sm">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    <span class="hidden-xs hidden-sm"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
 
+    <uib-tabset active="activeJustified" justified="true">
+        <uib-tab index="0" heading="Justified">
+            <nav ng-class="getNavStyle(scroll)">
+                <button ng-click="goPrevious()"><</span></button>
+                <button ng-click="goNext()">></span></button>
+
+                <button ng-click="zoomIn()">+</span></button>
+                <button ng-click="fit()">100%</span></button>
+                <button ng-click="zoomOut()">-</span></button>
+
+                <button ng-click="rotate()">90</span></button>
+
+                <span>Page: </span>
+                <input type="text" min=1 ng-model="pageNum">
+                <span> / {{pageCount}}</span>
+
+                &nbsp;&nbsp;
+                <span>Document URL: </span>
+                <input type="text" ng-model="pdfUrl">
+            </nav>
+
+            <hr>
+
+            {{loading}}
+            <canvas id="pdf" class="rotate0"></canvas>
+
+
+        </uib-tab>
+        <uib-tab index="1" heading="SJ">Short Labeled Justified content</uib-tab>
+        <uib-tab index="2" heading="Long Justified">Long Labeled Justified content</uib-tab>
+    </uib-tabset>
 
 
     <h2>Subir archivos</h2>
+
 
     <input type="file" file-upload multiple/>
     <ul>

@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-            DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal'];
+            DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService'];
 
-        function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices, $uibModal) {
+        function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService) {
             $scope.data= {};
             $scope.lista = [];
             $scope.listaBusqueda = [];
@@ -20,6 +20,7 @@
             $scope.openStartDate = openStartDate;
             $scope.openEndDate = openEndDate;
             $scope.openModal = openModal;
+            $scope.switchBoolean = switchBoolean;
 
             CamposGenericosServices.show({fieldType:'datos'}).$promise.then(function(data){
                 $scope.columnsMetadata = data;
@@ -115,22 +116,13 @@
                 })
             }
 
-            function openModal(entity, size) {
-                var modalInstance = $uibModal.open({
-                        animation: $scope.animationsEnabled,
-                        templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',
-                        controller: 'DynamicSearchModalController',
-                        size: size,
-                        resolve: {
-                            entity: function () {
-                                return entity;
-                            }
-                        }
-
-                    }
-                );
+            function openModal(entity) {
+                ShareService.set(entity);
+                $location.url('/dynamic-search-details');
             }
-            
+            function switchBoolean(key){
+                    $scope.allColumns[key] = !$scope.allColumns[key];
+            }        
         }
 
 

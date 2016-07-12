@@ -6,15 +6,27 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['$scope', 'entity',  'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias'];
+        DynamicSearchModalController.$inject = ['$scope', 'ShareService',  'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles'];
 
-        function DynamicSearchModalController($scope, entity,  UploadFilesService, Upload, $timeout, ApiGarantias) {
-            $scope.entity = entity;
+        function DynamicSearchModalController($scope, ShareService,  UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles) {
             
+            $scope.entity = ShareService.get();
             $scope.garantiaid = $scope.entity._id;
-
             $scope.model = "Garantia20";
+            $scope.upload = upload;
+            $scope.getDate = getDate;
+            $scope.log = [];
+            $scope.retrieve = retrieve;
 
+            ShowFiles.listOfFiles.get({garid:$scope.garantiaid}).$promise.then(
+                function(data){
+                    $scope.listOfFiles= data;
+                },
+                function(error){
+
+                }
+
+            );
 
             //an array of files selected
             $scope.files = [];
@@ -42,7 +54,7 @@
                 }
             });
 
-            $scope.upload = function (files) {
+            function upload(files) {
                 if (files && files.length) {
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
@@ -70,7 +82,40 @@
                     }
                 }
             };
-            
+
+            function getDate(date){
+                return new Date(date);
+            }
+
+
+            function retrieve() {
+                ShowFiles.retrieve($scope.name).success(function (data) {
+                    var file = new Blob([data], {type: 'application/pdf'});
+                    $scope.pdfUrl = URL.createObjectURL(file);
+                });
+            }
+            $scope.pdfName = 'Relativity: The Special and General Theory by Albert Einstein';
+            $scope.scroll = 0;
+            $scope.loading = 'loading';
+
+            $scope.getNavStyle = function(scroll) {
+                if(scroll > 100) return 'pdf-controls fixed';
+                else return 'pdf-controls';
+            }
+
+            $scope.onError = function(error) {
+                console.log(error);
+            }
+
+            $scope.onLoad = function() {
+                $scope.loading = '';
+            }
+
+            $scope.onProgress = function(progress) {
+                console.log(progress);
+            }
+
+
         }
 
 

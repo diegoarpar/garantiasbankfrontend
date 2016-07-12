@@ -63,7 +63,7 @@
                     <div id="demo" class="collapse">
                             <button type="button" class="btn btn-info marginated ng-binding ng-scope"
                                     ng-repeat="(key, value) in allColumns" ui-draggable="true" drag="m"
-                                    on-drop-success="dropSuccessHandler($event,$index,availableMetadata)"
+                                    ng-click="switchBoolean(key)"
                                     draggable="true">
                                 {{key}}
                             </button>
@@ -82,7 +82,15 @@
                     <th> opciones </th>
                 </tr>
                 </thead>
-                <tr ng-repeat="row in searchResults" ng-click="go('/dynamic-search-details')">
+                <tr ng-repeat="row in searchResults" ng-click="openModal(row)">
+                    <td>
+                        <button type="submit"
+                                ng-click="openModal(row)"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span class="hidden-xs hidden-sm"></span>
+                        </button>
+                    </td>
                     <td ng-repeat="(key, value) in allColumns" ng-show="value">{{row[key]}}</td>
                 </tr>
             </table>

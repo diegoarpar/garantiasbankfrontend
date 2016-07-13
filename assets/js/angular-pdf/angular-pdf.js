@@ -3,7 +3,7 @@
 
   'use strict';
 
-  angular.module('pdf', []).directive('ngPdf', [ '$window', function($window) {
+  angular.module('pdf', []).directive('ngPdf', [ '$window', '$timeout', function($window, $timeout) {
     var renderTask = null;
     var pdfLoaderTask = null;
     var debug = false;
@@ -31,18 +31,24 @@
     };
     return {
       restrict: 'E',
+      scope: {
+        canvasid: "=canvasid",
+        currentPdfUrl: '=currentPdfUrl'
+      },
       templateUrl: function(element, attr) {
         return attr.templateUrl ? attr.templateUrl : 'partials/viewer.html';
       },
       link: function(scope, element, attrs) {
+        $timeout(function () {
+          //DOM has finished rendering
         element.css('display', 'block');
-        var url = scope.pdfUrl;
+        var url = scope.currentPdfUrl;
         var httpHeaders = scope.httpHeaders;
-        var pdfDoc = null;
+        scope.pdfDoc = null;
         var pageToDisplay = isFinite(attrs.page) ? parseInt(attrs.page) : 1;
         var pageFit = attrs.scale === 'page-fit';
         var scale = attrs.scale > 0 ? attrs.scale : 1;
-        var canvasid = attrs.canvasid || 'pdf-canvas';
+        var canvasid = scope.canvasid == null ? 'pdf-canvas' :  scope.canvasid ;
         var canvas = document.getElementById(canvasid);
 
         debug = attrs.hasOwnProperty('debug') ? attrs.debug : false;
@@ -64,7 +70,7 @@
             renderTask._internalRenderTask.cancel();
           }
 
-          pdfDoc.getPage(num).then(function(page) {
+          scope.pdfDoc.getPage(num).then(function(page) {
             var viewport;
             var pageWidthScale;
             var renderContext;
@@ -72,8 +78,13 @@
             if (pageFit) {
               viewport = page.getViewport(1);
               var clientRect = element[0].getBoundingClientRect();
-              pageWidthScale = clientRect.width / viewport.width;
-              scale = pageWidthScale;
+              if(clientRect.height == 0){
+                scale = 1;
+              }
+              else {
+                pageWidthScale = clientRect.width / viewport.width;
+                scale = pageWidthScale;
+              }
             }
             viewport = page.getViewport(scale);
 
@@ -104,7 +115,7 @@
         };
 
         scope.goNext = function() {
-          if (scope.pageToDisplay >= pdfDoc.numPages) {
+          if (scope.pageToDisplay >= scope.pdfDoc.numPages) {
             return;
           }
           scope.pageToDisplay = parseInt(scope.pageToDisplay) + 1;
@@ -112,6 +123,7 @@
         };
 
         scope.zoomIn = function() {
+          renderPDF();
           pageFit = false;
           scale = parseFloat(scale) + 0.2;
           scope.renderPage(scope.pageToDisplay);
@@ -119,6 +131,7 @@
         };
 
         scope.zoomOut = function() {
+          renderPDF();
           pageFit = false;
           scale = parseFloat(scale) - 0.2;
           scope.renderPage(scope.pageToDisplay);
@@ -126,11 +139,13 @@
         };
 
         scope.fit = function() {
+          renderPDF();  
           pageFit = true;
           scope.renderPage(scope.pageToDisplay);
         }
 
         scope.changePage = function() {
+          renderPDF();  
           scope.renderPage(scope.pageToDisplay);
         };
 
@@ -172,7 +187,7 @@
                     scope.onLoad();
                   }
 
-                  pdfDoc = _pdfDoc;
+                  scope.pdfDoc = _pdfDoc;
                   scope.renderPage(scope.pageToDisplay);
 
                   scope.$apply(function() {
@@ -191,15 +206,15 @@
 
         scope.$watch('pageNum', function(newVal) {
           scope.pageToDisplay = parseInt(newVal);
-          if (pdfDoc !== null) {
+          if (scope.pdfDoc !== null) {
             scope.renderPage(scope.pageToDisplay);
           }
         });
 
-        scope.$watch('pdfUrl', function(newVal) {
+        scope.$watch('currentPdfUrl', function(newVal) {
           if (newVal !== '') {
             if (debug) {
-              console.log('pdfUrl value change detected: ', scope.pdfUrl);
+              console.log('pdfUrl value change detected: ', scope.currentPdfUrl);
             }
             url = newVal;
             scope.pageNum = scope.pageToDisplay = pageToDisplay;
@@ -213,6 +228,8 @@
           }
         });
 
+
+        });
       }
     };
   } ]);

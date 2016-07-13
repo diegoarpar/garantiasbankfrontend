@@ -116,7 +116,7 @@
                 console.log(progress);
             }
 
-            $scope.content = $sce.trustAsResourceUrl($scope.pdfUrl);
+            //$scope.content = $sce.trustAsResourceUrl($scope.pdfUrl);
 
         }
 

@@ -42,13 +42,8 @@
     </table>
 
     <uib-tabset active="activeJustified" justified="true">
-        <uib-tab index="0" heading="Justified" ng-repeat="pdfUrl in pdfUrlArray">
-            <div class="wrapper">
-                <h1>{{row.fileName}}</h1>
-                <ng-pdf template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="pdf" scale="page-fit" page=1></ng-pdf>
-            </div>
-
-
+        <uib-tab heading="Justified" ng-repeat="(key,pdfUrl) in pdfUrlArray">
+                <ng-pdf current-pdf-url="pdfUrlArray[key]" template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="$index" scale="page-fit" page=1></ng-pdf>
         </uib-tab>
     </uib-tabset>
 

@@ -42,7 +42,7 @@
     </table>
 
     <uib-tabset active="activeJustified" justified="true">
-        <uib-tab heading="Justified" ng-repeat="(key,pdfUrl) in pdfUrlArray">
+        <uib-tab ng-repeat="(key,pdfUrl) in pdfUrlArray" heading="{{key}}" >
                 <ng-pdf current-pdf-url="pdfUrlArray[key]" template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="$index" scale="page-fit" page=1></ng-pdf>
         </uib-tab>
     </uib-tabset>

@@ -42,21 +42,13 @@
     </table>
 
     <uib-tabset active="activeJustified" justified="true">
-        <uib-tab index="0" heading="Justified">
-            <div class="wrapper">
-                <h1>{{row.fileName}}</h1>
-                <ng-pdf template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="pdf" scale="page-fit" page=1></ng-pdf>
-            </div>
-
-
+        <uib-tab ng-repeat="(key,pdfUrl) in pdfUrlArray" heading="{{key}}" >
+                <ng-pdf current-pdf-url="pdfUrlArray[key]" template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="$index" scale="page-fit" page=1></ng-pdf>
         </uib-tab>
-        <uib-tab index="1" heading="SJ">Short Labeled Justified content</uib-tab>
-        <uib-tab index="2" heading="Long Justified">Long Labeled Justified content</uib-tab>
     </uib-tabset>
 
 
     <h2>Subir archivos</h2>
-
 
     <input type="file" file-upload multiple/>
     <ul>

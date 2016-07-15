@@ -87,11 +87,11 @@
                 return new Date(date);
             }
 
-
+            $scope.pdfUrlArray = {};
             function retrieve(url) {
                 ShowFiles.retrieve(url).success(function (data) {
                     var file = new Blob([data], {type: 'application/pdf'});
-                    $scope.pdfUrl = URL.createObjectURL(file);
+                    $scope.pdfUrlArray[url] = URL.createObjectURL(file);
                 });
             }
 
@@ -116,7 +116,7 @@
                 console.log(progress);
             }
 
-            $scope.content = $sce.trustAsResourceUrl($scope.pdfUrl);
+            //$scope.content = $sce.trustAsResourceUrl($scope.pdfUrl);
 
         }
 

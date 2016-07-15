@@ -68,6 +68,10 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 templateUrl: 'assets/app/entities/garantias/campos/parametricos/view/administrador-camposparametricos.html',
                                 controller: 'CamposParametricosController'}
                 );
+         $routeProvider.when('/ubicacion-garantias', {
+                                         templateUrl: 'assets/app/entities/garantias/ubicacion/view/ubicacion-garantia.html',
+                                         controller: 'UbicacionGarantiasController'}
+                         );
         $routeProvider.otherwise({redirectTo: '/'});
             }
         ]

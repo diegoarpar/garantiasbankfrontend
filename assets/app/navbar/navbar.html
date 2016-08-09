@@ -1,66 +1,77 @@
-
 <div ng-controller="NavBarController">
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/product-list-portales">
-                <img src="./assets/image/logos/logo-banagrario.png" height="20px"/>
-            </a>
-        </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/product-list-portales">
+                    <img src="./assets/image/logos/logo-banagrario.png" height="20px"/>
+                </a>
+            </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#/product-list-portales">Inicio <span class="sr-only">(current)</span></a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recepción <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#/product-list-acuse-recibido-garantia">1. Recepción de garantias</a></li>
-                        <li><a href="#/product-list-alistamiento-tulas">2. Alistar unidades de carga selladas</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bodega <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#/product-list-recepcion-tulas-bodega">3. Recepción de unidades de carga</a></li>
-                        <li><a href="#/product-list-recepcion-garantia-contenido">4. Validación de completitud</a></li>
-                        <li><a href="#/product-list-recepcion-garantia-idoneidad">5. Validación de idoneidad</a></li>
-                        <li><a href="#/product-list-recepcion-garantia-datos">6. Validación de datos</a></li>
-                        <li><a href="#/ubicacion-garantias">7. Ubicación en bodega</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#/dynamic-search" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consultas </a>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Archivos <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#/upload-files">Subir Archivos</a></li>
-                        <li><a href="#/upload-files/view">Visualizar archivos</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#/product-list-portales">Inicio <span
+                            class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Recepción <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/product-list-acuse-recibido-garantia">1. Recepción de garantias</a></li>
+                            <li><a href="#/product-list-alistamiento-tulas">2. Alistar unidades de carga selladas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Bodega <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/product-list-recepcion-tulas-bodega">3. Recepción de unidades de carga</a>
+                            </li>
+                            <li><a href="#/product-list-recepcion-garantia-contenido">4. Validación de completitud</a>
+                            </li>
+                            <li><a href="#/product-list-recepcion-garantia-idoneidad">5. Validación de idoneidad</a>
+                            </li>
+                            <li><a href="#/product-list-recepcion-garantia-datos">6. Validación de datos</a></li>
+                            <li><a href="#/ubicacion-garantias">7. Ubicación en bodega</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#/dynamic-search" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Consultas </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Archivos <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/upload-files">Subir Archivos</a></li>
+                            <li><a href="#/upload-files/view">Visualizar archivos</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a ng-click="open('lg')">Login</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#/administrador-usuarios">Gestión de Usuarios</a></li>
-                        <li><a href="#/administrador-camposGenericos">Gestión de campos generales</a></li>
-                        <li><a href="#/administrador-camposEspecificos">Gestión de campos según tipo garantía</a></li>
-                        <li><a href="#/administrador-camposParametricos">Gestión de tablas paramétricas</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a ng-click="open('lg')">Login</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Administración <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/administrador-usuarios">Gestión de Usuarios</a></li>
+                            <li><a href="#/administrador-camposGenericos">Gestión de campos generales</a></li>
+                            <li><a href="#/administrador-camposEspecificos">Gestión de campos según tipo garantía</a>
+                            </li>
+                            <li><a href="#/administrador-camposParametricos">Gestión de tablas paramétricas</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 </div>

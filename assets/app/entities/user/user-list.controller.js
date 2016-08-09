@@ -1,7 +1,7 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('UserListController', UserListController);
@@ -16,7 +16,7 @@
 
             // callback for ng-click 'deleteUser':
             $scope.deleteUser = function (userId) {
-                UserFactory.delete({ id: userId });
+                UserFactory.delete({id: userId});
                 $scope.users = UsersFactory.query();
             };
 
@@ -28,5 +28,4 @@
             $scope.users = UsersFactory.query();
         }
 
-    }
-)();
+    })();

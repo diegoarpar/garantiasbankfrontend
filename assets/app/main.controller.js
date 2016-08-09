@@ -1,22 +1,21 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('MainController', MainController);
 
-        MainController.$inject =  ['$scope','ngTableParams','$filter']
+        MainController.$inject = ['$scope', 'ngTableParams', '$filter']
 
-        function MainController($scope,ngTableParams,$filter) {
+        function MainController($scope, ngTableParams, $filter) {
 
-            $scope.showContent = function($fileContent){
+            $scope.showContent = function ($fileContent) {
                 alert($fileContent);
                 var digital = $fileContent.split('\n');
-                construirTabla($scope, digital,ngTableParams,$filter);
+                construirTabla($scope, digital, ngTableParams, $filter);
                 //$scope.content = $fileContent;
             };
         }
 
-    }
-)();
+    })();

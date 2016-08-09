@@ -3,16 +3,16 @@
     <div>
 
         Precinto:
-        <input ng-model="tula" />
+        <input ng-model="tula"/>
         <button class="btn green" ng-click="catchGarantias()">Consultar Garantias</button>
 
     </div>
 
     <div class="form-group">
-        <div class="col-sm-12" >
+        <div class="col-sm-12">
             <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
             <div id="demo" class="collapse">
-                <div ng-repeat="c in all_columns" >
+                <div ng-repeat="c in all_columns">
                     <label>
                         <input type="checkbox" ng-model="c.checked">{{c.title}}
                     </label>
@@ -23,39 +23,44 @@
     </div>
     <h3>VERIFICAR DATOS GARANTIA</h3>
 
-
-    <table  ng-table="tablaGarantias" show-filter="true"   export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
-        <th ng-repeat="d in columns">{{d.title}}</th>
-        <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
-        </tr>
-    </table>
+    <div class="span3">
+        <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
+               class="table table-striped table-hover table-condensed ">
+            <th></th>
+            <th ng-repeat="d in columns">{{d.title}}</th>
+            <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
+            </tr>
+        </table>
+    </div>
 
     <script type="text/ng-template" id="display">
-
-        <td ng-repeat="d in columns">{{c[d.title]}}</td>
         <td>
-            <button ng-click="completeInfo($index,c)" class="btn green" data-toggle="modal" data-target="#myModal" contenteditable="false">Verificar Datos</button>
+            <button ng-click="completeInfo($index,c)" class="btn green" data-toggle="modal" data-target="#myModal"
+                    contenteditable="false">Verificar Datos
+            </button>
         </td>
+        <td ng-repeat="d in columns">{{c[d.title]}}</td>
+
     </script>
     <script type="text/ng-template" id="edit">
-        <td>{{c.id}}</td>
-        <td>{{tula}}</td>
-        <td><input type="text" ng-model="digital.selected.r0" /></td>
-        <td><input type="text" ng-model="digital.selected.r1" /></td>
-        <td><input type="text" ng-model="digital.selected.r2" /></td>
         <td>
             <button ng-click="saveRow($index)" class="btn btn-primary">Guardar</button>
             <button ng-click="reset()" class="btn btn-primary">Cancelar</button>
         </td>
+        <td><input type="text" ng-model="digital.selected.r0"/></td>
+        <td><input type="text" ng-model="digital.selected.r1"/></td>
+        <td><input type="text" ng-model="digital.selected.r2"/></td>
+
+        <td>{{c.id}}</td>
+        <td>{{tula}}</td>
+
     </script>
 
 </div>
 
 
-
-
-
-<div ng-show="showmodal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div ng-show="showmodal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content"></div>
     </div>
@@ -65,25 +70,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"
+                                                                               class="">×   </span><span
+                        class="sr-only">Close</span>
 
                 </button>
                 <h4 class="modal-title" id="myModalLabel">DETALLE DE LA GARANTIA</h4>
                 <div class="content">
-                    <div ng-repeat="d in rowDetail"> <input readonly="true" ng-model="d.key" />:<input readonly="true" ng-model="d.value" /> </div>
+                    <div ng-repeat="d in rowDetail"><input readonly="true" ng-model="d.key"/>:<input readonly="true"
+                                                                                                     ng-model="d.value"/>
+                    </div>
                 </div>
                 <div class="content">
-                    <div ng-repeat="d in datoscomplementariosgenericos"> <input readonly="true" ng-model="d.key" />:<input type="text"  ng-model="d.value" /> </div>
+                    <div ng-repeat="d in datoscomplementariosgenericos"><input readonly="true" ng-model="d.key"/>:<input
+                            type="text" ng-model="d.value"/></div>
                 </div>
                 <div class="content">
-                    <div ng-repeat="d in datoscomplementariosespecificos"> <input readonly="true" ng-model="d.key" />:<input type="text"  ng-model="d.value" /> </div>
+                    <div ng-repeat="d in datoscomplementariosespecificos"><input readonly="true"
+                                                                                 ng-model="d.key"/>:<input type="text"
+                                                                                                           ng-model="d.value"/>
+                    </div>
                 </div>
 
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" ng-init="showmodal=false" class="btn btn-danger" data-dismiss="modal">Regresar</button>
-                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button" class="btn green">Guardar Información</button>
+                <button type="button" ng-init="showmodal=false" class="btn btn-danger" data-dismiss="modal">Regresar
+                </button>
+                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button"
+                        class="btn green">Guardar Información
+                </button>
             </div>
         </div>
     </div>

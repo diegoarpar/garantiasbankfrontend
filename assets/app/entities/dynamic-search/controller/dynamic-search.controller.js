@@ -1,15 +1,15 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-            DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService'];
+        DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService'];
 
         function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService) {
-            $scope.data= {};
+            $scope.data = {};
             $scope.lista = [];
             $scope.listaBusqueda = [];
             $scope.addColumn = addColumn;
@@ -22,7 +22,7 @@
             $scope.openModal = openModal;
             $scope.switchBoolean = switchBoolean;
 
-            CamposGenericosServices.show({fieldType:'datos'}).$promise.then(function(data){
+            CamposGenericosServices.show({fieldType: 'datos'}).$promise.then(function (data) {
                 $scope.columnsMetadata = data;
             });
 
@@ -45,46 +45,46 @@
                 $scope.popupEndDate.opened = true;
             };
 
-            function addColumn(col){
+            function addColumn(col) {
                 $scope.lista.push($scope.columnsMetadata[col]);
-                $scope.columnsMetadata.splice(col,1);
+                $scope.columnsMetadata.splice(col, 1);
             }
 
-            function buscar(){
+            function buscar() {
                 var searchVector = [];
-                for(var i = 0; i< $scope.lista.length; i++){
-                    searchVector[i]={
+                for (var i = 0; i < $scope.lista.length; i++) {
+                    searchVector[i] = {
                         key: $scope.lista[i].key,
                         value: $scope.listaBusqueda[i]
                     };
                 }
 
                 var search = {
-                    queryString : searchVector
+                    queryString: searchVector
                 };
 
-                if(angular.isDefined($scope.data.word)){
+                if (angular.isDefined($scope.data.word)) {
                     search.word = $scope.data.word;
                 }
 
-                if(angular.isDefined($scope.data.startDate)){
+                if (angular.isDefined($scope.data.startDate)) {
                     search.startDate = $scope.data.startDate.getTime();
                 }
-                if(angular.isDefined($scope.data.endDate)){
+                if (angular.isDefined($scope.data.endDate)) {
                     search.endDate = $scope.data.endDate.getTime();
                 }
-                
-                DynamicSearch.searchWithMetadata(search).success(function(data){
+
+                DynamicSearch.searchWithMetadata(search).success(function (data) {
                     alert(data);
                     $scope.searchResults = data;
                     generateColumns(data);
-                }).error(function(error){
+                }).error(function (error) {
                     alert(error)
                 })
             }
 
-            function removeRow(index){
-                if(index==0){
+            function removeRow(index) {
+                if (index == 0) {
                     $scope.lista.shift();
                     $scope.listaBusqueda.shift();
                 }
@@ -95,23 +95,23 @@
                 }
             }
 
-            function generateColumns(vector){
+            function generateColumns(vector) {
                 $scope.allColumns = {};
-                angular.forEach(vector, function(object, key){
-                    angular.forEach(object, function(object2, key2){
-                        if(key2 != '_id') {
-                            $scope.allColumns[key2] =  true;
+                angular.forEach(vector, function (object, key) {
+                    angular.forEach(object, function (object2, key2) {
+                        if (key2 != '_id') {
+                            $scope.allColumns[key2] = true;
                         }
-                        else{
+                        else {
                             $scope.allColumns[key2] = false;
                         }
                     })
                 })
             }
 
-            function filterSearchResult(){
+            function filterSearchResult() {
                 $scope.copySearchResult = [];
-                angular.forEach(vector, function(object, key){
+                angular.forEach(vector, function (object, key) {
 
                 })
             }
@@ -120,11 +120,11 @@
                 ShareService.set(entity);
                 $location.url('/dynamic-search-details');
             }
-            function switchBoolean(key){
-                    $scope.allColumns[key] = !$scope.allColumns[key];
-            }        
+
+            function switchBoolean(key) {
+                $scope.allColumns[key] = !$scope.allColumns[key];
+            }
         }
 
 
-    }
-)();
+    })();

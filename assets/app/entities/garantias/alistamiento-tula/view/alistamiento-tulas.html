@@ -3,68 +3,70 @@
     <h3>ALISTAMIENTO UNIDADES DE CARGA SELLADA</h3>
     <div>
         <span>Regional </span>
-        <select id="pname"  ng-model="regional" >
+        <select id="pname" ng-model="regional">
             <option ng:repeat="r in regionales" value="{{r.key}}">{{r.value}}</option>
         </select>
-    
+
     </div>
     <div>
         <span>Oficina </span>
-    <input type="text" ng-model="oficina" />
-    
+        <input type="text" ng-model="oficina"/>
+
     </div>
     <button class="btn green" ng-click="loadPlanillaToTula()">Cargar Planilla</button>
     <div>
-        Precinto: 
-    <input ng-model="tula" />  
-    <button class="btn green" ng-click="sendTula()">Enviar Tula</button>
+        Precinto:
+        <input ng-model="tula"/>
+        <button class="btn green" ng-click="sendTula()">Enviar Tula</button>
     </div>
 
-     <div class="form-group">
-        <div class="col-sm-12" >
+    <div class="form-group">
+        <div class="col-sm-12">
             <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
-          <div id="demo" class="collapse">
-          <div ng-repeat="c in all_columns" >
-            <label>
-                <input type="checkbox" ng-model="c.checked">{{c.title}} 
-            </label>
-          </div>
+            <div id="demo" class="collapse">
+                <div ng-repeat="c in all_columns">
+                    <label>
+                        <input type="checkbox" ng-model="c.checked">{{c.title}}
+                    </label>
+                </div>
 
+            </div>
         </div>
-      </div>
     </div>
-  <h3>ENVIO DE LA TULA DE LA REGIONAL {{regional}} / Oficina {{oficina}} CON PRECINTO {{tula}}</h3>
-    
+    <h3>ENVIO DE LA TULA DE LA REGIONAL {{regional}} / Oficina {{oficina}} CON PRECINTO {{tula}}</h3>
 
-    <table  ng-table="tablaGarantias" show-filter="true"   export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
-        <th> Enviar en Tula</th>
-        <th ng-repeat="d in columns">{{d.title}}</th>
-        <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
-            <!--td data-title="'r0'"  sortable="'r0'" filter="{ 'r0': 'text'}">{{ c.r0 }}</td>
-            <td><button class="btn btn-danger" ng-click="removeRow($index)">del</button></td>
-            <td><button ng-click="editRow(c)">Edit</button></td-->
+    <div class="span3" >
+        <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
+               class="table table-condensed table-bordered table-striped ng-scope ng-table table-hover">
+            <th> Enviar en Tula</th>
+            <th ng-repeat="d in columns">{{d.title}}</th>
+            <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
+                <!--td data-title="'r0'"  sortable="'r0'" filter="{ 'r0': 'text'}">{{ c.r0 }}</td>
+                <td><button class="btn btn-danger" ng-click="removeRow($index)">del</button></td>
+                <td><button ng-click="editRow(c)">Edit</button></td-->
 
-        </tr>
-    </table>
-    
-     <script type="text/ng-template" id="display">
+            </tr>
+        </table>
+    </div>
 
-        <td><input type="checkbox" ng-model="c.enviadoTula" /></td>
+    <script type="text/ng-template" id="display">
+
+        <td><input type="checkbox" ng-model="c.enviadoTula"/></td>
         <td ng-repeat="d in columns">{{c[d.title]}}</td>
 
     </script>
     <script type="text/ng-template" id="edit">
         <td>{{c.id}}</td>
         <td>{{tula}}</td>
-        <td><input type="text" ng-model="digital.selected.r0" /></td>
-        <td><input type="text" ng-model="digital.selected.r1" /></td>
-        <td><input type="text" ng-model="digital.selected.r2" /></td>
+        <td><input type="text" ng-model="digital.selected.r0"/></td>
+        <td><input type="text" ng-model="digital.selected.r1"/></td>
+        <td><input type="text" ng-model="digital.selected.r2"/></td>
         <td>
             <button ng-click="saveRow($index)" class="btn btn-primary">Save</button>
             <button ng-click="reset()" class="btn btn-primary">Cancel</button>
         </td>
     </script>
-      
+
 </div>
 
 

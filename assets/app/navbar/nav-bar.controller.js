@@ -1,18 +1,18 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('NavBarController', NavBarController);
 
-        NavBarController.$inject =  ['$scope', 'ProductServices', '$location','$uibModal'];
+        NavBarController.$inject = ['$scope', 'ProductServices', '$location', '$uibModal'];
 
-        function NavBarController($scope, ProductServices, $location,$uibModal) {
-            $scope.toggleStyle= function(){
+        function NavBarController($scope, ProductServices, $location, $uibModal) {
+            $scope.toggleStyle = function () {
                 $scope.bodyCon = !$scope.bodyCon;
                 $scope.noneStyle = !$scope.noneStyle;
-                $scope.menu=!$scope.menu;
+                $scope.menu = !$scope.menu;
 
             }
             $scope.open = function (size) {
@@ -32,5 +32,4 @@
             }
         }
 
-    }
-)();
+    })();

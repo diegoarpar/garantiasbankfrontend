@@ -1,53 +1,53 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('AcuseRecibidoGarantiasController', AcuseRecibidoGarantiasController);
 
         AcuseRecibidoGarantiasController.$inject =
-                    ['$scope', 'GarantiasServices','NumberService','CamposGenericosServices',
-                    'GarantiasServiceUpdateGarantias' ,'$location','ngTableParams','$filter','$window'];
+            ['$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window'];
 
-        function AcuseRecibidoGarantiasController($scope, GarantiasServices,NumberService,CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location,ngTableParams,$filter,$window) {
-            $scope.all_columns=[];
-            $scope.columns=[];
-            $scope.digital=[];
-            $scope.digitalu=[];
-            $scope.numero=[];
-            $scope.fields=CamposGenericosServices.show({fieldType:"datos",garantiaType:"-1"});
+        function AcuseRecibidoGarantiasController($scope, GarantiasServices, NumberService, CamposGenericosServices,
+                                                  GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window) {
+            $scope.all_columns = [];
+            $scope.columns = [];
+            $scope.digital = [];
+            $scope.digitalu = [];
+            $scope.numero = [];
+            $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
             $scope.reset = function () {
                 $scope.digital.selected = {};
             };
-            $scope.removeRow = function(index) {
+            $scope.removeRow = function (index) {
                 $scope.digital.splice(index, 1);
-                construirTabla($scope, $scope.digital,ngTableParams,$filter);
+                construirTabla($scope, $scope.digital, ngTableParams, $filter);
             };
-            $scope.addRow = function() {
+            $scope.addRow = function () {
                 $scope.inserted = {
-                    id: $scope.digital.length+1
+                    id: $scope.digital.length + 1
                 };
                 $scope.digital.push($scope.inserted);
             };
 
-            $scope.addColumn = function(title) {
+            $scope.addColumn = function (title) {
                 $scope.inserted = {
                     title: title,
-                    checked:true,
-                    type:"string",
-                    columnName:title
+                    checked: true,
+                    type: "string",
+                    columnName: title
                 };
 
                 $scope.all_columns.push($scope.inserted);
             };
 
             $scope.getTemplate = function (c) {
-                if($scope.digital.selected){
+                if ($scope.digital.selected) {
                     if (c.id === $scope.digital.selected.id) return 'edit';
                     else return 'display';
                 }
@@ -65,37 +65,40 @@
 
             $scope.createPlanilla = function () {
 
-                $scope.numero=NumberService.getNumber('');
-                $scope.numero.$promise.then(function(data) {
-                    $scope.numero=data;
+                $scope.numero = NumberService.getNumber('');
+                $scope.numero.$promise.then(function (data) {
+                    $scope.numero = data;
                     concatNumber($scope);
-                    try{
-                        changeColumnName($scope,$scope.all_columns);
-                    }catch(e){alert (e);return;}
-                    generateBarCodePDF($scope.numero[0].number,document,"Acuse de Recibido");
+                    try {
+                        changeColumnName($scope, $scope.all_columns);
+                    } catch (e) {
+                        alert(e);
+                        return;
+                    }
+                    generateBarCodePDF($scope.numero[0].number, document, "Acuse de Recibido");
                     GarantiasServices.create($scope.digital);
-                    alert("REGISTRO REALIZADO CON EL ACUSE "+$scope.numero[0].number) ;
+                    alert("REGISTRO REALIZADO CON EL ACUSE " + $scope.numero[0].number);
 
-                    $scope.numero=[];
-                    $scope.digital=[];
-                    $scope.all_columns=[];
+                    $scope.numero = [];
+                    $scope.digital = [];
+                    $scope.all_columns = [];
                     //$window.location.reload();
                 });
             };
 
-            $scope.showContent = function($fileContent){
+            $scope.showContent = function ($fileContent) {
                 var jsontext = $fileContent.split('\n');
-                jsontext=txtToJson(jsontext, $scope);
+                jsontext = txtToJson(jsontext, $scope);
                 $scope.digital = JSON.parse(jsontext);
             };
 
-            $scope.export=function($event, fileName){
+            $scope.export = function ($event, fileName) {
                 $scope.helper.csv.generate($event, "report.csv");
-                $location.href=$scope.helper.csv.link();
+                $location.href = $scope.helper.csv.link();
             };
 
 
-            $scope.$watch('all_columns', function() {
+            $scope.$watch('all_columns', function () {
                 update_columns($scope);
             }, true);
 
@@ -103,54 +106,57 @@
         }
 
 
-        function concatNumber($scope){
-            for(var i=0;i<$scope.digital.length;i++){
-                $scope.digital[i].acuse=$scope.numero[0].number;
+        function concatNumber($scope) {
+            for (var i = 0; i < $scope.digital.length; i++) {
+                $scope.digital[i].acuse = $scope.numero[0].number;
 
             }
         };
 
-        function getChange(value, listColumns){
-            for(var i=0;i<listColumns.length;i++){
+        function getChange(value, listColumns) {
+            for (var i = 0; i < listColumns.length; i++) {
 
-                   if(listColumns[i].title==value){
-                        if(listColumns[i].columnName==undefined){ throw("Existe un valor sin equivalente");return "NOK";}
-                        return listColumns[i].columnName;
-                   }
+                if (listColumns[i].title == value) {
+                    if (listColumns[i].columnName == undefined) {
+                        throw("Existe un valor sin equivalente");
+                        return "NOK";
+                    }
+                    return listColumns[i].columnName;
+                }
             }
             return value;
         };
-        function changeColumnName($scope,listColumns){
-                var newColumn="[";
-                var propertieseval=[];
-                for(var i=0;i<$scope.digital.length;i++){
-                    newColumn+="{";
+        function changeColumnName($scope, listColumns) {
+            var newColumn = "[";
+            var propertieseval = [];
+            for (var i = 0; i < $scope.digital.length; i++) {
+                newColumn += "{";
 
-                    for(var e in $scope.digital[i]){
-                        var newColumnName=getChange(e,listColumns);
-                        if(!propertieseval[newColumnName]){
-                            newColumn+="\""+newColumnName+"\":";
-                            newColumn+="\""+$scope.digital[i][e]+"\",";
-                            propertieseval[newColumnName]=newColumnName;
-                        }else{
-                        throw ("Columna "+newColumnName +" repetida");
-                        }
-
+                for (var e in $scope.digital[i]) {
+                    var newColumnName = getChange(e, listColumns);
+                    if (!propertieseval[newColumnName]) {
+                        newColumn += "\"" + newColumnName + "\":";
+                        newColumn += "\"" + $scope.digital[i][e] + "\",";
+                        propertieseval[newColumnName] = newColumnName;
+                    } else {
+                        throw ("Columna " + newColumnName + " repetida");
                     }
-                    propertieseval=[];
-                    newColumn=newColumn.substr(0,newColumn.length-1);
-                    newColumn+="},";
+
                 }
-                newColumn=newColumn.substr(0,newColumn.length-1);
-                newColumn+="]";
-                $scope.digital = JSON.parse(newColumn);
+                propertieseval = [];
+                newColumn = newColumn.substr(0, newColumn.length - 1);
+                newColumn += "},";
+            }
+            newColumn = newColumn.substr(0, newColumn.length - 1);
+            newColumn += "]";
+            $scope.digital = JSON.parse(newColumn);
         };
-        function construirTabla($scope, digital,ngTableParams,$filter){
+        function construirTabla($scope, digital, ngTableParams, $filter) {
             $scope.data = digital;
             $scope.tablaGarantias = new ngTableParams({
                 page: 1,
                 count: 2000,
-                sorting: {firstname:'asc'}
+                sorting: {firstname: 'asc'}
             }, {
                 total: digital.length,
                 getData: function ($defer, params) {
@@ -162,5 +168,4 @@
                 }
             });
         }
-    }
-)();
+    })();

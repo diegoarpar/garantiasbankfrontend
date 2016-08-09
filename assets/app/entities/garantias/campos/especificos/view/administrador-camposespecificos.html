@@ -1,29 +1,34 @@
 <div id="page-wrapper">
     <h3>CAMPOS SEGUN EL TIPO DE GARANTIA</h3>
     <div class="columnstwo"><label for="pname">Tipo de Garantia:</label>
-        <select id="pname" name="selectedFacilityId" ng-model="campo.garantiaType" ng-change="loadGenericos(campo.garantiaType)">
+        <select id="pname" name="selectedFacilityId" ng-model="campo.garantiaType"
+                ng-change="loadGenericos(campo.garantiaType)">
             <option ng:repeat="r in garantiaType" value="{{r.key}}">{{r.value}}</option>
         </select>
     </div>
     <div class="columnstwo"><label for="pname2">Tipo de Campo:</label>
-        <select id="pname2" name="selectedFacilityId" ng-model="campo.fieldType" ng-change="loadGenericos2(campo.fieldType)">
+        <select id="pname2" name="selectedFacilityId" ng-model="campo.fieldType"
+                ng-change="loadGenericos2(campo.fieldType)">
             <option value="completitud">Completitud</option>
             <option value="idoneidad">Idoneidad</option>
             <option value="datos">Datos</option>
         </select>
     </div>
-    <div class="columnstwo"><label for="key" >Clave del campo :</label> <input id="key" ng-model="campo.key"></div>
+    <div class="columnstwo"><label for="key">Clave del campo :</label> <input id="key" ng-model="campo.key"></div>
     <div class="columnstwo"><label for="valor">Nombre del campo: </label><input id="valor" ng-model="campo.value"></div>
-    <div class="columnstwo"><label > </label> <button type="button" class="btn green" ng-click="add()" data-dismiss="modal">Agregar</button></div>
+    <div class="columnstwo"><label> </label>
+        <button type="button" class="btn green" ng-click="add()" data-dismiss="modal">Agregar</button>
+    </div>
     <h3>LISTA DE CAMPOS </h3>
 
-    <table  ng-table="tabla" show-filter="true"   export-csv="csv" separator=";" class="table table-striped table-hover table-condensed " >
+    <table ng-table="tabla" show-filter="true" export-csv="csv" separator=";"
+           class="table table-striped table-hover table-condensed ">
         <th> Tipo de Garantia</th>
-        <th> Tipo de Campo </th>
-        <th> Clave del campo </th>
+        <th> Tipo de Campo</th>
+        <th> Clave del campo</th>
         <th> Nombre del Campo</th>
         <th> Opciones</th>
-        <tr ng-repeat="c in parametrics" >
+        <tr ng-repeat="c in parametrics">
             <td>{{c.garantiaType}}</td>
             <td>{{c.fieldType}}</td>
             <td>{{c.key}}</td>

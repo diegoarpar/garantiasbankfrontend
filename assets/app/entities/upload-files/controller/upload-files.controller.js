@@ -19,8 +19,12 @@
                 $scope.$apply(function () {
                     //add the file object to the scope's files collection
                     $scope.files.push(args.file);
-                    for(var i=0; i<$scope.files.length;i++)
-                        UploadFilesService.create({files:$scope.files[i],model:$scope.model, garid:$scope.garanatiaid});
+                    for (var i = 0; i < $scope.files.length; i++)
+                        UploadFilesService.create({
+                            files: $scope.files[i],
+                            model: $scope.model,
+                            garid: $scope.garanatiaid
+                        });
                 });
             });
 
@@ -29,8 +33,8 @@
             $scope.$watch('files', function () {
                 // $scope.upload($scope.files);
 
-                for(var i=0; i<$scope.files.length;i++)
-                    UploadFilesService.create({files:$scope.files[i],model:$scope.model, garid:$scope.garanatiaid});
+                for (var i = 0; i < $scope.files.length; i++)
+                    UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garanatiaid});
             });
             $scope.$watch('file', function () {
                 if ($scope.file != null) {
@@ -69,5 +73,4 @@
         }
 
 
-    }
-)();
+    })();

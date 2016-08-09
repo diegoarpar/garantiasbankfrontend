@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-(function() {
+(function () {
     'use strict'
     angular.module('wpc')
         .factory('ShareService', ShareService);
@@ -26,7 +26,6 @@
             get: get
         }
     }
-
 
 
 })();

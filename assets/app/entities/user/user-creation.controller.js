@@ -1,12 +1,12 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('UserCreationCtrl', UserCreationController);
 
-        UserCreationController.$inject =  ['$scope', 'UsersFactory', '$location']
+        UserCreationController.$inject = ['$scope', 'UsersFactory', '$location']
 
         function UserCreationController($scope, UsersFactory, $location) {
             // callback for ng-click 'createNewUser':
@@ -16,5 +16,4 @@
             }
         }
 
-    }
-)();
+    })();

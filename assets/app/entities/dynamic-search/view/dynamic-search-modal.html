@@ -8,23 +8,24 @@
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-6 col-lg-6" ng-repeat="(key,value) in entity" >
-                <div class="form-group"  >
+            <div class="col-md-6 col-lg-6" ng-repeat="(key,value) in entity">
+                <div class="form-group">
                     <label for="{{key}}">{{key}}</label>
                     <input type="text" class="form-control" id="{{key}}" name="{{key}}"
-                           ng-model="entity[key]" readonly />
+                           ng-model="entity[key]" readonly/>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <table  ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";" class="table table-condensed table-bordered table-striped ng-scope ng-table" >
+    <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
+           class="table table-condensed table-bordered table-striped ng-scope ng-table">
         <thead>
         <tr>
-            <th> Nombre del archivo </th>
-            <th> Fecha de apertura </th>
-            <th> Visualizar </th>
+            <th> Nombre del archivo</th>
+            <th> Fecha de apertura</th>
+            <th> Visualizar</th>
         </tr>
         </thead>
         <tr ng-repeat="row in listOfFiles" ng-click="openModal(row)">
@@ -42,8 +43,9 @@
     </table>
 
     <uib-tabset active="activeJustified" justified="true">
-        <uib-tab ng-repeat="(key,pdfUrl) in pdfUrlArray" heading="{{key}}" >
-                <ng-pdf current-pdf-url="pdfUrlArray[key]" template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="$index" scale="page-fit" page=1></ng-pdf>
+        <uib-tab ng-repeat="(key,pdfUrl) in pdfUrlArray" heading="{{key}}">
+            <ng-pdf current-pdf-url="pdfUrlArray[key]" template-url="/assets/app/entities/upload-files/view/viewer.html"
+                    canvasid="$index" scale="page-fit" page=1></ng-pdf>
         </uib-tab>
     </uib-tabset>
 
@@ -59,7 +61,8 @@
     Drop File:
     <div ngf-drop ngf-select ng-model="files" class="drop-box"
          ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
-    >Drop pdfs or images here or click to upload</div>
+    >Drop pdfs or images here or click to upload
+    </div>
     <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
 
     Upload Log:

@@ -1,15 +1,15 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['$scope', 'ShareService',  'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce'];
+        DynamicSearchModalController.$inject = ['$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce'];
 
-        function DynamicSearchModalController($scope, ShareService,  UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce) {
-            
+        function DynamicSearchModalController($scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce) {
+
             $scope.entity = ShareService.get();
             $scope.garantiaid = $scope.entity._id;
             $scope.model = "Garantia20";
@@ -18,14 +18,13 @@
             $scope.log = [];
             $scope.retrieve = retrieve;
 
-            ShowFiles.listOfFiles.get({garid:$scope.garantiaid}).$promise.then(
-                function(data){
-                    $scope.listOfFiles= data;
+            ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
+                function (data) {
+                    $scope.listOfFiles = data;
                 },
-                function(error){
+                function (error) {
 
                 }
-
             );
 
             //an array of files selected
@@ -35,8 +34,12 @@
                 $scope.$apply(function () {
                     //add the file object to the scope's files collection
                     $scope.files.push(args.file);
-                    for(var i=0; i<$scope.files.length;i++)
-                        UploadFilesService.create({files:$scope.files[i],model:$scope.model, garid:$scope.garantiaid});
+                    for (var i = 0; i < $scope.files.length; i++)
+                        UploadFilesService.create({
+                            files: $scope.files[i],
+                            model: $scope.model,
+                            garid: $scope.garantiaid
+                        });
                 });
             });
 
@@ -45,8 +48,8 @@
             $scope.$watch('files', function () {
                 // $scope.upload($scope.files);
 
-                for(var i=0; i<$scope.files.length;i++)
-                    UploadFilesService.create({files:$scope.files[i],model:$scope.model, garid:$scope.garanatiaid});
+                for (var i = 0; i < $scope.files.length; i++)
+                    UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garanatiaid});
             });
             $scope.$watch('file', function () {
                 if ($scope.file != null) {
@@ -83,7 +86,7 @@
                 }
             };
 
-            function getDate(date){
+            function getDate(date) {
                 return new Date(date);
             }
 
@@ -99,20 +102,20 @@
             $scope.scroll = 0;
             $scope.loading = 'loading';
 
-            $scope.getNavStyle = function(scroll) {
-                if(scroll > 100) return 'pdf-controls fixed';
+            $scope.getNavStyle = function (scroll) {
+                if (scroll > 100) return 'pdf-controls fixed';
                 else return 'pdf-controls';
             }
 
-            $scope.onError = function(error) {
+            $scope.onError = function (error) {
                 console.log(error);
             }
 
-            $scope.onLoad = function() {
+            $scope.onLoad = function () {
                 $scope.loading = '';
             }
 
-            $scope.onProgress = function(progress) {
+            $scope.onProgress = function (progress) {
                 console.log(progress);
             }
 
@@ -121,5 +124,4 @@
         }
 
 
-    }
-)();
+    })();

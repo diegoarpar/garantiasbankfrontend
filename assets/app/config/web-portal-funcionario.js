@@ -8,7 +8,7 @@ var app = express();
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
@@ -21,9 +21,9 @@ app.use(serveStatic(__dirname + '/dist', {'maxAge': maxAge}));
 //app.use(express.static(__dirname + '/dist'));
 
 app.listen(process.env.PORT || 9051,
-  function(){
-    console.log('I am running on port ' + (process.env.PORT || 9051) + ' biatch');
-  }
+    function () {
+        console.log('I am running on port ' + (process.env.PORT || 9051) + ' biatch');
+    }
 );
 
 /*
@@ -31,33 +31,33 @@ app.listen(process.env.PORT || 9051,
  * param tenant Name of the tenant.
  * Param color Color of the tenant.
  */
-app.post('/portal-functionary/api/colorStyle', function (req, res){
-  var message = req.body.color;
+app.post('/portal-functionary/api/colorStyle', function (req, res) {
+    var message = req.body.color;
 
-  fs.readFile(__dirname + '/app/styles/colorFull.less','utf8', function (err, data) {
-    if (err) throw err;
+    fs.readFile(__dirname + '/app/styles/colorFull.less', 'utf8', function (err, data) {
+        if (err) throw err;
 
-    var newLessFile = '@color: '+ req.body.color +';\n \n'+ data ;
+        var newLessFile = '@color: ' + req.body.color + ';\n \n' + data;
 
-    if (!fs.existsSync(__dirname + '/app/styles/' + req.body.tenant)){
+        if (!fs.existsSync(__dirname + '/app/styles/' + req.body.tenant)) {
 
-      fs.mkdirSync(__dirname + '/app/styles/' + req.body.tenant);
+            fs.mkdirSync(__dirname + '/app/styles/' + req.body.tenant);
 
-    }
+        }
 
-    fs.writeFile(__dirname + '/app/styles/' + req.body.tenant + '/' + req.body.tenant + '.less',newLessFile);
+        fs.writeFile(__dirname + '/app/styles/' + req.body.tenant + '/' + req.body.tenant + '.less', newLessFile);
 
-    if (fs.existsSync(__dirname + '/app/styles/' + req.body.tenant+ '/' + req.body.tenant + '.css')){
+        if (fs.existsSync(__dirname + '/app/styles/' + req.body.tenant + '/' + req.body.tenant + '.css')) {
 
-      fs.unlinkSync(__dirname + '/app/styles/' + req.body.tenant+'/' + req.body.tenant + '.css')
+            fs.unlinkSync(__dirname + '/app/styles/' + req.body.tenant + '/' + req.body.tenant + '.css')
 
-    }
+        }
 
-    app.use(lessMiddleware(__dirname + '/app/styles/' + req.body.tenant));
-    app.use(express.static(__dirname + '/app/styles/' + req.body.tenant));
+        app.use(lessMiddleware(__dirname + '/app/styles/' + req.body.tenant));
+        app.use(express.static(__dirname + '/app/styles/' + req.body.tenant));
 
-  });
-  return res.send(message);
+    });
+    return res.send(message);
 });
 
 

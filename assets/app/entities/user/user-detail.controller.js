@@ -1,12 +1,12 @@
 /**
  * Created by joag on 9/06/16.
  */
-(function(){
+(function () {
         'use strict';
         angular.module("wpc")
             .controller('UserDetailController', UserDetailController);
 
-        UserDetailController.$inject =  ['$scope', '$routeParams', 'UserFactory', '$location'];
+        UserDetailController.$inject = ['$scope', '$routeParams', 'UserFactory', '$location'];
 
         function UserDetailController($scope, $routeParams, UserFactory, $location) {
             // callback for ng-click 'updateUser':
@@ -23,5 +23,4 @@
             $scope.user = UserFactory.show({id: $routeParams.id});
         }
 
-    }
-)();
+    })();

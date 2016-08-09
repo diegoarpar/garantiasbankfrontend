@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-(function() {
+(function () {
     'use strict';
     angular.module('wpc')
         .factory('ShowFiles', ShowFiles);
@@ -21,18 +21,22 @@
                     method: 'GET',
                     url: baseUrl + '/retrieve',
                     params: params,
-                    responseType:'arraybuffer',
+                    responseType: 'arraybuffer',
                     headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
                 };
 
                 return $http(config);
             },
-            listOfFiles: $resource(ApiGarantias.url+'upload/list', {}, {
-                get: { data:{file:'@file'},
+            listOfFiles: $resource(ApiGarantias.url + 'upload/list', {}, {
+                get: {
+                    data: {file: '@file'},
                     method: 'POST',
-                    isArray:true,
-                    headers:{ 'Content-Type': undefined,'Authorization':'Bearer '+$window.localStorage.getItem('token')},
-                    transformRequest: function(data) {
+                    isArray: true,
+                    headers: {
+                        'Content-Type': undefined,
+                        'Authorization': 'Bearer ' + $window.localStorage.getItem('token')
+                    },
+                    transformRequest: function (data) {
                         var formData = new FormData();
                         formData.append("timestamp", data.garid.timestamp);
                         formData.append("machineIdentifier", data.garid.machineIdentifier);
@@ -46,7 +50,6 @@
         };
 
     }
-
 
 
 })();

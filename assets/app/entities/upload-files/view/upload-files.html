@@ -1,25 +1,23 @@
 <div id="page-wrapper">
 
 
-  <h2>Subir archivos</h2>
+    <h2>Subir archivos</h2>
 
-  <input type="file" file-upload multiple/>
-  <ul>
-    <li ng-repeat="file in files">{{file.name}}</li>
-  </ul>
-  Id Garantia
-  <input type="text" ng-model="garanatiaid"><br/><br/>
+    <input type="file" file-upload multiple/>
+    <ul>
+        <li ng-repeat="file in files">{{file.name}}</li>
+    </ul>
+    Id Garantia
+    <input type="text" ng-model="garanatiaid"><br/><br/>
     Drop File:
     <div ngf-drop ngf-select ng-model="files" class="drop-box"
          ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
-         >Drop pdfs or images here or click to upload</div>
+    >Drop pdfs or images here or click to upload
+    </div>
     <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
 
-  Upload Log:
-  <pre>{{log[0]}}</pre>
-
-
-
+    Upload Log:
+    <pre>{{log[0]}}</pre>
 
 
 </div>

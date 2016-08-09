@@ -1,16 +1,15 @@
 <div id="page-wrapper">
 
 
-  <h2>Subir archivos</h2>
-  Id Garantia
-  <input type="text" ng-model="name"><br/><br/>
-  <button class="btn-default" ng-click="retrieve()">Buscar</button>
+    <h2>Subir archivos</h2>
+    Id Garantia
+    <input type="text" ng-model="name"><br/><br/>
+    <button class="btn-default" ng-click="retrieve()">Buscar</button>
 </div>
 
 
-
-
 <div class="wrapper">
-  <h1>{{pdfName}}</h1>
-  <ng-pdf template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="pdf" scale="page-fit" page=13></ng-pdf>
+    <h1>{{pdfName}}</h1>
+    <ng-pdf template-url="/assets/app/entities/upload-files/view/viewer.html" canvasid="pdf" scale="page-fit"
+            page=13></ng-pdf>
 </div>

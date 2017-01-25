@@ -1,0 +1,33 @@
+<h3>Configuración Tabla de Retención Documental</h3>
+
+<div class="bs-example" append-source >
+    <div>
+    <div class="panel-group " ng-model="multiplePanels.activePanels" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
+
+        <div class="panel panel-default col-xs-6" ng-repeat="panel in panels">
+
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title">
+                        <a bs-collapse-toggle>
+                            {{ panel.title }}
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                    <div class="panel-body">
+                        {{ panel.body }}
+                        <table ng-table="vm.tableParams" class="table" show-filter="true">
+                            <tr ng-repeat="user in data">
+                                <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                                    {{user.name}}</td>
+                                <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
+                                    {{user.age}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+        </div>
+</div>

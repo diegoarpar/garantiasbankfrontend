@@ -1,15 +1,27 @@
-var app = angular.module('wpc', ['xeditable', 'ngRoute', 'ui.bootstrap', 'ngTable', 'ngTableToCsv', 'ngResource', 'ngFileUpload', 'pdf', 'ui.router']);
+var app = angular.module('wpc', ['xeditable', 'ngRoute', 'ui.bootstrap','ngTable', 'ngTableToCsv', 'ngResource', 'ngFileUpload', 'pdf', 'ui.router','ngAria','ngAnimate','ngMaterial','ngSanitize', 'mgcrea.ngStrap', 'ngStorage']);
 
 app.constant('ApiApp', {
     url: 'http://institucion.certicamara.co/reports/api/insert-database/'
 })
 app.constant('ApiAuth', {
     url: 'http://localhost:2022/insert-database/'
-})
+});
 app.constant('ApiGarantias', {
     url: 'http://localhost:2020/garantias/'
-})
+});
+
+
+        function inSession($scope, AuthenticationFactory, window) {
+
+                        alert("insession"+window.sessionStorage.length);
+                        +window.sessionStorage.removeItem("tenant");
+                        alert("insession"+window.sessionStorage.getItem("tenant"));
+                        AuthenticationFactory.tenant();
+          }
+
+
 app.config(['$routeProvider', function ($routeProvider) {
+
         $routeProvider.when('/login', {
                 templateUrl: 'assets/app/authentication/login.html',
                 controller: 'LoginController'
@@ -87,8 +99,14 @@ app.config(['$routeProvider', function ($routeProvider) {
                 controller: 'UbicacionGarantiasController'
             }
         );
+        $routeProvider.when('/administrador-archivo', {
+                templateUrl: 'assets/app/entities/garantias/trd/view/configuracion-archivo.html',
+                controller: 'ConfiguracionArchivoController'
+            }
+        );
         $routeProvider.otherwise({redirectTo: '/'});
     }
     ]
 );
+
 

@@ -11,7 +11,7 @@
         function ConfiguracionArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
                                  CamposEspecificosServices, $location, ngTableParams, $filter, $window,ngMaterial,$controller,$sessionStorage) {
 
-        $window.sessionStorage.setItem("tenant","pruebas");
+
       inSession($scope,AuthenticationFactory,$window);
             $scope.showContent = function ($fileContent) {
                 var jsontext = $fileContent.split('\n');

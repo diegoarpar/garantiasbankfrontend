@@ -12,7 +12,7 @@
             return $resource(ApiAuth.url + 'getToken', {}, {
                 show: {method: 'GET', isArray: false, params: {user: '@user', password: '@pass'}},
                 update: {method: 'PUT', params: {id: '@id'}},
-                tenant: {url:ApiAuth.url+'tenant', method: 'GET', isArray: false},
+                tenant: {url:ApiAuth.url+'tenant', method: 'GET', isArray: true},
                 delete: {method: 'DELETE', params: {id: '@id'}}
             })
         }

@@ -13,10 +13,10 @@ app.constant('ApiGarantias', {
 
         function inSession($scope, AuthenticationFactory, window) {
 
-                        alert("insession"+window.sessionStorage.length);
-                        +window.sessionStorage.removeItem("tenant");
-                        alert("insession"+window.sessionStorage.getItem("tenant"));
-                        AuthenticationFactory.tenant();
+                        if(!window.sessionStorage.getItem("tenant")){
+                         var rta = AuthenticationFactory.tenant();
+                         alert (rta[0]);
+                        }
           }
 
 

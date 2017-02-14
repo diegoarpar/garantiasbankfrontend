@@ -5,14 +5,14 @@
             .controller('ConfiguracionArchivoController', ConfiguracionArchivoController);
 
         ConfiguracionArchivoController.$inject =
-            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+            ['cApp','$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage'];
 
-        function ConfiguracionArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
+        function ConfiguracionArchivoController(cApp,$scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
                                  CamposEspecificosServices, $location, ngTableParams, $filter, $window,ngMaterial,$controller,$sessionStorage) {
 
 
-      inSession($scope,AuthenticationFactory,$window);
+            inSession($scope,AuthenticationFactory,$window,cApp);
             $scope.showContent = function ($fileContent) {
                 var jsontext = $fileContent.split('\n');
                 jsontext = txtToJson(jsontext, $scope);

@@ -9,14 +9,23 @@ app.constant('ApiAuth', {
 app.constant('ApiGarantias', {
     url: 'http://localhost:2020/garantias/'
 });
+app.constant('cApp', {
+    tenant: ''
+});
 
-
-        function inSession($scope, AuthenticationFactory, window) {
-
+        function inSession($scope, AuthenticationFactory, window, cApp) {
                         if(!window.sessionStorage.getItem("tenant")){
                          var rta = AuthenticationFactory.tenant();
-                         alert (rta[0]);
-                        }
+                         rta.$promise.then(function(data) {
+                                    if(!data[0]) alert ("este sitio no se encuentra configurado");
+                                    if(data[0])
+                                    window.sessionStorage["tenant"]=data[0].name
+                                 });
+
+                        }else
+                        cApp.tenant=window.sessionStorage.getItem("tenant");
+                        alert (cApp.tenant);
+
           }
 
 

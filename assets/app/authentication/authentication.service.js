@@ -10,7 +10,7 @@
 
         function AuthenticationFactory($resource, ApiAuth, $window, $route) {
             return $resource(ApiAuth.url + 'getToken', {}, {
-                show: {method: 'GET', isArray: false, params: {user: '@user', password: '@pass'}},
+                show: {method: 'GET', isArray: false, params: {user: '@user', password: '@pass',tenant:window.sessionStorage.getItem("tenant")}},
                 update: {method: 'PUT', params: {id: '@id'}},
                 tenant: {url:ApiAuth.url+'tenant', method: 'GET', isArray: true},
                 delete: {method: 'DELETE', params: {id: '@id'}}

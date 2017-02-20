@@ -13,7 +13,7 @@ app.constant('cApp', {
     tenant: ''
 });
 
-        function inSession($scope, AuthenticationFactory, window, cApp) {
+        function inSession($scope, AuthenticationFactory, window) {
                         if(!window.sessionStorage.getItem("tenant")){
                          var rta = AuthenticationFactory.tenant();
                          rta.$promise.then(function(data) {
@@ -22,9 +22,8 @@ app.constant('cApp', {
                                     window.sessionStorage["tenant"]=data[0].name
                                  });
 
-                        }else
-                        cApp.tenant=window.sessionStorage.getItem("tenant");
-                        alert (cApp.tenant);
+                        }
+                        //alert (cApp.tenant);
 
           }
 

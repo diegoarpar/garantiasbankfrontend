@@ -6,47 +6,43 @@
         angular.module("wpc")
             .controller('CamposGenericosController', CamposGenericosController);
 
-        CamposGenericosController.$inject = ['$scope', 'CamposGenericosServices', 'CamposGenericosRemoveServices', 'CamposParametricosServices', '$location', '$rootScope', '$window', '$route'];
+        CamposGenericosController.$inject = ['AuthenticationFactory','$scope', 'CamposGenericosServices', 'CamposParametricosServices', '$location', '$rootScope', '$window', '$route'];
 
-        function CamposGenericosController($scope, CamposGenericosServices, CamposGenericosRemoveServices, CamposParametricosServices, $location, $rootScope, $window, $route) {
-            $scope.garantiaType = CamposParametricosServices.show({nombreparametrica: "tipogarantia", key: "-1"});
+        function CamposGenericosController(AuthenticationFactory,$scope, CamposGenericosServices,  CamposParametricosServices, $location, $rootScope, $window, $route) {
+
+            inSession($scope,AuthenticationFactory,$window);
+            $scope.garantiaType = CamposParametricosServices.show({nombreparametrica: "tipogarantia", key: "-1",tenant:window.sessionStorage.getItem("tenant")});
             $scope.campo = {};
             $scope.parametrics = [];
             $scope.parametricst = [];
             $scope.loadGenericos = function (value) {
                 $scope.parametrics = CamposGenericosServices.show({
                     garantiaType: value,
-                    fieldType: $scope.campo.fieldType
+                    fieldType: $scope.campo.fieldType,
+                    tenant:window.sessionStorage.getItem("tenant")
                 });
             }
             $scope.loadGenericos2 = function (value) {
                 $scope.parametrics = CamposGenericosServices.show({
                     garantiaType: $scope.campo.garantiaType,
-                    fieldType: value
+                    fieldType: value,
+                    tenant:window.sessionStorage.getItem("tenant")
                 });
             }
             $scope.add = function () {
+                $scope.campo.tenant=window.sessionStorage.getItem("tenant");
                 $scope.parametricst.push($scope.campo);
-                $scope.rta = CamposGenericosServices.create($scope.parametricst).$promise.then(
-                    function (datos) {
-                        $scope.parametrics = CamposGenericosServices.show({
-                            garantiaType: $scope.campo.garantiaType,
-                            fieldType: value
-                        });
-                    },
-                    function (error) {
-                        alert(error);
-                    }
-                );
+                $scope.rta = CamposGenericosServices.create($scope.parametricst);
                 $scope.parametrics = [];
                 $scope.parametricst = [];
                 $scope.campo = {};
             }
             $scope.remove = function (idx) {
                 $scope.parametricst.push($scope.parametrics[idx]);
-                CamposGenericosRemoveServices.remove({
+                CamposGenericosServices.remove({
                     garantiaType: $scope.parametrics[idx].garantiaType,
-                    key: $scope.parametrics[idx].key
+                    key: $scope.parametrics[idx].key,
+                    tenant:window.sessionStorage.getItem("tenant")
                 });
                 $scope.parametrics = [];
                 $scope.parametricst = [];

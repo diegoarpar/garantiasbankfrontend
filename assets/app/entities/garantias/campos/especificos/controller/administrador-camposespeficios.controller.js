@@ -6,9 +6,10 @@
         angular.module("wpc")
             .controller('CamposEspecificosController', CamposEspecificosController);
 
-        CamposEspecificosController.$inject = ['$scope', 'CamposParametricosServices', 'CamposEspecificosServices', 'CamposEspecificosRemoveServices', '$location', '$rootScope', '$window', '$route'];
+        CamposEspecificosController.$inject = ['AuthenticationFactory','$scope', 'CamposParametricosServices', 'CamposEspecificosServices',  '$location', '$rootScope', '$window', '$route'];
 
-        function CamposEspecificosController($scope, CamposParametricosServices, CamposEspecificosServices, CamposEspecificosRemoveServices, $location, $rootScope, $window, $route) {
+        function CamposEspecificosController(AuthenticationFactory,$scope, CamposParametricosServices, CamposEspecificosServices,  $location, $rootScope, $window, $route) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.garantiaType = CamposParametricosServices.show({nombreparametrica: "tipogarantia"});
             $scope.campo = {};
             $scope.parametrics = [];
@@ -16,16 +17,19 @@
             $scope.loadGenericos = function (value) {
                 $scope.parametrics = CamposEspecificosServices.show({
                     garantiaType: value,
-                    fieldType: $scope.campo.fieldType
+                    fieldType: $scope.campo.fieldType,
+                    tenant:window.sessionStorage.getItem("tenant")
                 });
             }
             $scope.loadGenericos2 = function (value) {
                 $scope.parametrics = CamposEspecificosServices.show({
                     garantiaType: $scope.campo.garantiaType,
-                    fieldType: value
+                    fieldType: value,
+                    tenant:window.sessionStorage.getItem("tenant")
                 });
             }
             $scope.add = function () {
+                $scope.campo.tenant=window.sessionStorage.getItem("tenant");
                 $scope.parametricst.push($scope.campo);
                 $scope.rta = CamposEspecificosServices.create($scope.parametricst);
                 $scope.parametrics = [];
@@ -34,9 +38,10 @@
             }
             $scope.remove = function (idx) {
                 $scope.parametricst.push($scope.parametrics[idx]);
-                CamposEspecificosRemoveServices.remove({
+                CamposEspecificosServices.remove({
                     garantiaType: $scope.parametrics[idx].garantiaType,
-                    key: $scope.parametrics[idx].key
+                    key: $scope.parametrics[idx].key,
+                    tenant:window.sessionStorage.getItem("tenant")
                 });
                 $scope.parametrics = [];
                 $scope.parametricst = [];

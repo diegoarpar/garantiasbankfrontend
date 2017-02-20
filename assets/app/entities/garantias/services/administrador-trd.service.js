@@ -1,17 +1,22 @@
+/**
+ * Created by joag on 9/06/16.
+ */
 (function () {
         'use strict';
         angular.module("wpc")
-            .factory('CamposEspecificosServices', CamposEspecificosServices);
+            .factory('TRDServices', TRDServices);
 
-        CamposEspecificosServices.$inject = ['$resource', 'ApiGarantias', '$window', '$route'];
+        TRDServices.$inject = ['$resource', 'ApiGarantias', '$window', '$route'];
 
-        function CamposEspecificosServices($resource, ApiGarantias, $window, $route) {
-            return $resource(ApiGarantias.url + 'config/garantias-field', {}, {
+        function TRDServices($resource, ApiGarantias, $window, $route) {
+            var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+            var url = ApiGarantias.url + 'config/garantias-parametricvalues';
+            return $resource(url, {}, {
                 create: {
                     method: 'POST',
                     isArray: false,
                     data: '@data',
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
+                    headers: headers2,
                     transformResponse: function (res, headers) {
                         //var data = angular.fromJson(res);
                         return res;
@@ -21,38 +26,20 @@
                     method: 'GET',
                     isArray: true,
                     data: '@data',
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    params:{tenant:window.sessionStorage.getItem("tenant")},
+                    headers: headers2
                 },
                 update: {
                     method: 'PUT',
                     data: '@data',
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    headers: headers2
                 },
                 remove: {
-                    method: 'DELETE',
-                    isArray: false,
-                    data: '@data',
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
-                }
-            })
-        }
-
-    })();
-
-(function () {
-        'use strict';
-        angular.module("wpc")
-            .factory('CamposEspecificosRemoveServices', CamposEspecificosRemoveServices);
-
-        CamposEspecificosRemoveServices.$inject = ['$resource', 'ApiGarantias', '$window', '$route'];
-
-        function CamposEspecificosRemoveServices($resource, ApiGarantias, $window, $route) {
-            return $resource(ApiGarantias.url + 'config/garantias-field/{id}', {}, {
-                remove: {
-                    method: 'DELETE',
-                    isArray: false,
+                    url:url+"/delete",
                     params: {id: '@id'},
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    method: 'DELETE',
+                    isArray: false,
+                    headers: headers2
                 }
             })
         }

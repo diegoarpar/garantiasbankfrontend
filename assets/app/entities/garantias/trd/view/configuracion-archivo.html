@@ -15,13 +15,13 @@
                 </div>
                 <div class="panel-collapse" role="tabpanel" bs-collapse-target>
                     <div class="panel-body">
-                        {{ panel.body }}
-                        <table ng-table="vm.tableParams" class="table" show-filter="true">
-                            <tr ng-repeat="user in data">
-                                <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                                    {{user.name}}</td>
-                                <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
-                                    {{user.age}}</td>
+                        <!--{{ panel.body }}-->
+                        <table ng-table="vm.tableParams" class="table" show-filter="false">
+                            <tr ng-repeat="data in panel.data">
+                                <td title="'Código'" filter="{ key: 'text'}" sortable="'key'">
+                                    {{data.key}}</td>
+                                <td title="'Nombre'" filter="{ value: 'number'}" sortable="'value'">
+                                    {{data.value}}</td>
                             </tr>
                         </table>
                     </div>
@@ -30,4 +30,17 @@
         </div>
     </div>
         </div>
+</div>
+
+<div class="container">
+    <feb-stepper steps="['{{stepNo1}}', 'Step 2', 'Step 3', 'Step 4', 'Step 5']" control="stepperControl" start-step="1"></feb-stepper>
+</div>
+<div>
+    <button ng-click="stepperControl.prevStep()">Prev step</button>
+    <button ng-click="stepperControl.nextStep()">Next step</button>
+</div>
+<div>
+    <br/>
+    Change text for the first step :
+    <input ng-model="stepNo1"/>
 </div>

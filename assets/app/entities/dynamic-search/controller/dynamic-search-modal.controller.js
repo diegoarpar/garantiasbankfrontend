@@ -76,6 +76,7 @@
                                         ', Response: ' + JSON.stringify(resp.data));
                                 });
                             }, null, function (evt) {
+
                                 var progressPercentage = parseInt(100.0 *
                                     evt.loaded / evt.total);
                                 $scope.log.unshift('progress: ' + progressPercentage +

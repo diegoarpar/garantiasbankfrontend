@@ -12,13 +12,15 @@
 
     function DynamicSearch($http, ApiGarantias, $window) {
         var baseUrl = ApiGarantias.url + 'search';
+        var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+
         return {
             getMetaData: function (id, date) {
                 var config = {
                     method: 'GET',
                     url: baseUrl + '/getMetadata',
                     isArray: true,
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    headers: headers2
                 };
 
                 return $http(config);
@@ -27,7 +29,7 @@
                 var url = baseUrl + '/searchWithMetadata';
                 var config = {
                     isArray: true,
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    headers: headers2
                 };
                 return $http.post(url, metadata, config);
 

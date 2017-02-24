@@ -31,8 +31,11 @@
             ,{id:"tiposdocumentales",data:datatipodocumento,title:'Tipos de documentos', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
             ,{id:"nivelacceso",data:datafondo,title:'Niveles de acceso', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
           ];
-
-
+        $scope.trd={};
+        $scope.select = function (data){
+             $scope.trd[data.nombreparametrica]=data;
+             alert("alert"+$scope.trd[data.nombreparametrica].value);
+        };
          $scope.multiplePanels = {
              activePanels: []
            };

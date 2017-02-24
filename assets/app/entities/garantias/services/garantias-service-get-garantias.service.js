@@ -9,12 +9,14 @@
         GarantiasServiceGetGarantias.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
         function GarantiasServiceGetGarantias($resource, ApiGarantias, $rootScope, $window) {
+            var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+             var url = ApiGarantias.url + 'insertGarantias';
             return $resource(ApiGarantias.url + 'getGarantias', {}, {
                 show: {
                     method: 'GET',
                     isArray: true,
                     params: {'@param': '@param'},
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    headers: headers2
                 }
             });
         }

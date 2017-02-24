@@ -9,29 +9,26 @@
         GarantiasServices.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
         function GarantiasServices($resource, ApiGarantias, $rootScope, $window, $scope) {
-            return $resource(ApiGarantias.url + 'insertGarantias', {}, {
+        var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+         var url = ApiGarantias.url + 'insertGarantias';
+            return $resource(url, {}, {
                 create: {
                     method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + $window.localStorage.getItem('token')
-                    },
-                    transformResponse: function (res, headers) {
-                        //var data = angular.fromJson(res);
-                        return res;
-                    }
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: true
                 },
                 show: {
+                    headers: headers2,
                     method: 'GET',
                     isArray: true,
                     params: {processName: '@processName', dateStart: '@dateEnd', dateEnd: '@dateEnd'},
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
                 },
                 update: {
+                    headers: headers2,
                     method: 'PUT',
                     isArray: false,
                     params: {},
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
                     transformResponse: function (res, headers) {
                         //var data = angular.fromJson(res);
                         return res;

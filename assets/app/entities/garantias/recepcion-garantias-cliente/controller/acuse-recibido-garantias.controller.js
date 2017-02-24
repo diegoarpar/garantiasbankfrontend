@@ -17,7 +17,7 @@
             $scope.digital = [];
             $scope.digitalu = [];
             $scope.numero = [];
-            $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
+            $scope.fields = CamposGenericosServices.show({tenant:window.sessionStorage.getItem("tenant"),fieldType: "datos", garantiaType: "-1"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
@@ -87,7 +87,8 @@
             };
 
             $scope.showContent = function ($fileContent) {
-                var jsontext = $fileContent.split('\n');
+
+                var jsontext = $fileContent.split(/\r\n|\n/);
                 jsontext = txtToJson(jsontext, $scope);
                 $scope.digital = JSON.parse(jsontext);
             };

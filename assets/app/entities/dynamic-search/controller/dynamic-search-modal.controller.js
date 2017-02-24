@@ -47,11 +47,11 @@
             $scope.log = [];
             $scope.$watch('files', function () {
                 // $scope.upload($scope.files);
-
                 for (var i = 0; i < $scope.files.length; i++)
-                    UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garanatiaid});
+                    UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
             });
             $scope.$watch('file', function () {
+            //alert("upload file");
                 if ($scope.file != null) {
                     $scope.files = [$scope.file];
                 }

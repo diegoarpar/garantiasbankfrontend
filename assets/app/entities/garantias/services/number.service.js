@@ -9,11 +9,13 @@
         NumberService.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
         function NumberService($resource, ApiGarantias, $rootScope, $window) {
-            return $resource(ApiGarantias.url + 'getNumber', {}, {
+         var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+         var url = ApiGarantias.url + 'getNumber';
+            return $resource(url, {}, {
                 getNumber: {
+                    headers:headers2,
                     method: 'GET',
-                    isArray: true,
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
+                    isArray: true
                 }
             });
         }

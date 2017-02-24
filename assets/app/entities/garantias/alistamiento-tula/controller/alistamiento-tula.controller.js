@@ -68,6 +68,7 @@
                 $scope.columns = [];
                 $scope.all_columns = [];
                 $scope.digital = GarantiasServices.show({
+                    tenant: $scope.regional,
                     regional: $scope.regional,
                     oficina: $scope.oficina,
                     enviadoTula: "null"

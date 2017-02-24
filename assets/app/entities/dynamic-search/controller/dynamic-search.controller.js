@@ -75,7 +75,7 @@
                 }
 
                 DynamicSearch.searchWithMetadata(search).success(function (data) {
-                    alert(data);
+
                     $scope.searchResults = data;
                     generateColumns(data);
                 }).error(function (error) {

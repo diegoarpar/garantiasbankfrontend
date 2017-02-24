@@ -11,13 +11,15 @@
     UploadFilesService.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
     function UploadFilesService($resource, ApiGarantias, $rootScope, $window, $scope) {
+    var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+
         return $resource(ApiGarantias.url + 'upload/save', {}, {
             create: {
                 data: {file: '@file'},
                 method: 'POST',
                 headers: {
                     'Content-Type': undefined,
-                    'Authorization': 'Bearer ' + $window.localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")
                 },
                 transformRequest: function (data) {
                     var formData = new FormData();

@@ -20,45 +20,59 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#/product-list-portales">Inicio <span
                             class="sr-only">(current)</span></a></li>
+
+
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Recepción <span class="caret"></span></a>
+                        aria-expanded="false">Bodega <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/product-list-acuse-recibido-garantia">1. Recepción de garantias</a></li>
-                            <li><a href="#/product-list-alistamiento-tulas">2. Alistar unidades de carga selladas</a>
-                            </li>
+                            <ul class="dropdown-header">
+                                <a class="dropdown" data-toggle="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Recepción <span class="caret"></span></a>
+                                <ul class="dropdown-submenu">
+                                    <li><a href="#/product-list-acuse-recibido-garantia">1. Recepción de garantias</a></li>
+                                    <li><a href="#/product-list-alistamiento-tulas">2. Alistar unidades de carga selladas</a>
+                                </ul>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-header">
+                                <a class="dropdown" data-toggle="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Punteo <span class="caret"></span></a>
+                                <ul class="dropdown-submenu">
+                                    <li><a href="#/product-list-recepcion-tulas-bodega">3. Recepción de unidades de carga</a> </li>
+                                    <li><a href="#/product-list-recepcion-garantia-contenido">4. Validación de completitud</a></li>
+                                    <li><a href="#/product-list-recepcion-garantia-idoneidad">5. Validación de idoneidad</a></li>
+                                    <li><a href="#/product-list-recepcion-garantia-datos">6. Validación de datos</a></li>
+                                    <li><a href="#/ubicacion-garantias">7. Ubicación en bodega</a></li>
+                                </ul>
+                                </li>
+                            </ul>
+
+                            <ul class="dropdown-header">
+                                <a class="dropdown" data-toggle="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Consultas <span class="caret"></span></a>
+                                <ul class="dropdown-submenu">
+                                    <li>
+                                        <a href="#/dynamic-search" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-haspopup="true" aria-expanded="false">Consultas </a>
+                                    </li>
+                                </ul>
+                                </li>
+                            </ul>
                         </ul>
+
                     </li>
+
+
+
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Bodega <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/product-list-recepcion-tulas-bodega">3. Recepción de unidades de carga</a>
-                            </li>
-                            <li><a href="#/product-list-recepcion-garantia-contenido">4. Validación de completitud</a>
-                            </li>
-                            <li><a href="#/product-list-recepcion-garantia-idoneidad">5. Validación de idoneidad</a>
-                            </li>
-                            <li><a href="#/product-list-recepcion-garantia-datos">6. Validación de datos</a></li>
-                            <li><a href="#/ubicacion-garantias">7. Ubicación en bodega</a></li>
-                        </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#/dynamic-search" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false">Consultas </a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Archivos <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/upload-files">Subir Archivos</a></li>
-                            <li><a href="#/upload-files/view">Visualizar archivos</a></li>
-                        </ul>
-                    </li>
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a ng-click="open('lg')">Login</a></li>
+                    <li><a ng-if="!inSession" ng-click="open('lg')">Login</a></li>
+                    <li><a ng-if="inSession" ng-click="open('lg')">{{userLogIn.user}}</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Administración <span class="caret"></span></a>

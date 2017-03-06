@@ -6,10 +6,11 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce'];
+        DynamicSearchModalController.$inject = ['AuthenticationFactory','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window'];
 
-        function DynamicSearchModalController($scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce) {
+        function DynamicSearchModalController(AuthenticationFactory,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window) {
 
+            inSession($scope,AuthenticationFactory,$window);
             $scope.entity = ShareService.get();
             $scope.garantiaid = $scope.entity._id;
             $scope.model = "Garantia20";

@@ -21,37 +21,66 @@
          var dataserie=CamposParametricosServices.show({nombreparametrica:'serie',tenant:window.sessionStorage.getItem("tenant")});
          var datasubserie=CamposParametricosServices.show({nombreparametrica:'subserie',tenant:window.sessionStorage.getItem("tenant")});
          var datatipodocumento=CamposParametricosServices.show({nombreparametrica:'tipodocumento',tenant:window.sessionStorage.getItem("tenant")});
-         $scope.panels = [
-            {id:"fondos",data:datafondo,title:'Fondos', body: 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.'}
-            ,{id:"subfondos",data:datasubfondo,title:'Subfondos', body: 'Food truck fixie locavore, accusamus mcsweeney\'s marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.'}
-            ,{id:"secciones",data:dataseccion,title:'Secciones', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"subsecciones",data:datasubseccion,title:'Subsecciones', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"series",data:dataserie,title:'Serie', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"subseries",data:datasubserie,title:'Subserie', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"tiposdocumentales",data:datatipodocumento,title:'Tipos de documentos', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"nivelacceso",data:datafondo,title:'Niveles de acceso', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-          ];
+
         $scope.trd={};
         $scope.select = function (data){
              $scope.trd[data.nombreparametrica]=data;
-             alert("alert"+$scope.trd[data.nombreparametrica].value);
-        };
-         $scope.multiplePanels = {
-             activePanels: []
-           };
-        $scope.pushPanel = function() {
-            $scope.panels.push({title: 'Collapsible Group Item #4', body: 'Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'});
         };
 
 
 
-        $scope.data = [{name: "Moroni", age: 50},
-                         {name: "Tiancum", age: 43},
-                         {name: "Jacob", age: 27},
-                         {name: "Nephi", age: 29},
-                         {name: "Enos", age: 34}
-                         ];
-        $scope.gridOptions = { data: 'myData' };
 
+        $scope.modal = this;
+
+        $scope.modal.steps = [
+                                {'id':1,data:datafondo, 'name':'Fondo'},
+                                {'id':2,data:datasubfondo,'name':'SubFondo'},
+                                {'id':3,data:dataseccion,'name':'Sección'},
+                                {'id':4,data:datasubseccion,'name':'Subsección'},
+                                {'id':5,data:dataserie,'name':'Serie'},
+                                {'id':6,data:datasubserie,'name':'Subserie'},
+                                {'id':7,data:datatipodocumento,'name':'tiposdocumentales'}
+                                ];
+        $scope.modal.step = $scope.modal.steps[0].id;
+        $scope.modal.wizard = {tacos: 2};
+
+       $scope.modal.isFirstStep = function () {
+            return ($scope.modal.step ) === ($scope.modal.steps[0].id );
+        };
+
+        $scope.modal.isLastStep = function () {
+            return $scope.modal.step === ($scope.modal.steps[$scope.modal.steps.length-1].id );
+        };
+        $scope.modal.getClass = function (step) {
+                return $scope.modal.isCurrentStep(step)?"btn green":"btn";
+            };
+
+        $scope.modal.isCurrentStep = function (step) {
+            return $scope.modal.step === step;
+        };
+
+       $scope.modal.setCurrentStep = function (step) {
+            $scope.modal.step = step;
+        };
+
+        $scope.modal.getCurrentStep = function () {
+            return $scope.modal.steps[$scope.modal.step];
+        };
+
+        $scope.modal.getNextLabel = function () {
+            return ($scope.modal.isLastStep()) ? 'Confirmar' : 'Siguiente';
+        };
+
+        $scope.modal.handlePrevious = function () {
+            $scope.modal.step -= ($scope.modal.isFirstStep()) ? 0 : 1;
+        };
+
+        $scope.modal.handleNext = function () {
+            if ($scope.modal.isLastStep()) {
+                alert('GUARDADO');
+            } else {
+               $scope.modal.step += 1;
+            }
+        };
         }
     })();

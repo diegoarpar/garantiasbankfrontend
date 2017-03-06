@@ -6,9 +6,10 @@
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-        DynamicSearchController.$inject = ['$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService'];
+        DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window'];
 
-        function DynamicSearchController($scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService) {
+        function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
             $scope.lista = [];
             $scope.listaBusqueda = [];

@@ -7,11 +7,12 @@
             .controller('RecepcionTulaBodegaController', RecepcionTulaBodegaController);
 
         RecepcionTulaBodegaController.$inject =
-            ['$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window'];
 
-        function RecepcionTulaBodegaController($scope, GarantiasServices, NumberService, CamposGenericosServices,
+        function RecepcionTulaBodegaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
                                                GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];

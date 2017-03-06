@@ -6,9 +6,22 @@
         angular.module("wpc")
             .controller('NavBarController', NavBarController);
 
-        NavBarController.$inject = ['$scope', 'ProductServices', '$location', '$uibModal'];
+        NavBarController.$inject = ['AuthenticationFactory','$scope', 'ProductServices', '$location', '$uibModal','$window'];
 
-        function NavBarController($scope, ProductServices, $location, $uibModal) {
+        function NavBarController(AuthenticationFactory,$scope, ProductServices, $location, $uibModal,$window) {
+            inSession($scope,AuthenticationFactory,$window);
+            $scope.inSession=false;
+
+            $scope.userLogIn=[];
+            if($window.localStorage.getItem('token')){
+                $scope.inSession=true;
+               var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
+                    logIn.$promise.then(
+                        function (data){
+                        $scope.userLogIn=data[0];
+                        }
+                    );
+            }
             $scope.toggleStyle = function () {
                 $scope.bodyCon = !$scope.bodyCon;
                 $scope.noneStyle = !$scope.noneStyle;

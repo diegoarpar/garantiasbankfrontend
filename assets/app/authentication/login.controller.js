@@ -9,11 +9,11 @@
         LoginController.$inject = ['$scope', 'AuthenticationFactory', '$location', '$uibModalInstance', '$rootScope', '$window', '$route'];
 
         function LoginController($scope, AuthenticationFactory, $location, $uibModalInstance, $rootScope, $window, $route) {
-
+            inSession($scope,AuthenticationFactory,$window);
             // callback for ng-click 'createNewUser':
             $scope.ok = function (user, pass) {
 
-                $window.localStorage.setItem('token', sha256(pass));
+                $window.localStorage.removeItem('token');
                 var rta = AuthenticationFactory.show({user: user, password: sha256(pass)});
                 $scope.token = rta;
                 $scope.token.$promise.then(function (data) {
@@ -24,8 +24,8 @@
                     else {
                         $scope.token = data.token;
                         $uibModalInstance.dismiss('cancel');
-                        $window.location.reload();
                         $window.localStorage.setItem('token', $scope.token);
+                        $window.location.reload();
                     }
 
                 });

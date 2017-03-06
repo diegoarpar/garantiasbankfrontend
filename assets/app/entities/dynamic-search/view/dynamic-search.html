@@ -92,9 +92,9 @@
                class="table table-condensed table-bordered table-striped ng-scope ng-table">
             <thead>
             <tr>
+                <th> Detalle</th>
                 <th ng-repeat="(key, value) in allColumns" ng-show="value">{{ key }}
                 </th>
-                <th> opciones</th>
             </tr>
             </thead>
             <tr ng-repeat="row in searchResults" ng-click="openModal(row)">

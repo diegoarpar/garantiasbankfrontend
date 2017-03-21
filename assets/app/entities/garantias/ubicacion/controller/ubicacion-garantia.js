@@ -7,11 +7,12 @@
             .controller('UbicacionGarantiasController', UbicacionGarantiasController);
 
         UbicacionGarantiasController.$inject =
-            ['$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window'];
 
-        function UbicacionGarantiasController($scope, GarantiasServices, NumberService, CamposGenericosServices,
+        function UbicacionGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
                                               CamposEspecificosServices, $location, ngTableParams, $filter, $window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];

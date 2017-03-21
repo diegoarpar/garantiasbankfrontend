@@ -18,8 +18,10 @@ app.constant('cApp', {
                          var rta = AuthenticationFactory.tenant();
                          rta.$promise.then(function(data) {
                                     if(!data[0]) alert ("este sitio no se encuentra configurado");
-                                    if(data[0])
-                                    window.sessionStorage["tenant"]=data[0].name
+                                    if(data[0]){
+                                        window.sessionStorage["tenant"]=data[0].name
+                                        window.location.reload();
+                                    }
                                  });
 
                         }

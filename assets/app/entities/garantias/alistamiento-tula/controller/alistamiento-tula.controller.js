@@ -7,17 +7,18 @@
             .controller('AlistamientoTulaController', AlistamientoTulaController);
 
         AlistamientoTulaController.$inject =
-            ['$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window'];
 
-        function AlistamientoTulaController($scope, GarantiasServices, NumberService, CamposGenericosServices,
+        function AlistamientoTulaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
                                             CamposParametricosServices, $location, ngTableParams, $filter, $window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];
             $scope.digitalu = [];
             $scope.numero = [];
-            $scope.regionales = CamposParametricosServices.show({nombreparametrica: "regional"});
+            $scope.regionales = CamposParametricosServices.show({nombreparametrica: "origen"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };

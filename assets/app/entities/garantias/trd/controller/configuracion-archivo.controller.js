@@ -12,7 +12,7 @@
                                  CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,ngMaterial,$controller,$sessionStorage) {
 
 
-            inSession($scope,AuthenticationFactory,$window);
+         inSession($scope,AuthenticationFactory,$window);
 
          var datafondo=CamposParametricosServices.show({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
          var datasubfondo=CamposParametricosServices.show({nombreparametrica:'subfondo',tenant:window.sessionStorage.getItem("tenant")});
@@ -21,37 +21,102 @@
          var dataserie=CamposParametricosServices.show({nombreparametrica:'serie',tenant:window.sessionStorage.getItem("tenant")});
          var datasubserie=CamposParametricosServices.show({nombreparametrica:'subserie',tenant:window.sessionStorage.getItem("tenant")});
          var datatipodocumento=CamposParametricosServices.show({nombreparametrica:'tipodocumento',tenant:window.sessionStorage.getItem("tenant")});
-         $scope.panels = [
-            {id:"fondos",data:datafondo,title:'Fondos', body: 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.'}
-            ,{id:"subfondos",data:datasubfondo,title:'Subfondos', body: 'Food truck fixie locavore, accusamus mcsweeney\'s marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.'}
-            ,{id:"secciones",data:dataseccion,title:'Secciones', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"subsecciones",data:datasubseccion,title:'Subsecciones', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"series",data:dataserie,title:'Serie', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"subseries",data:datasubserie,title:'Subserie', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"tiposdocumentales",data:datatipodocumento,title:'Tipos de documentos', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-            ,{id:"nivelacceso",data:datafondo,title:'Niveles de acceso', body: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-          ];
+
         $scope.trd={};
+        $scope.trd.tipodocumento={};
+        $scope.actualsTrds=[];
         $scope.select = function (data){
-             $scope.trd[data.nombreparametrica]=data;
-             alert("alert"+$scope.trd[data.nombreparametrica].value);
+             if(data.nombreparametrica!="tipodocumento"){
+                $scope.trd[data.nombreparametrica]=data;
+             }else{
+                if($scope.trd.tipodocumento[data.key]==null){
+                    $scope.trd.tipodocumento[data.key]=data;
+                }else{
+                    delete $scope.trd.tipodocumento[data.key];
+
+                }
+             }
+
         };
-         $scope.multiplePanels = {
-             activePanels: []
-           };
-        $scope.pushPanel = function() {
-            $scope.panels.push({title: 'Collapsible Group Item #4', body: 'Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'});
+
+         $scope.getValue = function (data, propertie,key){
+             try{
+                if(key!='tipodocumento'){
+                    var json=JSON.parse(data);
+                    return json[propertie];
+                }else{
+                var rta="";
+                var json=JSON.parse(data);
+                   for(var p in json){
+                     rta +=json[p][propertie]+" ";
+                   }
+                   return rta;
+                }
+             }catch(exc){
+                return "-";
+             }
+        };
+        $scope.actualsTrds=GarantiasServices.showtrd();
+
+        $scope.modal = this;
+
+        $scope.modal.steps = [
+                                {'id':1,data:datafondo, 'name':'Fondo',key:'fondo'},
+                                {'id':2,data:datasubfondo,'name':'SubFondo',key:'subfondo'},
+                                {'id':3,data:dataseccion,'name':'Sección',key:'seccion'},
+                                {'id':4,data:datasubseccion,'name':'Subsección',key:'subseccion'},
+                                {'id':5,data:dataserie,'name':'Serie',key:'serie'},
+                                {'id':6,data:datasubserie,'name':'Subserie',key:'subserie'},
+                                {'id':7,data:datatipodocumento,'name':'tiposdocumentales',key:'tipodocumento'}
+                                ];
+        $scope.modal.step = $scope.modal.steps[0].id;
+        $scope.modal.wizard = {tacos: 2};
+
+       $scope.modal.isFirstStep = function () {
+            return ($scope.modal.step ) === ($scope.modal.steps[0].id );
         };
 
+        $scope.modal.isLastStep = function () {
+            return $scope.modal.step === ($scope.modal.steps[$scope.modal.steps.length-1].id );
+        };
+        $scope.modal.getClass = function (step) {
+                return $scope.modal.isCurrentStep(step)?"btn green":"btn";
+            };
 
+        $scope.modal.isCurrentStep = function (step) {
+            return $scope.modal.step === step;
+        };
 
-        $scope.data = [{name: "Moroni", age: 50},
-                         {name: "Tiancum", age: 43},
-                         {name: "Jacob", age: 27},
-                         {name: "Nephi", age: 29},
-                         {name: "Enos", age: 34}
-                         ];
-        $scope.gridOptions = { data: 'myData' };
+       $scope.modal.setCurrentStep = function (step) {
+            $scope.modal.step = step;
+        };
 
+        $scope.modal.getCurrentStep = function () {
+            return $scope.modal.steps[$scope.modal.step];
+        };
+
+        $scope.modal.getNextLabel = function () {
+            return ($scope.modal.isLastStep()) ? 'Confirmar' : 'Siguiente';
+        };
+
+        $scope.modal.handlePrevious = function () {
+            $scope.modal.step -= ($scope.modal.isFirstStep()) ? 0 : 1;
+        };
+
+        $scope.modal.handleNext = function () {
+            if ($scope.modal.isLastStep()) {
+                var trds=[];
+                trds.push($scope.trd);
+                var create = GarantiasServices.createtrd(trds);
+                create.$promise.then(function (data) {
+                                         $scope.actualsTrds=GarantiasServices.showtrd();
+                                      });
+                $scope.trd={};
+                $scope.actualsTrds=[];
+
+            } else {
+               $scope.modal.step += 1;
+            }
+        };
         }
     })();

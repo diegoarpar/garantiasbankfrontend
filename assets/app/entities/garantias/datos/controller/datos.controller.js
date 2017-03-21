@@ -7,11 +7,12 @@
             .controller('DatosController', DatosController);
 
         DatosController.$inject =
-            ['$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window'];
 
-        function DatosController($scope, GarantiasServices, NumberService, CamposGenericosServices,
+        function DatosController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
                                  CamposEspecificosServices, $location, ngTableParams, $filter, $window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];

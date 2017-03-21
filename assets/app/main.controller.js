@@ -9,7 +9,6 @@
         MainController.$inject = ['$scope', 'ngTableParams', '$filter']
 
         function MainController($scope, ngTableParams, $filter) {
-
             $scope.showContent = function ($fileContent) {
                 alert($fileContent);
                 var digital = $fileContent.split('\n');

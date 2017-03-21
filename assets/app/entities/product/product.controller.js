@@ -6,9 +6,10 @@
         angular.module("wpc")
             .controller('ProductController', ProductController);
 
-        ProductController.$inject = ['$scope', 'ProductServices', 'ReportServicesTelefonica', '$location', 'ngTableParams', '$filter'];
+        ProductController.$inject = ['AuthenticationFactory','$scope', 'ProductServices', 'ReportServicesTelefonica', '$location', 'ngTableParams', '$filter','$window'];
 
-        function ProductController($scope, ProductServices, ReportServicesTelefonica, $location, ngTableParams, $filter) {
+        function ProductController(AuthenticationFactory,$scope, ProductServices, ReportServicesTelefonica, $location, ngTableParams, $filter,$window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.dateStart = new Date();
             $scope.dateEnd = new Date();
             // callback for ng-click 'createNewUser':

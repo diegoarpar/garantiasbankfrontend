@@ -7,11 +7,12 @@
             .controller('CompletitudController', CompletitudController);
 
         CompletitudController.$inject =
-            ['$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window'];
 
-        function CompletitudController($scope, GarantiasServices, NumberService, CamposGenericosServices,
+        function CompletitudController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
                                        CamposEspecificosServices, $location, ngTableParams, $filter, $window) {
+            inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];

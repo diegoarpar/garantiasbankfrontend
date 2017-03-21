@@ -18,11 +18,32 @@
                     params: {'@param': '@param'},
                     isArray: true
                 },
+                createtrd: {
+                        url:ApiGarantias.url+'trd',
+                        method: 'POST',
+                        headers: headers2,
+                        params: {'@param': '@param'},
+                        isArray: false,
+                        data: '@data'
+                    },
+                showtrd: {
+                        url:ApiGarantias.url+'trd',
+                        method: 'GET',
+                        headers: headers2,
+                        params: {'@param': '@param'},
+                        isArray: true
+                    },
                 show: {
                     headers: headers2,
                     method: 'GET',
                     isArray: true,
                     params: {processName: '@processName', dateStart: '@dateEnd', dateEnd: '@dateEnd'},
+                },
+                showtrd: {
+                    url:ApiGarantias.url+'trd',
+                    headers: headers2,
+                    method: 'GET',
+                    isArray: true
                 },
                 update: {
                     headers: headers2,

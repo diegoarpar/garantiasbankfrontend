@@ -30,23 +30,64 @@
         <div ng-repeat="data in modal.steps" class="btn-group">
             <button  class="btn"  ng-class="modal.getClass(data.id)" ng-click="modal.setCurrentStep(data.id)">{{data.name}}</button>
         </div>
-        <div class="panel panel-default col-xs-6" ng-repeat="step in modal.steps"  ng-show="modal.isCurrentStep(step.id)">
+        <div class="panel panel-default " ng-repeat="step in modal.steps"  ng-show="modal.isCurrentStep(step.id)">
             <table ng-table="vm.tableParams" class="table"  uif-row-select-mode="multiple">
                     <tr ng-repeat="data in step.data" >
-                        <td ng-click="select (data)" title="'Código'"  >
+                        <td ng-click="select (data,this)" title="'Código'"  >
                             {{data.key}}</td>
-                        <td ng-click="select (data)" title="'Nombre'"  >
+                        <td ng-click="select (data,this)" title="'Nombre'"  >
                             {{data.value}}</td>
                     </tr>
                 </table>
         </div>
     </div>
-    <br/>
+
     <div>
-        <div class="col-md-1">
-            <a class="btn btn-default" ng-click="modal.handlePrevious()" ng-disabled="modal.isFirstStep()">Atrás</a>
-            <a class="btn btn-default" ng-click="modal.handleNext()">{{modal.getNextLabel()}}</a>
+        <div class="">
+            <a class="pull-right  btn btn-default" ng-click="modal.handlePrevious()" ng-disabled="modal.isFirstStep()">Atrás</a>
+            <a class="pull-right  btn btn-default" ng-click="modal.handleNext()">{{modal.getNextLabel()}}</a>
+        </div>
+    </div>
+
+</div>
+<br/>
+<h3>Configuración para captura de datos</h3>
+
+
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle class="tree-node tree-node-content">
+        <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+                class="glyphicon"
+                ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+
+        <span ng-if="node.nombreparametrica">{{node.nombreparametrica}} :</span>
+        <span ng-if="node.nombreparametrica">{{node.value}}</span>
+        <a  ng-if="node.nombreparametrica=='metadato'"  class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+                class="glyphicon glyphicon-remove"></span></a>
+        <a   ng-if="node.nombreparametrica!='metadato'"  class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="openModal(this)" style="margin-right: 8px;"><span
+                class="glyphicon glyphicon-plus"></span></a>
+        <a   ng-if="node.nombreparametrica=='fondo'" class="pull-right glyphicon glyphicon-floppy-disk btn-xs" data-nodrag ng-click="saveChanges(this)" style="margin-right: 16px;"><span
+        ></span></a>
+        <a   ng-if="node.nombreparametrica=='fondo'" class="pull-right glyphicon glyphicon-refresh btn-xs" data-nodrag ng-click="retrive(this)" style="margin-right: 16px;"><span
+        ></span></a>
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+
+
+
+<div class="row">
+    <div class="col-sm-16">
+        <div ui-tree id="tree-root">
+            <ol ui-tree-nodes ng-model="trdssubseries">
+                <li ng-repeat="node in trdssubseries" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+            </ol>
         </div>
     </div>
 </div>
-

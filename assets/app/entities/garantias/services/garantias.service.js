@@ -18,21 +18,7 @@
                     params: {'@param': '@param'},
                     isArray: true
                 },
-                createtrd: {
-                        url:ApiGarantias.url+'trd',
-                        method: 'POST',
-                        headers: headers2,
-                        params: {'@param': '@param'},
-                        isArray: false,
-                        data: '@data'
-                    },
-                showtrd: {
-                        url:ApiGarantias.url+'trd',
-                        method: 'GET',
-                        headers: headers2,
-                        params: {'@param': '@param'},
-                        isArray: true
-                    },
+
                 show: {
                     headers: headers2,
                     method: 'GET',
@@ -44,6 +30,27 @@
                     headers: headers2,
                     method: 'GET',
                     isArray: true
+                },createtrd: {
+                      url:ApiGarantias.url+'trd',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: false,
+                      data: '@data'
+                  },
+                showregional: {
+                    url:ApiGarantias.url+'regional',
+                    headers: headers2,
+                    method: 'GET',
+                    params: {'@param': '@param'},
+                    isArray: true
+                },createRegional: {
+                    url:ApiGarantias.url+'regional',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
                 },
                 update: {
                     headers: headers2,

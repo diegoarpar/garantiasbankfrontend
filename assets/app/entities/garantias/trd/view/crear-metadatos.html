@@ -1,0 +1,31 @@
+<div  close="cancel()">
+    <div class="modal-header">
+        <h4>Crear Metadatos</h4>
+    </div>
+    <div>
+        <span>Nombre del dato:</span>     <input ng-model="campo.value"/>
+    </div>
+    <div>
+        <span>Label para el dato:</span>     <input ng-model="campo.name"/>
+    </div>
+    <div>
+        <span>Clasificacion:</span>      <select  ng-model="campo.fieldType"
+                                                 >
+                                            <option value="completitud">Completitud</option>
+                                            <option value="idoneidad">Idoneidad</option>
+                                            <option value="datos">Datos</option>
+                                        </select>
+    </div>
+    <div>
+        <span>Tipo:</span>    <select  ng-model="campo.fieldPrototype"
+                                >
+                                    <option value="check">Check</option>
+                                    <option value="text">Texto</option>
+                                    <option value="numeric">Numérico</option>
+                                </select>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Agregar</button>
+        <button class="btn" ng-click="cancel()">Cancelar</button>
+    </div>
+</div>

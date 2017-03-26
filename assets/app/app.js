@@ -1,4 +1,4 @@
-var app = angular.module('wpc', ['xeditable', 'ngRoute', 'ui.bootstrap','ngTable', 'ngTableToCsv', 'ngResource', 'ngFileUpload', 'pdf', 'ui.router','ngAria','ngAnimate','ngMaterial','ngSanitize', 'mgcrea.ngStrap', 'ngStorage']);
+var app = angular.module('wpc', ['xeditable', 'ngRoute', 'ui.bootstrap','ngTable', 'ngTableToCsv', 'ngResource', 'ngFileUpload', 'pdf', 'ui.router','ngAria','ngAnimate','ngMaterial','ngSanitize', 'mgcrea.ngStrap', 'ngStorage','ui.tree']);
 
 app.constant('ApiApp', {
     url: 'http://institucion.certicamara.co/reports/api/insert-database/'
@@ -113,6 +113,16 @@ app.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'assets/app/entities/garantias/trd/view/configuracion-archivo.html',
                 controller: 'ConfiguracionArchivoController'
             }
+        );
+        $routeProvider.when('/organigrama', {
+                        templateUrl: 'assets/app/entities/garantias/tree/view/configuracion-organigrama.html',
+                        controller: 'ConfiguracionOrganigramaController'
+                    }
+        );
+        $routeProvider.when('/regionales', {
+                                templateUrl: 'assets/app/entities/garantias/regionales/view/administrar-regionales.html',
+                                controller: 'ConfiguracionRegionalController'
+                            }
         );
         $routeProvider.otherwise({redirectTo: '/'});
     }

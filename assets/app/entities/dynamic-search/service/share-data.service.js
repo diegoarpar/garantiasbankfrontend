@@ -12,7 +12,7 @@
 
     function ShareService() {
         var savedData = {}
-
+        var contxt;
         function set(data) {
             savedData = data;
         }
@@ -21,9 +21,18 @@
             return savedData;
         }
 
+        function getContext(){
+            return contxt;
+        }
+        function setContxt(nContext){
+                    contxt= nContext;
+                }
+
         return {
             set: set,
-            get: get
+            get: get,
+            getContext: getContext,
+            setContxt: setContxt
         }
     }
 

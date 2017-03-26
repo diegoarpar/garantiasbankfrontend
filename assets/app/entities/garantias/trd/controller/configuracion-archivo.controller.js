@@ -6,10 +6,10 @@
 
         ConfiguracionArchivoController.$inject =
             ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage'];
+                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
 
         function ConfiguracionArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,ngMaterial,$controller,$sessionStorage) {
+                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
 
 
          inSession($scope,AuthenticationFactory,$window);
@@ -25,7 +25,8 @@
         $scope.trd={};
         $scope.trd.tipodocumento={};
         $scope.actualsTrds=[];
-        $scope.select = function (data){
+        $scope.select = function (data, context){
+
              if(data.nombreparametrica!="tipodocumento"){
                 $scope.trd[data.nombreparametrica]=data;
              }else{
@@ -57,6 +58,37 @@
              }
         };
         $scope.actualsTrds=GarantiasServices.showtrd();
+        $scope.trdssubseries=[];
+        $scope.actualsTrds.$promise.then(function(data){
+            for(var i=0;i<data.length;i++){
+                 var subserie=JSON.parse(data[i].subserie);
+                     subserie.nodes=[];
+                var td=JSON.parse(data[i].tipodocumento);
+                var cont=0;
+                for(var p in td){
+                 var tipodocumento= td[p];
+                    tipodocumento.nodes=[];
+                     subserie.nodes[cont]=tipodocumento;
+                     cont++;
+                }
+
+
+
+
+                var serie=JSON.parse(data[i].serie);
+                    serie.nodes=[];
+                    serie.nodes[0]=subserie;
+                var subfondo=JSON.parse(data[i].subfondo);
+                    subfondo.nodes=[];
+                    subfondo.nodes[0]=serie;
+                var trd=JSON.parse(data[i].fondo);
+                    trd.nodes=[];
+                    trd.nodes[0]=subfondo;
+
+
+                $scope.trdssubseries.push(trd)
+            }
+        });
 
         $scope.modal = this;
 
@@ -80,7 +112,7 @@
             return $scope.modal.step === ($scope.modal.steps[$scope.modal.steps.length-1].id );
         };
         $scope.modal.getClass = function (step) {
-                return $scope.modal.isCurrentStep(step)?"btn green":"btn";
+                return $scope.modal.isCurrentStep(step)?"btn green ":"btn";
             };
 
         $scope.modal.isCurrentStep = function (step) {
@@ -118,5 +150,71 @@
                $scope.modal.step += 1;
             }
         };
+
+        $scope.showModal = false;
+                        $scope.openModal = function (context) {
+                        $scope.actualVariable=context.$modelValue;
+                            var modalInstance = $uibModal.open({
+                                    templateUrl: 'assets/app/entities/garantias/trd/view/crear-metadatos.html',
+                                    controller: 'CrearMetadatosController',
+                                    scope: $scope,
+                                    size: 'lg'
+                                }
+                            );
+                        }
+
+                      $scope.saveChanges = function (scope) {
+                                    var o = [];
+                                    o.push(scope.$modelValue);
+                                    GarantiasServices.createRegional(o);
+                                   };
+                      $scope.retrive = function (context) {
+
+                                        $scope.actualVariable=context.$modelValue;
+                                        if($scope.actualVariable.nodes==undefined){
+                                                                            $scope.actualVariable.nodes=[];
+                                                                        }
+                                        var promise =GarantiasServices.showregional({nombreparametrica: $scope.actualVariable.nombreparametrica,key: $scope.actualVariable.key});
+                                        promise.$promise.then(function (data){
+                                            if(data.length>0){
+                                                if(data[0].nodes!=undefined){
+                                                    $scope.actualVariable.nodes=JSON.parse(data[0].nodes);
+                                                }
+                                            }
+
+                                        });
+
+                                     };
+                     $scope.remove = function (scope) {
+                        scope.remove();
+                      };
+
+                      $scope.toggle = function (scope) {
+                        scope.toggle();
+                      };
+
+                      $scope.moveLastToTheBeginning = function () {
+                        var a = $scope.data.pop();
+                        $scope.data.splice(0, 0, a);
+                      };
+
+                      $scope.newSubItem = function (scope) {
+                        var nodeData = scope.$modelValue;
+                        if(nodeData.nodes==undefined){nodeData.nodes=[]}
+                        nodeData.nodes.push({
+                          id: nodeData.id * 10 + nodeData.nodes.length,
+                          title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+                          nodes: []
+                        });
+                      };
+
+                      $scope.collapseAll = function () {
+                        $scope.$broadcast('angular-ui-tree:collapse-all');
+                      };
+
+                      $scope.expandAll = function () {
+                        $scope.$broadcast('angular-ui-tree:expand-all');
+                      };
+
         }
     })();

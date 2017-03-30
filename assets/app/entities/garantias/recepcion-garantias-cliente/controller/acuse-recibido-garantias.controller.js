@@ -8,11 +8,23 @@
 
         AcuseRecibidoGarantiasController.$inject =
             ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window'];
+                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
         function AcuseRecibidoGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window) {
+                                                  GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal) {
             inSession($scope,AuthenticationFactory,$window);
+
+
+            $scope.openModal = function () {
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',
+                        controller: 'SeleccionarRegionalController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
+             $scope.openModal();
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];

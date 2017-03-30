@@ -22,8 +22,8 @@
                   nodeData.nodes.push({
                     fieldType: $scope.campo.fieldType,
                     fieldPrototype: $scope.campo.fieldPrototype,
-                    value:$scope.campo.value,
-                    name:$scope.campo.name,
+                    key:$scope.campo.value,
+                    value:$scope.campo.name,
                     nodes: [],
                     nombreparametrica:"metadato"
                   });

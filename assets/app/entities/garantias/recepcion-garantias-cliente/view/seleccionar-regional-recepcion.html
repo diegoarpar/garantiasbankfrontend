@@ -1,0 +1,24 @@
+<div  close="cancel()">
+    <div class="modal-header">
+        <h4>Seleccione la regional de recepción</h4>
+    </div>
+
+        <span>Empresa:</span>      <select  ng-model="fondoSeleccionado" ng-change="cargarRegionales(r)">
+                                    <option ng-repeat="f in fondos" value="{{f}}">{{f.value}}</option>
+                                </select>
+    </div>
+    <div>
+        <span>Regional:</span>    <select  ng-model="regionalSeleccionada" >
+                                    <option ng-repeat="r in regionales" value="{{r}}">{{r.value}}</option>
+                                </select>
+    </div>
+    <div>
+        <span>Documentos  a recibir:</span>    <select  ng-model="subserieseleccionada" >
+        <option ng-repeat="r in subseries" value="{{r}}">{{r["subserie"].value}}</option>
+    </select>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Seleccionar</button>
+        <button class="btn" ng-click="cancel()">Cancelar</button>
+    </div>
+</div>

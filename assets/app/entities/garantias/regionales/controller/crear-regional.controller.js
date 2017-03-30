@@ -22,6 +22,7 @@
                   nodeData.nodes.push({
                     location: $scope.location,
                     value: $scope.value,
+                    key:$scope.key,
                     nodes: []
                   });
 

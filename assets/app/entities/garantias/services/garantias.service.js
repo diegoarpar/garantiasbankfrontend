@@ -30,7 +30,14 @@
                     headers: headers2,
                     method: 'GET',
                     isArray: true
-                },createtrd: {
+                },
+                 showtrdpost: {
+                     url:ApiGarantias.url+'trd/retrive',
+                     headers: headers2,
+                     method: 'POST',
+                     params: {'@param': '@param'},
+                     isArray: true
+                 },createtrd: {
                       url:ApiGarantias.url+'trd',
                       method: 'POST',
                       headers: headers2,
@@ -46,6 +53,20 @@
                     isArray: true
                 },createRegional: {
                     url:ApiGarantias.url+'regional',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
+                },
+                showMetadata: {
+                    url:ApiGarantias.url+'metadata',
+                    headers: headers2,
+                    method: 'GET',
+                    params: {'@param': '@param'},
+                    isArray: true
+                },createMetadata: {
+                    url:ApiGarantias.url+'metadata',
                     method: 'POST',
                     headers: headers2,
                     params: {'@param': '@param'},

@@ -69,10 +69,7 @@
                 class="glyphicon glyphicon-remove"></span></a>
         <a   ng-if="node.nombreparametrica!='metadato'"  class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="openModal(this)" style="margin-right: 8px;"><span
                 class="glyphicon glyphicon-plus"></span></a>
-        <a   ng-if="node.nombreparametrica=='fondo'" class="pull-right glyphicon glyphicon-floppy-disk btn-xs" data-nodrag ng-click="saveChanges(this)" style="margin-right: 16px;"><span
-        ></span></a>
-        <a   ng-if="node.nombreparametrica=='fondo'" class="pull-right glyphicon glyphicon-refresh btn-xs" data-nodrag ng-click="retrive(this)" style="margin-right: 16px;"><span
-        ></span></a>
+
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
         <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
@@ -81,7 +78,10 @@
 </script>
 
 
-
+<a   class="glyphicon glyphicon-floppy-disk btn-xs" data-nodrag ng-click="saveChanges()" style="margin-right: 16px;">Guardar los cambios<span
+    ></span></a>
+<a   class=" glyphicon glyphicon-refresh btn-xs" data-nodrag ng-click="retrive()" style="margin-right: 16px;"> Cargar metadatos<span
+></span></a>
 <div class="row">
     <div class="col-sm-16">
         <div ui-tree id="tree-root">

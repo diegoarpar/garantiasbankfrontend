@@ -41,13 +41,14 @@
         };
 
          $scope.getValue = function (data, propertie,key){
+
              try{
                 if(key!='tipodocumento'){
-                    var json=JSON.parse(data);
+                    var json=data;
                     return json[propertie];
                 }else{
                 var rta="";
-                var json=JSON.parse(data);
+                var json=data;
                    for(var p in json){
                      rta +=json[p][propertie]+" ";
                    }
@@ -61,9 +62,9 @@
         $scope.trdssubseries=[];
         $scope.actualsTrds.$promise.then(function(data){
             for(var i=0;i<data.length;i++){
-                 var subserie=JSON.parse(data[i].subserie);
+                 var subserie=data[i].subserie;
                      subserie.nodes=[];
-                var td=JSON.parse(data[i].tipodocumento);
+                var td=data[i].tipodocumento;
                 var cont=0;
                 for(var p in td){
                  var tipodocumento= td[p];
@@ -75,13 +76,13 @@
 
 
 
-                var serie=JSON.parse(data[i].serie);
+                var serie=data[i].serie;
                     serie.nodes=[];
                     serie.nodes[0]=subserie;
-                var subfondo=JSON.parse(data[i].subfondo);
+                var subfondo=data[i].subfondo;
                     subfondo.nodes=[];
                     subfondo.nodes[0]=serie;
-                var trd=JSON.parse(data[i].fondo);
+                var trd=data[i].fondo;
                     trd.nodes=[];
                     trd.nodes[0]=subfondo;
 
@@ -164,25 +165,16 @@
                         }
 
                       $scope.saveChanges = function (scope) {
-                                    var o = [];
-                                    o.push(scope.$modelValue);
-                                    GarantiasServices.createRegional(o);
+                                    //var o = [];
+                                    //o.push(scope.$modelValue);
+                                    for(var i=0;i<$scope.trdssubseries.length;i++){
+                                        delete $scope.trdssubseries[i]["_id"];
+                                    }
+                                    GarantiasServices.createMetadata($scope.trdssubseries);
                                    };
                       $scope.retrive = function (context) {
 
-                                        $scope.actualVariable=context.$modelValue;
-                                        if($scope.actualVariable.nodes==undefined){
-                                                                            $scope.actualVariable.nodes=[];
-                                                                        }
-                                        var promise =GarantiasServices.showregional({nombreparametrica: $scope.actualVariable.nombreparametrica,key: $scope.actualVariable.key});
-                                        promise.$promise.then(function (data){
-                                            if(data.length>0){
-                                                if(data[0].nodes!=undefined){
-                                                    $scope.actualVariable.nodes=JSON.parse(data[0].nodes);
-                                                }
-                                            }
-
-                                        });
+                                       $scope.trdssubseries= GarantiasServices.showMetadata();
 
                                      };
                      $scope.remove = function (scope) {

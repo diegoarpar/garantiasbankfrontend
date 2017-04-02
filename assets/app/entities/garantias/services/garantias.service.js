@@ -58,7 +58,13 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },
+                },showMetadataPost: {
+                      url:ApiGarantias.url+'metadata/retrive',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: true
+                  },
                 showMetadata: {
                     url:ApiGarantias.url+'metadata',
                     headers: headers2,
@@ -67,6 +73,13 @@
                     isArray: true
                 },createMetadata: {
                     url:ApiGarantias.url+'metadata',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
+                },saveChangesMetadata: {
+                    url:ApiGarantias.url+'metadata/savechanges',
                     method: 'POST',
                     headers: headers2,
                     params: {'@param': '@param'},

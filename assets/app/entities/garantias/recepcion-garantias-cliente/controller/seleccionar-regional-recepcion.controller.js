@@ -33,14 +33,29 @@
                 }
 
                 $scope.ok = function() {
+                    var subserie = JSON.parse($scope.subserieseleccionada);
+
+                    var subserieRetrive=[{'subserie.key':subserie.key}];
+                    var promise=GarantiasServices.showMetadataPost(subserieRetrive);
+                        promise.$promise.then(function (data){
+
+                            if(data!=null){
+                                if(data.length>0){
+                                    $uibModalInstance.dismiss('cancel');
+                                    $scope.fields.splice(0,$scope.fields.length);
+                                    for(var i=0;i<data[0].subserie.metadata.length;i++)
+                                        $scope.fields.push(data[0].subserie.metadata[i]);
+                                }else{
+                                    alert("no hay datos asociados");
+                                }
+                                    }
+                        });
 
 
-
-                $uibModalInstance.dismiss('cancel');
                 };
 
                 $scope.cancel = function() {
-
+                    $scope.fields=[{},{},{}];
                   $uibModalInstance.dismiss('cancel');
                 };
 

@@ -82,7 +82,7 @@
     ></span></a>
 <a   class=" glyphicon glyphicon-refresh btn-xs" data-nodrag ng-click="retrive()" style="margin-right: 16px;"> Cargar metadatos<span
 ></span></a>
-<div class="row">
+<div class="row" ng-init="getMetadata()">
     <div class="col-sm-16">
         <div ui-tree id="tree-root">
             <ol ui-tree-nodes ng-model="trdssubseries">

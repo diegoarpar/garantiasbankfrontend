@@ -26,8 +26,9 @@
         $scope.trd.tipodocumento={};
         $scope.actualsTrds=[];
         $scope.select = function (data, context){
-
+             data.metadata=[];
              if(data.nombreparametrica!="tipodocumento"){
+
                 $scope.trd[data.nombreparametrica]=data;
              }else{
                 if($scope.trd.tipodocumento[data.key]==null){
@@ -58,39 +59,89 @@
                 return "-";
              }
         };
-        $scope.actualsTrds=GarantiasServices.showtrd();
         $scope.trdssubseries=[];
-        $scope.actualsTrds.$promise.then(function(data){
-            for(var i=0;i<data.length;i++){
-                 var subserie=data[i].subserie;
-                     subserie.nodes=[];
-                var td=data[i].tipodocumento;
-                var cont=0;
-                for(var p in td){
-                 var tipodocumento= td[p];
-                    tipodocumento.nodes=[];
-                     subserie.nodes[cont]=tipodocumento;
-                     cont++;
+        $scope.actualsTrds=GarantiasServices.showtrd();
+        $scope.getMetadata = function () {
+             $scope.trdssubseries=[];
+             var promise=GarantiasServices.showMetadata();
+             promise.$promise.then(function(data){
+                for(var i=0;i<data.length;i++){
+                    var td=data[i].tipodocumento;
+                    var tiposdocumentos=[];
+                    for(var p in td){
+                     var tipodocumento= td[p];
+                         tipodocumento.nodes=[];
+                         var metadata=tipodocumento.metadata;
+                         if(metadata!=null){
+                             for(var j=0;j<metadata.length;j++)
+                                 tipodocumento.nodes.push(metadata[j]);
+                         }
+                         delete tipodocumento.metadata;
+                         tiposdocumentos.push(tipodocumento);
+
+                    }
+                     var subserie=data[i].subserie;
+                         subserie.nodes=[];
+                         var metadata=subserie.metadata;
+                         if(metadata!=null){
+                             for(var j=0;j<metadata.length;j++)
+                                 subserie.nodes.push(metadata[j]);
+                         }
+                         for(var j=0;j<tiposdocumentos.length;j++)
+                            subserie.nodes.push(tiposdocumentos[j]);
+                         delete subserie.metadata;
+                    var serie=data[i].serie;
+                        serie.nodes=[];
+                        var metadata=serie.metadata;
+                        if(metadata!=null){
+                            for(var j=0;j<metadata.length;j++)
+                                serie.nodes.push(metadata[j]);
+                        }
+                        serie.nodes.push(subserie);
+                        delete serie.metadata;
+                    var subseccion=data[i].subseccion;
+                        subseccion.nodes=[];
+                        var metadata=subseccion.metadata;
+                        if(metadata!=null){
+                            for(var j=0;j<metadata.length;j++)
+                                subseccion.nodes.push(metadata[j]);
+                        }
+                        subseccion.nodes.push(serie);
+                        delete subseccion.metadata;
+                    var seccion=data[i].seccion;
+                        seccion.nodes=[];
+                        var metadata=seccion.metadata;
+                        if(metadata!=null){
+                            for(var j=0;j<metadata.length;j++)
+                                seccion.nodes.push(metadata[j]);
+                        }
+                        seccion.nodes.push(subseccion);
+                        delete seccion.metadata;
+                    var subfondo=data[i].subfondo;
+                        subfondo.nodes=[];
+                        var metadata=subfondo.metadata;
+                        if(metadata!=null){
+                            for(var j=0;j<metadata.length;j++)
+                                subfondo.nodes.push(metadata[j]);
+                        }
+                        subfondo.nodes.push(seccion);
+                        delete subfondo.metadata;
+                    var trd=data[i].fondo;
+                        trd.nodes=[];
+                        var metadata=trd.metadata;
+                        if(metadata!=null){
+                            for(var j=0;j<metadata.length;j++)
+                                trd.nodes.push(metadata[j]);
+                        }
+                        trd.nodes.push(subfondo);
+                        delete trd.metadata;
+
+                    $scope.trdssubseries.push(trd);
                 }
+            });
+        };
 
-
-
-
-                var serie=data[i].serie;
-                    serie.nodes=[];
-                    serie.nodes[0]=subserie;
-                var subfondo=data[i].subfondo;
-                    subfondo.nodes=[];
-                    subfondo.nodes[0]=serie;
-                var trd=data[i].fondo;
-                    trd.nodes=[];
-                    trd.nodes[0]=subfondo;
-
-
-                $scope.trdssubseries.push(trd)
-            }
-        });
-
+        //$scope.getMetadata();
         $scope.modal = this;
 
         $scope.modal.steps = [
@@ -139,12 +190,18 @@
         $scope.modal.handleNext = function () {
             if ($scope.modal.isLastStep()) {
                 var trds=[];
+                var metadata=[];
                 trds.push($scope.trd);
+                metadata.push($scope.trd);
                 var create = GarantiasServices.createtrd(trds);
+
+                GarantiasServices.createMetadata(metadata);
                 create.$promise.then(function (data) {
-                                         $scope.actualsTrds=GarantiasServices.showtrd();
-                                      });
+                     $scope.actualsTrds=GarantiasServices.showtrd();
+                     $scope.getMetadata();
+                  });
                 $scope.trd={};
+                $scope.trd.tipodocumento={};
                 $scope.actualsTrds=[];
 
             } else {
@@ -153,60 +210,159 @@
         };
 
         $scope.showModal = false;
-                        $scope.openModal = function (context) {
-                        $scope.actualVariable=context.$modelValue;
-                            var modalInstance = $uibModal.open({
-                                    templateUrl: 'assets/app/entities/garantias/trd/view/crear-metadatos.html',
-                                    controller: 'CrearMetadatosController',
-                                    scope: $scope,
-                                    size: 'lg'
-                                }
-                            );
+        $scope.openModal = function (context) {
+        $scope.actualVariable=context.$modelValue;
+            var modalInstance = $uibModal.open({
+                    templateUrl: 'assets/app/entities/garantias/trd/view/crear-metadatos.html',
+                    controller: 'CrearMetadatosController',
+                    scope: $scope,
+                    size: 'lg'
+                }
+            );
+        }
+          $scope.getMetadatoFromNode=function(nodes){
+            var metadatos=[];
+            for(var i=0;i<nodes.length;i++){
+                if(nodes[i].nombreparametrica=="metadato"){
+                   metadatos[metadatos.length]=nodes[i];
+               }
+            }
+            return metadatos;
+
+          };
+           $scope.getNodeName=function(name,node){
+            var indexNode=0;
+            for(var i=0;i<node.length;i++){
+                if(node[i].nombreparametrica==name){
+                    return i;
+                }
+            }
+            return indexNode;
+           }
+          $scope.saveChanges = function (scope) {
+                var trd=[];
+                for(var i=0;i<$scope.trdssubseries.length;i++){
+                    var subserie;
+                    var serie;
+                    var seccion;
+                    var subseccion;
+                    var subfondo;
+                    var fondo;
+                    var tipodocumento;
+
+                    var indexSubfondo;
+                    var indexNodeSeccion;
+                    var indexNodeSubseccion;
+                    var indexNodeSerie;
+                    var indexNodeSubserie;
+                    try{
+                        indexSubfondo=$scope.getNodeName("subfondo",$scope.trdssubseries[i].nodes);
+                    }catch(e){}
+                    try{
+                        indexNodeSeccion=$scope.getNodeName("seccion",$scope.trdssubseries[i].nodes[indexSubfondo].nodes);
+                    }catch(e){}
+                    try{
+                        indexNodeSubseccion=$scope.getNodeName("subseccion",$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes);
+                    }catch(e){}
+                    try{
+                        indexNodeSerie=$scope.getNodeName("serie",$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes[indexNodeSubseccion].nodes);
+                    }catch(e){}
+                    try{
+                        indexNodeSubserie=$scope.getNodeName("subserie",$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes[indexNodeSubseccion].nodes[indexNodeSerie].nodes);
+                    }catch(e){}
+                    try{
+                        tipodocumento=$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes[indexNodeSubseccion].nodes[indexNodeSerie].nodes[indexNodeSubserie].nodes;
+                        var temp=[];
+
+                        for(var k=0;k<tipodocumento.length;k++){
+                           if(tipodocumento[k].nombreparametrica=="tipodocumento"){
+                            tipodocumento[k].metadata=$scope.getMetadatoFromNode(tipodocumento[k].nodes);
+                            delete tipodocumento[k].nodes;
+                            temp.push(tipodocumento[k]);
+                           }
                         }
+                        delete tipodocumento.nodes;
+                        tipodocumento=temp;
+                    }catch (e){}
+                    try{
+                        subserie=$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes[indexNodeSubseccion].nodes[indexNodeSerie].nodes[indexNodeSubserie];
+                        subserie.metadata=$scope.getMetadatoFromNode(subserie.nodes);
+                        delete subserie.nodes;
+                    }catch (e){}
+                    try{
+                        serie=$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes[indexNodeSubseccion].nodes[indexNodeSerie];
+                        serie.metadata=$scope.getMetadatoFromNode(serie.nodes);
+                        delete serie.nodes;
+                    }catch (e){}
+                     try{
+                        subseccion=$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion].nodes[indexNodeSubseccion];
+                        subseccion.metadata=$scope.getMetadatoFromNode(serie.nodes);
+                        delete subseccion.nodes;
+                    }catch (e){}
+                     try{
+                        seccion=$scope.trdssubseries[i].nodes[indexSubfondo].nodes[indexNodeSeccion];
+                        seccion.metadata=$scope.getMetadatoFromNode(serie.nodes);
+                        delete seccion.nodes;
+                    }catch (e){}
+                    try{
+                        subfondo=$scope.trdssubseries[i].nodes[indexSubfondo];
+                        subfondo.metadata=$scope.getMetadatoFromNode(subfondo.nodes);
+                        delete subfondo.nodes;
+                    }catch (e){}
+                    try{
+                        fondo=$scope.trdssubseries[i];
+                        fondo.metadata=$scope.getMetadatoFromNode(fondo.nodes);
+                        delete fondo.nodes;
+                    }catch (e){}
+                    delete fondo["_id"];
 
-                      $scope.saveChanges = function (scope) {
-                                    //var o = [];
-                                    //o.push(scope.$modelValue);
-                                    for(var i=0;i<$scope.trdssubseries.length;i++){
-                                        delete $scope.trdssubseries[i]["_id"];
-                                    }
-                                    GarantiasServices.createMetadata($scope.trdssubseries);
-                                   };
-                      $scope.retrive = function (context) {
+                    trd[i]={};
+                    trd[i]["fondo"]=fondo;
+                    trd[i]["subfondo"]=subfondo;
+                    trd[i]["seccion"]=seccion;
+                    trd[i]["subseccion"]=subseccion;
+                    trd[i]["serie"]=serie;
+                    trd[i]["subserie"]=subserie;
+                    trd[i]["tipodocumento"]=tipodocumento;
+                }
+                $scope.trdssubseries=[];
+                GarantiasServices.saveChangesMetadata(trd);
+                $scope.retrive();
+               };
+          $scope.retrive = function (context) {
+           $scope.getMetadata();
 
-                                       $scope.trdssubseries= GarantiasServices.showMetadata();
+         };
+         $scope.remove = function (scope) {
+            scope.remove();
+          };
 
-                                     };
-                     $scope.remove = function (scope) {
-                        scope.remove();
-                      };
+          $scope.toggle = function (scope) {
+            scope.toggle();
+          };
 
-                      $scope.toggle = function (scope) {
-                        scope.toggle();
-                      };
+          $scope.moveLastToTheBeginning = function () {
+            var a = $scope.data.pop();
+            $scope.data.splice(0, 0, a);
+          };
 
-                      $scope.moveLastToTheBeginning = function () {
-                        var a = $scope.data.pop();
-                        $scope.data.splice(0, 0, a);
-                      };
+          $scope.newSubItem = function (scope) {
+            var nodeData = scope.$modelValue;
+            if(nodeData.nodes==undefined){nodeData.nodes=[]}
+            nodeData.nodes.push({
+              id: nodeData.id * 10 + nodeData.nodes.length,
+              title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+              nodes: []
+            });
+          };
 
-                      $scope.newSubItem = function (scope) {
-                        var nodeData = scope.$modelValue;
-                        if(nodeData.nodes==undefined){nodeData.nodes=[]}
-                        nodeData.nodes.push({
-                          id: nodeData.id * 10 + nodeData.nodes.length,
-                          title: nodeData.title + '.' + (nodeData.nodes.length + 1),
-                          nodes: []
-                        });
-                      };
+          $scope.collapseAll = function () {
+            $scope.$broadcast('angular-ui-tree:collapse-all');
+          };
 
-                      $scope.collapseAll = function () {
-                        $scope.$broadcast('angular-ui-tree:collapse-all');
-                      };
-
-                      $scope.expandAll = function () {
-                        $scope.$broadcast('angular-ui-tree:expand-all');
-                      };
+          $scope.expandAll = function () {
+            $scope.$broadcast('angular-ui-tree:expand-all');
+          };
 
         }
     })();

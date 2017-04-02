@@ -24,7 +24,7 @@
                     fieldPrototype: $scope.campo.fieldPrototype,
                     key:$scope.campo.value,
                     value:$scope.campo.name,
-                    nodes: [],
+
                     nombreparametrica:"metadato"
                   });
 

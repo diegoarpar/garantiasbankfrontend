@@ -8,29 +8,33 @@
 
         AcuseRecibidoGarantiasController.$inject =
             ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
+                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal','$timeout'];
 
         function AcuseRecibidoGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal) {
+                                                  GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal,$timeout) {
             inSession($scope,AuthenticationFactory,$window);
 
 
-            $scope.openModal = function () {
-                var modalInstance = $uibModal.open({
-                        templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',
-                        controller: 'SeleccionarRegionalController',
-                        scope: $scope,
-                        size: 'lg'
-                    }
-                );
-            }
-             $scope.openModal();
+
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];
             $scope.digitalu = [];
             $scope.numero = [];
-            $scope.fields = CamposGenericosServices.show({tenant:window.sessionStorage.getItem("tenant"),fieldType: "datos", garantiaType: "-1"});
+            $scope.fields=[{},{}];
+            //$scope.fields = CamposGenericosServices.show({tenant:window.sessionStorage.getItem("tenant"),fieldType: "datos", garantiaType: "-1"});
+
+            $scope.openModal = function () {
+                            var modalInstance = $uibModal.open({
+                                    templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',
+                                    controller: 'SeleccionarRegionalController',
+                                    scope: $scope,
+                                    size: 'lg'
+                                }
+                            );
+
+                        };
+
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
@@ -116,6 +120,10 @@
                 update_columns($scope);
             }, true);
 
+            $scope.$watch('fields',function(){
+
+            });
+            //$scope.openModal();
 
         }
 

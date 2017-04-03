@@ -25,16 +25,25 @@
             //$scope.fields = CamposGenericosServices.show({tenant:window.sessionStorage.getItem("tenant"),fieldType: "datos", garantiaType: "-1"});
 
             $scope.openModal = function () {
-                            var modalInstance = $uibModal.open({
-                                    templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',
-                                    controller: 'SeleccionarRegionalController',
-                                    scope: $scope,
-                                    size: 'lg'
-                                }
-                            );
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',
+                        controller: 'SeleccionarRegionalController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
 
-                        };
+            };
+            $scope.confirmarPlanillaModal = function () {
+                var modalInstance2 = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/confirmar-recepcion.html',
+                        controller: 'ConfirmarRecepcionController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
 
+            };
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
@@ -80,27 +89,15 @@
                 $scope.reset();
             };
 
-            $scope.createPlanilla = function () {
-
-                $scope.numero = NumberService.getNumber('');
-                $scope.numero.$promise.then(function (data) {
-                    $scope.numero = data;
-                    concatNumber($scope);
-                    try {
-                        changeColumnName($scope, $scope.all_columns);
-                    } catch (e) {
-                        alert(e);
-                        return;
-                    }
-                    generateBarCodePDF($scope.numero[0].number, document, "Acuse de Recibido");
+            $scope.createPlanilla = function (code) {
+                    $scope.numero=[];
+                    $scope.numero[0]={};
+                    $scope.numero[0].number=code;
                     GarantiasServices.create($scope.digital);
                     alert("REGISTRO REALIZADO CON EL ACUSE " + $scope.numero[0].number);
-
                     $scope.numero = [];
                     $scope.digital = [];
                     $scope.all_columns = [];
-                    //$window.location.reload();
-                });
             };
 
             $scope.showContent = function ($fileContent) {

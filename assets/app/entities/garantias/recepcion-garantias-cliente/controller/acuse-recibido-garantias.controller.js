@@ -72,21 +72,24 @@
                 $scope.all_columns.push($scope.inserted);
             };
 
-            $scope.getTemplate = function (c) {
+            $scope.getTemplate = function (idx) {
+
                 if ($scope.digital.selected) {
-                    if (c.id === $scope.digital.selected.id) return 'edit';
+                    if (idx == $scope.digital.selectedIndex) return 'edit';
                     else return 'display';
                 }
                 else return 'display';
             };
 
-            $scope.editRow = function (c) {
-                $scope.digital.selected = angular.copy(c);
+            $scope.editRow = function (idx) {
+                $scope.digital.selectedIndex=idx;
+                $scope.digital.selected = angular.copy($scope.digital[idx]);
             };
 
             $scope.saveRow = function (idx) {
                 $scope.digital[idx] = angular.copy($scope.digital.selected);
-                $scope.reset();
+                $scope.digital.selectedIndex=-1;
+                $scope.getTemplate(idx);
             };
 
             $scope.createPlanilla = function (code) {
@@ -103,8 +106,9 @@
             $scope.showContent = function ($fileContent) {
 
                 var jsontext = $fileContent.split(/\r\n|\n/);
-                jsontext = txtToJson(jsontext, $scope);
-                $scope.digital = JSON.parse(jsontext);
+                var jsonObject=txtToJson(jsontext, $scope);
+
+                $scope.digital = jsonObject;
             };
 
             $scope.export = function ($event, fileName) {

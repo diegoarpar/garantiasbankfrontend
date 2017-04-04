@@ -2,22 +2,18 @@
     <div id="bcTarget" ng-show="false"></div>
     <h3>ALISTAMIENTO UNIDADES DE CARGA SELLADA</h3>
     <div>
-        <span>Origen </span>
-        <select id="pname" ng-model="regional">
-            <option ng:repeat="r in regionales" value="{{r.key}}">{{r.value}}</option>
-        </select>
+        <span> </span>
+        <span   ng-init="openModal()"></span>
+         <h2>  Origen: {{regional.location + "-" + regional.value}}</h2>
+
 
     </div>
-    <div>
-        <span>Oficina </span>
-        <input type="text" ng-model="oficina"/>
 
-    </div>
     <button class="btn green" ng-click="loadPlanillaToTula()">Cargar Planilla</button>
     <div>
         Precinto:
         <input ng-model="tula"/>
-        <button class="btn green" ng-click="sendTula()">Enviar Tula</button>
+        <button class="btn green" ng-click="openModalMedioEnvio ()">Enviar Tula</button>
     </div>
 
     <div class="form-group">
@@ -33,7 +29,7 @@
             </div>
         </div>
     </div>
-    <h3>ENVIO DE LA TULA DE LA REGIONAL {{regional}} / Oficina {{oficina}} CON PRECINTO {{tula}}</h3>
+    <h3>ENVIO DE LA TULA DE LA REGIONAL {{regional.location+ "-" + regional.value}}  CON PRECINTO {{tula}}</h3>
 
     <div class="span3" >
         <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"

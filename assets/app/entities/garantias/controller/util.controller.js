@@ -1,29 +1,36 @@
 function txtToJson(txtToJson, $scope) {
     $scope.all_columns = [];
-    var head = false;
-    var str = "[";
-    for (var i = 1; i < txtToJson.length; i++) {
-        str += "{";
-        str += "\"id\":\"" + i + "\",";
-        for (var j = 0; j < txtToJson[i].split(',').length; j++) {
-            if (!head)$scope.all_columns.push({
-                "title": "" + txtToJson[0].split(',')[j].trim() + "",
+    var head = true;
+    var json=[];
+    for (var i = 0; i < txtToJson.length; i++) {
+        txtToJson[i]=txtToJson[i].replace('"','');
+        txtToJson[i]=txtToJson[i].replace(';',',');
+        var headrow=txtToJson[0];
+        var headcols=txtToJson[0].split(",");
+
+        var jsonO={};
+
+        var row = txtToJson[i];
+        var cols= row.split(',');
+        for (var j = 0; j < headcols.length; j++) {
+            if (head)$scope.all_columns.push({
+                "title": "" + cols[j].trim() + "",
                 "type": "string",
                 "checked": true
             });
-            if (txtToJson[0].split(',')[j]) {
-                str += "\"" + txtToJson[0].split(',')[j].trim() + "\":\"";
-                str += txtToJson[i].split(',')[j].trim();
-                str += "\",";
+            if (cols[j]&&!head) {
+                var name=headcols[j];
+                var value=cols[j];
+                try{name=name.trim();}catch(e){}
+                try{value=value.trim();}catch(e){}
+                jsonO[name]=value;
             }
         }
-        head = true;
-        str = str.substr(0, str.length - 1);
-        str += "},";
+        if (!head)
+        json.push(jsonO);
+        head = false;
     }
-    str = str.substr(0, str.length - 1);
-    str += "]";
-    return str;
+    return json;
 };
 
 function fillColumns(list, $scope) {

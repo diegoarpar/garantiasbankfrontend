@@ -8,10 +8,10 @@
 
         AlistamientoTulaController.$inject =
             ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window'];
+                'CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
         function AlistamientoTulaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                            CamposParametricosServices, $location, ngTableParams, $filter, $window) {
+                                            CamposParametricosServices, $location, ngTableParams, $filter, $window,$uibModal) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -19,6 +19,38 @@
             $scope.digitalu = [];
             $scope.numero = [];
             $scope.regionales = CamposParametricosServices.show({nombreparametrica: "origen"});
+            $scope.regional={};
+            $scope.setRegional = function (data) {
+                $scope.regional=JSON.parse( data);
+            }
+            $scope.openModal = function () {
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/alistamiento-tula/view/seleccionar-regional-Alistamiento.html',
+                        controller: 'SeleccionarRegionalAlistamientoController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+                var promise=modalInstance.closed;
+                    promise.then(function (data){
+
+                    });
+
+            };
+            $scope.openModalMedioEnvio = function () {
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/alistamiento-tula/view/medio-envio-tula.html',
+                        controller: 'SeleccionarMedioEnvioController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+                var promise=modalInstance.closed;
+                    promise.then(function (data){
+
+                    });
+
+            };
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };

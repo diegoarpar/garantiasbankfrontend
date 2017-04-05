@@ -25,7 +25,7 @@
                     promise.$promise.then(function (data){
                         if(data!=null){
                             if(data.length>0){
-                                $scope.regionales=JSON.parse(data[0].nodes);
+                                $scope.regionales=data[0].nodes;
                                 }
                             }
                     });

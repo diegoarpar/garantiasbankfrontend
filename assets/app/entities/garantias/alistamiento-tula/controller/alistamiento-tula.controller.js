@@ -102,7 +102,7 @@
                 $scope.all_columns = [];
                 $scope.digital = GarantiasServices.show({
                     tenant: $scope.regional,
-                    regional: $scope.regional,
+                    //regional: $scope.regional,
                     oficina: $scope.oficina,
                     enviadoTula: "null"
                 });
@@ -112,18 +112,15 @@
 
                 });
             };
-            $scope.sendTula = function () {
-                $scope.numero = NumberService.getNumber('');
-                $scope.numero.$promise.then(function (data) {
-                    $scope.idtula = data;
-                    concatTula($scope);
-                    GarantiasServices.update($scope.digitalu);
-                    alert("REGISTRO REALIZADO CON EL ID " + $scope.numero[0].number);
-                    generateBarCodePDF($scope.numero[0].number, document, "Número Id Tula");
-                    $scope.digital = [];
-                    $scope.digitalu = [];
+            $scope.sendTula = function (number) {
+                $scope.numero = number;
+                $scope.idtula = number;
+                concatTula($scope);
+                GarantiasServices.update($scope.digitalu);
+                alert("REGISTRO REALIZADO CON EL ID " + number);
+                $scope.digital = [];
+                $scope.digitalu = [];
 
-                });
             };
             $scope.showContent = function ($fileContent) {
                 var jsontext = $fileContent.split('\n');

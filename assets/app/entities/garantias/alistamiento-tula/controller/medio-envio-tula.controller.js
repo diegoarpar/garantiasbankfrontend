@@ -13,28 +13,28 @@
 
 
          inSession($scope,AuthenticationFactory,$window);
-            $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
-            $scope.regionales=[];
-            $scope.subseries=[];
-                $scope.cargarRegionales = function(value) {
-                    var regionalSeleccionada=JSON.parse($scope.fondoSeleccionado);
-                    var fondo3=[{'fondo.key':regionalSeleccionada.key}];
+                $scope.code = "";
+                $scope.type = "CODE128B";
+                $scope.downloadBarCode = function() {
+                var element = angular.element($("img")[0]);
+                var toPdf=element[0].currentSrc;
 
-                    $scope.subseries=$scope.actualsTrds=GarantiasServices.showtrdpost(fondo3);
-                    var promise=GarantiasServices.showregional({nombreparametrica: regionalSeleccionada.nombreparametrica,key: regionalSeleccionada.key});
+                     var doc = new jsPDF('p', 'mm');
+                             doc.addImage(toPdf, 'PNG', 10, 10);
+                             doc.text(40, 41, 'Código '+$scope.code);
+                             doc.save('sample-file.pdf');
+                };
+                $scope.generateBarcode = function() {
+                    $scope.code = '';
+                    var promise = NumberService.getNumber('');
                     promise.$promise.then(function (data){
-                        if(data!=null){
-                            if(data.length>0){
-                                $scope.regionales=JSON.parse(data[0].nodes);
-                                }
-                            }
+                        if(data!=null)
+                        $scope.code = data[0].number;
                     });
 
-                }
-
+                };
                 $scope.ok = function() {
-
-                    $scope.setRegional($scope.regionalSeleccionada);
+                    $scope.sendTula($scope.code);
                     $uibModalInstance.dismiss($scope);
                 };
 

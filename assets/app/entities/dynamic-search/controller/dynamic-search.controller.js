@@ -16,7 +16,7 @@
             $scope.addColumn = addColumn;
             $scope.buscar = buscar;
             $scope.removeRow = removeRow;
-            $scope.generateColumns = generateColumns;
+            //$scope.generateColumns = generateColumns;
             $scope.filterSearchResult = filterSearchResult;
             $scope.openStartDate = openStartDate;
             $scope.openEndDate = openEndDate;
@@ -78,7 +78,11 @@
                 DynamicSearch.searchWithMetadata(search).success(function (data) {
 
                     $scope.searchResults = data;
-                    generateColumns(data);
+
+                    fillColumns(data,$scope);
+                    update_columns($scope);
+                    $scope.generateColumns=$scope.all_columns;
+
                 }).error(function (error) {
                     alert(error)
                 })
@@ -96,19 +100,7 @@
                 }
             }
 
-            function generateColumns(vector) {
-                $scope.allColumns = {};
-                angular.forEach(vector, function (object, key) {
-                    angular.forEach(object, function (object2, key2) {
-                        if (key2 != '_id') {
-                            $scope.allColumns[key2] = true;
-                        }
-                        else {
-                            $scope.allColumns[key2] = false;
-                        }
-                    })
-                })
-            }
+
 
             function filterSearchResult() {
                 $scope.copySearchResult = [];
@@ -123,7 +115,7 @@
             }
 
             function switchBoolean(key) {
-                $scope.allColumns[key] = !$scope.allColumns[key];
+                $scope.all_columns[r].checked = !$scope.all_columns[key].checked;
             }
         }
 

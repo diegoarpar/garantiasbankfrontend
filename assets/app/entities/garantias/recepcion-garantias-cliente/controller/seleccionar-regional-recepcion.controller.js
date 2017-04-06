@@ -43,14 +43,20 @@
                                 if(data.length>0){
                                     $uibModalInstance.dismiss('cancel');
                                     $scope.fields.splice(0,$scope.fields.length);
-                                    for(var i=0;i<data[0].subserie.metadata.length;i++)
+                                    for(var i=0;i<data[0].subserie.metadata.length;i++){
                                         $scope.fields.push(data[0].subserie.metadata[i]);
+                                        }
+                                     var ingreso={};
+                                         ingreso.regional=JSON.parse($scope.regionalSeleccionada);
+                                         ingreso.subserie=JSON.parse($scope.subserieseleccionada);
+                                         ingreso.empresa=JSON.parse($scope.fondoSeleccionado);
+
+                                     $scope.setIngreso(ingreso);
                                 }else{
                                     alert("no hay datos asociados");
                                 }
                                     }
                         });
-
 
                 };
 

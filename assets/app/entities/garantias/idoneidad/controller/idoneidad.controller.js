@@ -66,20 +66,25 @@
             };
 
             $scope.catchGarantias = function () {
-                $scope.mapColumns = [];
-                $scope.columns = [];
-                $scope.all_columns = [];
-                $scope.digital = GarantiasServices.show({
-                    tula: $scope.tula,
-                    enviadoTula: "true",
-                    garantiaRecibida: "true",
-                    validacionidoneidad: "false"
-                });
-                $scope.digital.$promise.then(function (data) {
-                    $scope.digital = data;
-                    fillColumns(data, $scope);
+               $scope.mapColumns = [];
+               $scope.columns = [];
+               $scope.all_columns = [];
+               if($scope.tula=="")$scope.tula=undefined;
+               var consulta=[];
+                   consulta[0]={
+                               tula: $scope.tula,
+                               "ingreso.enviadoTula": true,
+                               "envio.recibido": true,
+                               "validaciones.validacioncompletitud": true,
+                               "validaciones.validacionidoneidad": false,
+                               "validaciones.validaciondatos": false
+                           };
+               $scope.digital = GarantiasServices.showPost(consulta);
+               $scope.digital.$promise.then(function (data) {
+                   $scope.digital = data;
+                   fillColumns(data, $scope);
 
-                });
+               });
             };
 
             $scope.saveCompleteInfoRow = function () {
@@ -134,8 +139,12 @@
 
         function concatGontenido($scope) {
             var cont = 0;
-            $scope.selectedRow.fechavalidacionidoneidad = new Date();
-            $scope.selectedRow.validacionidoneidad = true;
+           var validaciones={};
+           validaciones.validacionidoneidad=true;
+           validaciones.validacioncompletitud=true;
+           validaciones.validaciondatos=false;
+
+           $scope.selectedRow.validaciones=validaciones;
             $scope.digitalu[cont] = $scope.selectedRow;
             $scope.selectedRow = {};
 

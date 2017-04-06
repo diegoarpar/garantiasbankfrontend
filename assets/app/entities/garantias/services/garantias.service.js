@@ -25,6 +25,13 @@
                     isArray: true,
                     params: {processName: '@processName', dateStart: '@dateEnd', dateEnd: '@dateEnd'},
                 },
+                showPost: {
+                    url:ApiGarantias.url+'retrive',
+                    headers: headers2,
+                    method: 'POST',
+                    isArray: true,
+                    params: {'@param': '@param'}
+                },
                 showtrd: {
                     url:ApiGarantias.url+'trd',
                     headers: headers2,

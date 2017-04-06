@@ -91,11 +91,19 @@
                 $scope.digital.selectedIndex=-1;
                 $scope.getTemplate(idx);
             };
-
-            $scope.createPlanilla = function (code) {
+            $scope.ingreso={};
+            $scope.setIngreso=function(ingreso){
+                    $scope.ingreso=ingreso;
+            }
+            $scope.createPlanilla = function (code,ingreso) {
                     $scope.numero=[];
                     $scope.numero[0]={};
                     $scope.numero[0].number=code;
+                    $scope.ingreso.numero=code;
+                    changeColumnName($scope, $scope.all_columns);
+                    for(var i=0;i<$scope.digital.length;i++){
+                        $scope.digital[i].ingreso=$scope.ingreso;
+                    }
                     GarantiasServices.create($scope.digital);
                     alert("REGISTRO REALIZADO CON EL ACUSE " + $scope.numero[0].number);
                     $scope.numero = [];
@@ -150,29 +158,21 @@
             return value;
         };
         function changeColumnName($scope, listColumns) {
-            var newColumn = "[";
-            var propertieseval = [];
+            var newDigital=[];
             for (var i = 0; i < $scope.digital.length; i++) {
-                newColumn += "{";
-
+                var row={};
                 for (var e in $scope.digital[i]) {
                     var newColumnName = getChange(e, listColumns);
-                    if (!propertieseval[newColumnName]) {
-                        newColumn += "\"" + newColumnName + "\":";
-                        newColumn += "\"" + $scope.digital[i][e] + "\",";
-                        propertieseval[newColumnName] = newColumnName;
+                    if (!row[newColumnName]) {
+                        row[newColumnName] = $scope.digital[i][e];
                     } else {
                         throw ("Columna " + newColumnName + " repetida");
                     }
 
                 }
-                propertieseval = [];
-                newColumn = newColumn.substr(0, newColumn.length - 1);
-                newColumn += "},";
+                newDigital.push(row);
             }
-            newColumn = newColumn.substr(0, newColumn.length - 1);
-            newColumn += "]";
-            $scope.digital = JSON.parse(newColumn);
+            $scope.digital = newDigital;
         };
         function construirTabla($scope, digital, ngTableParams, $filter) {
             $scope.data = digital;

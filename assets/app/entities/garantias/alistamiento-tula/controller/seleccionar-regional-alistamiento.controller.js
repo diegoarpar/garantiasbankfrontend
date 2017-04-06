@@ -33,8 +33,12 @@
                 }
 
                 $scope.ok = function() {
+                    var empresa = JSON.parse($scope.fondoSeleccionado);
+                    var regional = JSON.parse($scope.regionalSeleccionada);
+                    var consulta={"ingreso.empresa.key":empresa.key,"ingreso.regional.key":regional.key,enviadoTula:null};
 
                     $scope.setRegional($scope.regionalSeleccionada);
+                    $scope.loadPlanillaToTula(consulta);
                     $uibModalInstance.dismiss($scope);
                 };
 

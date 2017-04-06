@@ -66,20 +66,25 @@
             };
 
             $scope.catchGarantias = function () {
-                $scope.mapColumns = [];
-                $scope.columns = [];
-                $scope.all_columns = [];
-                $scope.digital = GarantiasServices.show({
-                    tula: $scope.tula,
-                    enviadoTula: "true",
-                    garantiaRecibida: "true",
-                    validaciondatos: "false"
-                });
-                $scope.digital.$promise.then(function (data) {
-                    $scope.digital = data;
-                    fillColumns(data, $scope);
+               $scope.mapColumns = [];
+               $scope.columns = [];
+               $scope.all_columns = [];
+               if($scope.tula=="")$scope.tula=undefined;
+               var consulta=[];
+                   consulta[0]={
+                               tula: $scope.tula,
+                               "ingreso.enviadoTula": true,
+                               "envio.recibido": true,
+                               "validaciones.validacioncompletitud": true,
+                               "validaciones.validacionidoneidad": true,
+                               "validaciones.validaciondatos": false
+                           };
+               $scope.digital = GarantiasServices.showPost(consulta);
+               $scope.digital.$promise.then(function (data) {
+                   $scope.digital = data;
+                   fillColumns(data, $scope);
 
-                });
+               });
             };
 
             $scope.saveCompleteInfoRow = function () {

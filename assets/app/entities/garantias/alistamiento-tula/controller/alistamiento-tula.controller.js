@@ -96,30 +96,33 @@
                 $scope.reset();
             };
 
-            $scope.loadPlanillaToTula = function () {
+            $scope.loadPlanillaToTula = function (consulta) {
                 $scope.mapColumns = [];
                 $scope.columns = [];
                 $scope.all_columns = [];
-                $scope.digital = GarantiasServices.show({
-                    tenant: $scope.regional,
-                    //regional: $scope.regional,
-                    oficina: $scope.oficina,
-                    enviadoTula: "null"
-                });
+                var parameters=[];
+                parameters[0]=consulta;
+                $scope.digital = GarantiasServices.showPost(parameters);
                 $scope.digital.$promise.then(function (data) {
                     $scope.digital = data;
                     fillColumns(data, $scope);
-
+                    generateColumns($scope.all_columns,$scope);
                 });
             };
-            $scope.sendTula = function (number) {
-                $scope.numero = number;
-                $scope.idtula = number;
-                concatTula($scope);
-                GarantiasServices.update($scope.digitalu);
-                alert("REGISTRO REALIZADO CON EL ID " + number);
+            $scope.sendTula = function (envio) {
+                var documentosEnviados=[];
+                for(var i=0;i<$scope.digital.length;i++){
+                    if($scope.digital[i].enviadoTula){
+                        delete $scope.digital[i].enviadoTula;
+                        $scope.digital[i].envio=envio;
+                        $scope.digital[i].ingreso.enviadoTula=true;
+                        documentosEnviados.push($scope.digital[i]);
+                    }
+
+                }
+                GarantiasServices.update(documentosEnviados);
+                alert("REGISTRO REALIZADO CON EL ID " + envio.numero);
                 $scope.digital = [];
-                $scope.digitalu = [];
 
             };
             $scope.showContent = function ($fileContent) {
@@ -142,31 +145,17 @@
         }
 
 
-        function concatTula($scope) {
-            var cont = 0;
-            for (var i = 0; i < $scope.digital.length; i++) {
-                if ($scope.digital[i].enviadoTula) {
-                    $scope.digital[i].idtula = $scope.idtula[0].number;
-                    $scope.digital[i].tula = $scope.tula;
-                    $scope.digital[i].fechaEnvioTula = new Date();
-                    $scope.digitalu[cont] = ($scope.digital[i]);
-                    cont++;
+        function generateColumns(vector,$scope) {
+            for(var i=0;i<vector.length;i++){
+                if (vector[i].title != '_id'&&vector[i].title!= 'ingreso') {
+                    $scope.all_columns[i].checked = true;
+                }
+                else {
+                $scope.all_columns[i].checked = false;
+                    $scope.all_columns.slice(i,1);
                 }
             }
-        }
 
-        function generateColumns(vector) {
-            $scope.allColumns = {};
-            angular.forEach(vector, function (object, key) {
-                angular.forEach(object, function (object2, key2) {
-                    if (key2 != '_id') {
-                        $scope.allColumns[key2] = true;
-                    }
-                    else {
-                        $scope.allColumns[key2] = false;
-                    }
-                })
-            })
         }
 
         function construirTabla($scope, digital, ngTableParams, $filter) {

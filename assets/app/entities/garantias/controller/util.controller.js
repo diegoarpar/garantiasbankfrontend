@@ -34,6 +34,9 @@ function txtToJson(txtToJson, $scope) {
 };
 
 function fillColumns(list, $scope) {
+if(!$scope.mapColumns)$scope.mapColumns=[];
+if(!$scope.all_columns)$scope.all_columns=[];
+
     for (var i = 0; i < list.length; i++)
         for (var key in list[i]) {
             if (!$scope.mapColumns[key] && key.indexOf("$") === -1 && key !== "toJSON") {
@@ -45,12 +48,18 @@ function fillColumns(list, $scope) {
 
 var update_columns = function ($scope) {
     $scope.columns = [];
+    if(!$scope.mapColumns)$scope.mapColumns=[];
     for (var i = 0; i < $scope.all_columns.length; i++) {
         var column = $scope.all_columns[i];
-        if (column.title != '_id') {
+        if (column.title != '_id'&&column.title != 'ingreso'
+        &&column.title != 'envio'
+        &&column.title != 'validaciones'
+        &&column.title != 'json') {
             if (column.checked) {
                 $scope.columns.push($scope.all_columns[i]);
             }
+        }else{
+            column.checked=false;
         }
     }
 };

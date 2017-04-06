@@ -69,12 +69,17 @@
                 $scope.mapColumns = [];
                 $scope.columns = [];
                 $scope.all_columns = [];
-                $scope.digital = GarantiasServices.show({
-                    tula: $scope.tula,
-                    enviadoTula: "true",
-                    garantiaRecibida: "true",
-                    validacioncompletitud: "false"
-                });
+                if($scope.tula=="")$scope.tula=undefined;
+                var consulta=[];
+                    consulta[0]={
+                                tula: $scope.tula,
+                                "ingreso.enviadoTula": true,
+                                "envio.recibido": true,
+                                "validaciones.validacioncompletitud": false,
+                                "validaciones.validacionidoneidad": false,
+                                "validaciones.validaciondatos": false
+                            };
+                $scope.digital = GarantiasServices.showPost(consulta);
                 $scope.digital.$promise.then(function (data) {
                     $scope.digital = data;
                     fillColumns(data, $scope);
@@ -134,8 +139,12 @@
 
         function concatGontenido($scope) {
             var cont = 0;
-            $scope.selectedRow.fechavalidacioncompletitud = new Date();
-            $scope.selectedRow.validacioncompletitud = true;
+            var validaciones={};
+            validaciones.validacionidoneidad=false;
+            validaciones.validacioncompletitud=true;
+            validaciones.validaciondatos=false;
+
+            $scope.selectedRow.validaciones=validaciones;
             $scope.digitalu[cont] = $scope.selectedRow;
             $scope.selectedRow = {};
 

@@ -34,7 +34,8 @@
 
                 };
                 $scope.ok = function() {
-                    $scope.sendTula($scope.code);
+                    var envio ={numero:$scope.code,precinto:$scope.tula,medio:$scope.medioEnvioSeleccionado};
+                    $scope.sendTula(envio);
                     $uibModalInstance.dismiss($scope);
                 };
 

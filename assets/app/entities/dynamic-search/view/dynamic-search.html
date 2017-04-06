@@ -60,7 +60,7 @@
             </uib-accordion-group>
         </div>
     </uib-accordion>
-    <button ng-click="buscar()" class="btn btn-primary">Busqueda</button>
+    <button ng-click="buscar()" class="btn green">Busqueda</button>
 
 
     <div class="row">
@@ -71,10 +71,10 @@
                     <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
                     <div id="demo" class="collapse">
                         <button type="button" class="btn btn-info marginated ng-binding ng-scope"
-                                ng-repeat="(key, value) in allColumns" ui-draggable="true" drag="m"
-                                ng-click="switchBoolean(key)"
+                                ng-repeat="r in all_columns" ui-draggable="true" drag="m"
+                                ng-click="switchBoolean(r)"
                                 draggable="true">
-                            {{key}}
+                            {{r.title}}
                         </button>
                         <div>
                             <input type="text" ng-model="columnName">{{c.title}}
@@ -93,7 +93,7 @@
             <thead>
             <tr>
                 <th> Detalle</th>
-                <th ng-repeat="(key, value) in allColumns" ng-show="value">{{ key }}
+                <th ng-repeat="r in all_columns" ng-if="r.checked">{{ r.title }}
                 </th>
             </tr>
             </thead>
@@ -106,7 +106,7 @@
                         <span class="hidden-xs hidden-sm"></span>
                     </button>
                 </td>
-                <td ng-repeat="(key, value) in allColumns" ng-show="value">{{row[key]}}</td>
+                <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>
             </tr>
         </table>
     </div>

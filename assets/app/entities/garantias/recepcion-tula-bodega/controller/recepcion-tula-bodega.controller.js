@@ -70,16 +70,24 @@
                 $scope.digital = [];
                 $scope.digitalu = [];
             };
-            $scope.catchTula = function () {
+            $scope.consultarTulas = function () {
                 $scope.mapColumns = [];
                 $scope.columns = [];
                 $scope.all_columns = [];
-                $scope.digital = GarantiasServices.show({
-                    tula: $scope.tula,
-                    enviadoTula: "true",
-                    idtula: $scope.idtula,
-                    garantiaRecibida: "null"
-                });
+                var consulta=[];
+                if($scope.idtula==""){
+                    $scope.idtula=undefined;
+                }
+                if($scope.tula==""){
+                    $scope.tula=undefined;
+                }
+                consulta[0]={
+                            "envio.precinto": $scope.tula,
+                            "ingreso.enviadoTula": true,
+                            "envio.numero": $scope.idtula,
+                             "envio.recibido": null
+                        };
+                $scope.digital = GarantiasServices.showPost(consulta);
                 $scope.digital.$promise.then(function (data) {
                     $scope.digital = data;
                     fillColumns(data, $scope);
@@ -109,15 +117,17 @@
 
         function concatGarantia($scope) {
             var cont = 0;
+            var validaciones={};
+                validaciones.validacionidoneidad=false;
+                validaciones.validacioncompletitud=false;
+                validaciones.validaciondatos=false;
+
             for (var i = 0; i < $scope.digital.length; i++) {
                 if ($scope.digital[i].garantiaRecibida) {
-                    $scope.digital[i].fechaRecepcionGarantia = new Date();
-                    $scope.digital[i].validacionidoneidad = "false";
-                    $scope.digital[i].validacioncompletitud = "false";
-                    $scope.digital[i].validaciondatos = "false";
-                    $scope.digitalu[cont] = ($scope.digital[i]);
-
-                    cont++;
+                    $scope.digital[i].validaciones = validaciones;
+                    $scope.digital[i].envio.recibido=true;
+                    delete $scope.digital[i].garantiaRecibida;
+                    $scope.digitalu.push($scope.digital[i]);
                 }
             }
         }

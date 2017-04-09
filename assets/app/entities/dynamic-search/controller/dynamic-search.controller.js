@@ -6,9 +6,10 @@
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-        DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window'];
+        DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window','CamposParametricosServices','GarantiasServices'];
 
-        function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window) {
+        function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window,CamposParametricosServices,GarantiasServices)
+         {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
             $scope.lista = [];
@@ -23,10 +24,6 @@
             $scope.openModal = openModal;
             $scope.switchBoolean = switchBoolean;
 
-            CamposGenericosServices.show({fieldType: 'datos'}).$promise.then(function (data) {
-                $scope.columnsMetadata = data;
-            });
-
             $scope.dateOptions = {
                 formatYear: 'yy',
                 startingDay: 1
@@ -38,7 +35,35 @@
                 opened: false
             };
 
+            $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
+            $scope.subseries=[];
 
+            $scope.cargarSubseries = function() {
+                var parameter=[{'fondo.key':$scope.fondoSelected.key}];
+                $scope.subseries=GarantiasServices.showtrdpost(parameter);
+            }
+            $scope.cargarMetadatos = function() {
+                var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
+
+                var promise = GarantiasServices.showMetadataPost(parameter);
+                promise.$promise.then(function(data){
+                    if(data!=null){
+
+                        $scope.columnsMetadata=[];
+                        for(var i=0;i<data.length;i++){
+                            for(var j=0;j<data[i].subserie.metadata.length;j++){
+                                $scope.columnsMetadata.push({fieldType:data[i].subserie.metadata[j].fieldType,key:data[i].subserie.metadata[j].key,value:data[i].subserie.metadata[j].value})
+                            }
+                            for(var j=0;j<data[i].tipodocumento.length;j++){
+                                for(var k=0;k<data[i].tipodocumento[j].metadata.length;k++){
+                                    $scope.columnsMetadata.push({fieldType:data[i].tipodocumento[j].metadata[k].fieldType,key:data[i].tipodocumento[j].metadata[k].key,value:data[i].tipodocumento[j].metadata[k].value})
+
+                                }
+                            }
+                        }
+                    }
+                });
+            }
             function openStartDate() {
                 $scope.popupStartDate.opened = true;
             };
@@ -111,7 +136,13 @@
 
             function openModal(entity) {
                 ShareService.set(entity);
-                $location.url('/dynamic-search-details');
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',
+                        controller: 'DynamicSearchModalController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
             }
 
             function switchBoolean(key) {

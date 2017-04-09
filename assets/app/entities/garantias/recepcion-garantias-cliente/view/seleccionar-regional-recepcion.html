@@ -3,18 +3,18 @@
         <h4>Seleccione la regional de recepción</h4>
     </div>
 
-        <span>Empresa:</span>      <select  ng-model="fondoSeleccionado" ng-change="cargarRegionales(r)">
-                                    <option ng-repeat="f in fondos" value="{{f}}">{{f.value}}</option>
+        <span>Empresa:</span>      <select  ng-model="fondoSeleccionado" ng-change="cargarRegionales(r)"
+                                            ng-options="f as f.value for f in fondos">
                                 </select>
     </div>
     <div>
-        <span>Regional:</span>    <select  ng-model="regionalSeleccionada" >
-                                    <option ng-repeat="r in regionales" value="{{r}}">{{r.location+"-"+ r.value}}</option>
+        <span>Regional:</span>    <select  ng-model="regionalSeleccionada"
+                                           ng-options="r as r.location+'-'+ r.value for r in regionales">
                                 </select>
     </div>
     <div>
-        <span>Documentos  a recibir:</span>    <select  ng-model="subserieseleccionada" >
-        <option ng-repeat="r in subseries" value="{{r['subserie']}}">{{r["subserie"].value}}</option>
+        <span>Documentos  a recibir:</span>    <select  ng-model="subserieseleccionada"
+                                            ng-options="r['subserie'] as  r['subserie'].value for r in subseries">
     </select>
     </div>
     <div class="modal-footer">

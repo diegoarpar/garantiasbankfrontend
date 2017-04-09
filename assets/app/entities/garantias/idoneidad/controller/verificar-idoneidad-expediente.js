@@ -54,8 +54,15 @@
                 var parameter=[];
                 parameter[0]=row;
 
-                GarantiasServices.update(parameter);
-                $scope.catchGarantias();
+                $scope.rowToSave=parameter;
+
+                var promise = NumberService.getNumber('');
+                promise.$promise.then(function (data){
+                    if(data!=null){
+                        $scope.rowToSave[0].idoneidad._date=data[0].number;
+                        GarantiasServices.update(parameter);
+                    }
+                });
 
                 $uibModalInstance.dismiss('cancel');
             };

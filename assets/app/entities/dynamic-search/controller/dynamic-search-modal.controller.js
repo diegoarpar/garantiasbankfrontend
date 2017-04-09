@@ -19,6 +19,11 @@
             $scope.log = [];
             $scope.retrieve = retrieve;
 
+            $scope.rowDetailShow=function(rowSelected){
+                 var row={};
+                row["key"]=rowSelected;
+                return rowDetailShow(row);
+            }
             ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
                 function (data) {
                     $scope.listOfFiles = data;

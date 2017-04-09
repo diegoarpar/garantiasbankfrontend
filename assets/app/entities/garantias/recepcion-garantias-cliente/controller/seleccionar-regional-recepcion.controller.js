@@ -17,10 +17,10 @@
             $scope.regionales=[];
             $scope.subseries=[];
                 $scope.cargarRegionales = function(value) {
-                    var regionalSeleccionada=JSON.parse($scope.fondoSeleccionado);
+                    var regionalSeleccionada=$scope.fondoSeleccionado;
                     var fondo3=[{'fondo.key':regionalSeleccionada.key}];
 
-                    $scope.subseries=$scope.actualsTrds=GarantiasServices.showtrdpost(fondo3);
+                    $scope.subseries=GarantiasServices.showtrdpost(fondo3);
                     var promise=GarantiasServices.showregional({nombreparametrica: regionalSeleccionada.nombreparametrica,key: regionalSeleccionada.key});
                     promise.$promise.then(function (data){
                         if(data!=null){

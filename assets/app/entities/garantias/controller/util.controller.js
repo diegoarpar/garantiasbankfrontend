@@ -54,6 +54,9 @@ var update_columns = function ($scope) {
         if (column.title != '_id'&&column.title != 'ingreso'
         &&column.title != 'envio'
         &&column.title != 'validaciones'
+        &&column.title != 'completitud'
+        &&column.title != 'idoneidad'
+        &&column.title != 'datos'
         &&column.title != 'json') {
             if (column.checked) {
                 $scope.columns.push($scope.all_columns[i]);
@@ -64,6 +67,18 @@ var update_columns = function ($scope) {
     }
 };
 
+var rowDetailShow = function(row){
+    if(row["key"].includes("$")){
+        return false;
+    }
+    if(row["key"].includes("toJSON")){
+            return false;
+        }
+    if(row["key"].includes("ingreso")||row["key"].includes("envio")||row["key"].includes("validaciones")||row["key"].includes("_id")||row["key"].includes("completitud")||row["key"].includes("idoneidad")||row["key"].includes("datos")){
+                return false;
+            }
+    return true;
+}
 
 var generateBarCodePDF = function (code, document, text) {
     var doc = new jsPDF('1', 'mm', [60, 35]);

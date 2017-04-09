@@ -1,0 +1,21 @@
+
+<h2  >VERIFICACION DE DATOS</h2>
+<div class="content">
+    <div ng-if="rowDetailShow(d)" ng-repeat="d in rowDetailP">
+        <input readonly="true" ng-model="d.key"/>:
+        <input readonly="true"  ng-model="d.value"/>
+
+    </div>
+
+</div>
+<div ng-if="t.metadata.length>0" ng-repeat="t in tipodocumento" >
+    <h4>{{t.value}}</h4>
+    <div ng-if="m.fieldType=='datos'" ng-repeat="m in t.metadata">
+        <input readonly="true" ng-model="m.key"/>:<input  type="checkbox" ng-model="m.result"/>
+    </div>
+</div>
+
+<button ng-click="ok()" data-dismiss="modal" type="button"
+        class="btn green">Guardar Información
+</button>
+<button ng-click="cancel()" type="button" class="btn btn-danger" >Regresar    </button>

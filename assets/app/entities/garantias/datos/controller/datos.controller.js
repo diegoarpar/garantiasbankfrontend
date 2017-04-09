@@ -8,10 +8,10 @@
 
         DatosController.$inject =
             ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window'];
+                'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
         function DatosController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices, $location, ngTableParams, $filter, $window) {
+                                 CamposEspecificosServices, $location, ngTableParams, $filter, $window,$uibModal) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -96,36 +96,7 @@
                 $scope.showmodal = false;
             };
 
-            $scope.completeInfo = function (idx, c) {
-                $scope.showmodal = true;
-                $scope.selectedRow = c;
-                $scope.selectedRowIndex = idx;
-                $scope.rowDetails = [];
-                $scope.rowDetail = [];
-                datosFillComplementarios($scope, $scope.selectedRow.tipogarantia, CamposEspecificosServices);
-                for (var key in c) {
-                    if (!$scope.rowDetails[key] && key.indexOf("$") === -1 && key !== "toJSON") {
-                        $scope.rowDetails[key] = key;
-                        $scope.rowDetail.push({key: key, value: c[key]});
-                    }
-                }
 
-            };
-            function datosFillComplementarios($scope, gt, service) {
-                $scope.datoscomplementariosgenericos = [];
-                $scope.datoscomplementariosgenericosTemp = service.show({fieldType: "datos", garantiaType: "-1"});
-                $scope.datoscomplementariosgenericosTemp.$promise.then(function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        if (!$scope.rowDetails[data[i].key]) {
-                            data[i].value = "";
-                            $scope.datoscomplementariosgenericos.push(data[i]);
-                        }
-                    }
-                });
-                //$scope.datoscomplementariosgenericos=service.show({fieldType:"datos",garantiaType:"-1"});
-                $scope.datoscomplementariosespecificos = service.show({fieldType: "datos", garantiaType: gt});
-
-            }
 
             $scope.showContent = function ($fileContent) {
                 var jsontext = $fileContent.split('\n');
@@ -143,26 +114,21 @@
                 update_columns($scope);
             }, true);
 
+            $scope.openModal = function (idx,object) {
+                $scope.rowDetail=object;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/datos/view/verificar-datos-expediente.html',
+                        controller: 'VerificarDatosExpedienteController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
 
         }
 
 
-        function concatGontenido($scope) {
-            var cont = 0;
-            $scope.selectedRow.fechavalidaciondatos = new Date();
-            $scope.selectedRow.validaciondatos = true;
-            $scope.digitalu[cont] = $scope.selectedRow;
-            $scope.selectedRow = {};
 
-        }
-
-        function completeRowDetail($scope) {
-            for (var i = 0; i < $scope.datoscomplementariosespecificos.length; i++)
-                $scope.selectedRow[$scope.datoscomplementariosespecificos[i].key] = $scope.datoscomplementariosespecificos[i].value;
-            for (var i = 0; i < $scope.datoscomplementariosgenericos.length; i++)
-                $scope.selectedRow[$scope.datoscomplementariosgenericos[i].key] = $scope.datoscomplementariosgenericos[i].value;
-
-        }
 
         function construirTabla($scope, digital, ngTableParams, $filter) {
             $scope.data = digital;

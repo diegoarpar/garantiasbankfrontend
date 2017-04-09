@@ -35,7 +35,7 @@
 
     <script type="text/ng-template" id="display">
         <td>
-            <button ng-click="completeInfo($index,c)" class="btn green" data-toggle="modal" data-target="#myModal"
+            <button ng-click="openModal($index,c)" class="btn green" data-toggle="modal" data-target="#myModal"
                     contenteditable="false">Verificar Contenido
             </button>
         </td>
@@ -58,47 +58,4 @@
 </div>
 
 
-<div ng-show="showmodal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content"></div>
-    </div>
-    <div class="modal-dialog">
-        <div class="modal-content"></div>
-    </div>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"
-                                                                               class="">×   </span><span
-                        class="sr-only">Close</span>
 
-                </button>
-                <h4 class="modal-title" id="myModalLabel">DETALLE DE LA GARANTIA</h4>
-                <div class="content">
-                    <div ng-repeat="d in rowDetail"><input readonly="true" ng-model="d.key"/>:<input readonly="true"
-                                                                                                     ng-model="d.value"/>
-                    </div>
-                </div>
-                <div class="content">
-                    <div ng-repeat="d in datoscomplementariosgenericos"><input readonly="true" ng-model="d.key"/>:<input
-                            type="checkbox" ng-model="d.value"/></div>
-                </div>
-                <div class="content">
-                    <div ng-repeat="d in datoscomplementariosespecificos"><input readonly="true"
-                                                                                 ng-model="d.key"/>:<input
-                            type="checkbox" ng-model="d.value"/></div>
-                </div>
-
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" ng-init="showmodal=false" class="btn btn-danger" data-dismiss="modal">Regresar
-                </button>
-                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button"
-                        class="btn green">Guardar Información
-                </button>
-            </div>
-        </div>
-    </div>
-</div>

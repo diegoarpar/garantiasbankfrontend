@@ -28,7 +28,7 @@
                     isArray: true
                     },
                 userByToken: {
-                    url:ApiAuth.url+'getUsersByToken',
+                    url:ApiAuth.url+'token',
                     headers:headers2,
                     method: 'GET',
                     isArray: true

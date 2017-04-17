@@ -97,7 +97,8 @@ form[editable-form] > div {margin: 10px 0;}
 }
 
 .btn-primary {
-    background-color:#72B324! important;
+    background-color:var(--buttonSucces) !important;
+    border:NONE !important;
 }
 button>*{
     background-color:var(--buttonBackGround)! important;

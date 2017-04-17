@@ -4,7 +4,7 @@ app.constant('ApiApp', {
     url: 'http://institucion.certicamara.co/reports/api/insert-database/'
 })
 app.constant('ApiAuth', {
-    url: 'http://localhost:2022/insert-database/'
+    url: 'http://localhost:2022/autentication/'
 });
 app.constant('ApiGarantias', {
     url: 'http://localhost:2020/garantias/'

@@ -6,10 +6,10 @@
         angular.module("wpc")
             .controller('AdministradorUsuariosController', AdministradorUsuariosController);
 
-        AdministradorUsuariosController.$inject = ['$scope', 'AuthenticationGetUserServices', 'AuthenticationGetRolesServices', 'AuthenticationGetPermissionServices', '$location', '$rootScope', '$window', '$route'];
+        AdministradorUsuariosController.$inject = ['$scope', 'AuthenticationGetUserServices', 'AuthenticationGetRolesServices', 'AuthenticationGetPermissionServices', '$location', '$rootScope', '$window', '$route','$uibModal'];
 
-        function AdministradorUsuariosController($scope, AuthenticationGetUserServices, AuthenticationGetRolesServices, AuthenticationGetPermissionServices, $location, $rootScope, $window, $route) {
-            $scope.users = AuthenticationGetUserServices.show();
+        function AdministradorUsuariosController($scope, AuthenticationGetUserServices, AuthenticationGetRolesServices, AuthenticationGetPermissionServices, $location, $rootScope, $window, $route,    $uibModal) {
+            $scope.users = AuthenticationGetUserServices.showAll();
             $scope.roles = AuthenticationGetRolesServices.show();
             $scope.permission = [];
             $scope.selectedUser = {};
@@ -42,6 +42,16 @@
             $scope.removeUser = function (idx) {
                 $scope.users.splice(idx, 1);
             };
+
+            $scope.openModal = function(){
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/authentication/view/crear-usuario.html',
+                        controller: 'CrearUsuarioController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
             $scope.saveRole = function () {
                 var permission = {user: $scope.selectedUser.user, roleName: $scope.selectedRole};
                 AuthenticationGetPermissionServices.create({

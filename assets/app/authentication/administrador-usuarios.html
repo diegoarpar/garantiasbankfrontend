@@ -1,77 +1,7 @@
-<div class="modal fade" tabindex="-1" id="modalUser" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"
-                                                                               class="">×   </span><span
-                        class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel"><span>DETALLE DEL USUARIO </span></h4>
-                <div class="content">
-                    Nombre Completo : <input ng-model="selectedUser.completeName"><br/>
-                    Usuario: {{selectedUser.user}}<br/>
-                    Contraseña : <input type="password" ng-model="selectedUser.password">
-                </div>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Regresar</button>
-                <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button"
-                        class="btn green">Guardar Información
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="modalRoles" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-
-
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"
-                                                                               class="">×   </span><span
-                        class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel2">DETALLE DE LOS ROLES PARA EL USUARIO
-                    {{selectedUser.user}} </h4>
-                <div class="modal-body">
-                    <div class="content">
-                        Usuario {{selectedUser.completeName}}
-                        Lista de Roles : <select name="selectedFacilityId" ng-model="selectedRole">
-                        <option ng:repeat="r in roles" value="{{r.roleName}}">{{r.roleName}}</option>
-                    </select>
-                        <button ng-click="saveRole()" type="button" class="btn green">Agregar Role</button>
-
-                    </div>
-                    <div ng-repeat="d in permission">{{d.roleName}}</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Regresar</button>
-                    <button ng-click="saveCompleteInfoRow(selectedRowIndex)" data-dismiss="modal" type="button"
-                            class="btn green">Guardar Información
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <div id="page-wrapper">
+    <button ng-click="openModal()" class="btn green" >Crear usuario    </button>
     <div>
-        <span>Nombre Completo</span> <input type="text" ng-model="nombreCompleto" class="span2"
-                                            placeholder="Nombre Completo">
-        <br/>
-        <span>Usuario</span> <input type="text" ng-model="nombre" class="span2" placeholder="Usuario">
-        <br/>
-        <span>Contraseña</span><input type="password" ng-model="contrasena" class="span2" placeholder="Contaseña">
-
-
-        <input type="submit" value="Agregar" ng-click="addUser()" class="btn green"/>
 
         <h3>USUARIOS</h3>
 

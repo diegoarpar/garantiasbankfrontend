@@ -9,12 +9,14 @@
         LoginController.$inject = ['$scope', 'AuthenticationFactory', '$location', '$uibModalInstance', '$rootScope', '$window', '$route'];
 
         function LoginController($scope, AuthenticationFactory, $location, $uibModalInstance, $rootScope, $window, $route) {
-            inSession($scope,AuthenticationFactory,$window);
+            inSession($scope,AuthenticationFactory,$window,true);
             // callback for ng-click 'createNewUser':
-            $scope.ok = function (user, pass) {
+            $scope.ok = function () {
 
                 $window.localStorage.removeItem('token');
-                var rta = AuthenticationFactory.show({user: user, password: sha256(pass)});
+
+                var tenant=$window.sessionStorage.getItem("tenant");
+                var rta = AuthenticationFactory.logIn({user: $scope.user, pass: sha256($scope.pass),tenant:tenant});
                 $scope.token = rta;
                 $scope.token.$promise.then(function (data) {
                     if (!data.token) {

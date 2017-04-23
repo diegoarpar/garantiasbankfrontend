@@ -1,0 +1,27 @@
+<h2>Asociar roles para {{selectedUser.nombreCompleto}}</h2>
+
+<span>Roles :</span>
+<select ng-model="selectedRole">
+    <option value="ADMIN">Admin</option> <!-- interpolation -->
+    <option value="CONFIG_BODEGA">Condiguración de bodega</option>
+    <option value="USER_BODEGA">Usuario bodega</option>
+    <option value="USER_REGIONAL">Usuario regional</option>
+</select>
+<input type="submit" value="Agregar" ng-click="add()" class="btn green"/>
+<table ng-table="tableRoles" class="table" >
+
+    <tr>
+        <th >Role</th>
+        <th >Opciones</th>
+    </tr>
+    <tr ng-repeat ="p in roles" >
+        <td    >{{p.rol}}</td>
+        <td    >
+            <button class="btn green" ng-click="remove($index)" >X</button>
+        </td>
+    </tr>
+</table>
+
+
+<input type="submit" value="Guardar Cambios" ng-click="ok()" class="btn green"/>
+<button class="btn" ng-click="cancel()">Cancelar</button>

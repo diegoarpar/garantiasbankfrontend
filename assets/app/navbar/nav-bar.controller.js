@@ -13,6 +13,10 @@
             $scope.inSession=false;
 
             $scope.userLogIn=[];
+            $scope.logOut=function(){
+                $window.localStorage.removeItem('token');
+                $window.location.reload();
+            };
             if($window.localStorage.getItem('token')){
                 $scope.inSession=true;
                var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
@@ -28,12 +32,12 @@
                 $scope.menu = !$scope.menu;
 
             }
-            $scope.open = function (size) {
+            $scope.open = function () {
                 var modalInstance = $uibModal.open({
                         animation: $scope.animationsEnabled,
-                        templateUrl: 'assets/app/authentication/login.html',
+                        templateUrl: 'assets/app/authentication/view/login.html',
                         controller: 'LoginControl',
-                        size: size,
+                        size: 'lg',
                         resolve: {
                             items: function () {
                                 return $scope.items;

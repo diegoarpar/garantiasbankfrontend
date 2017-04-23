@@ -13,7 +13,7 @@ app.constant('cApp', {
     tenant: ''
 });
 
-        function inSession($scope, AuthenticationFactory, window) {
+        function inSession($scope, AuthenticationFactory, window,principal) {
                         if(!window.sessionStorage.getItem("tenant")){
                          var rta = AuthenticationFactory.tenant();
                          rta.$promise.then(function(data) {
@@ -21,9 +21,17 @@ app.constant('cApp', {
                                     if(data[0]){
                                         window.sessionStorage["tenant"]=data[0].name
                                         window.location.reload();
+
                                     }
                                  });
 
+                        }
+
+                        if(!principal){
+                            if(!window.localStorage.getItem("token")){
+                                alert("Para hacer uso de los módulos, es necesario ingresar");
+                                window.location.href = '#/product-list-portales';
+                            }
                         }
                         //alert (cApp.tenant);
 
@@ -33,7 +41,7 @@ app.constant('cApp', {
 app.config(['$routeProvider', function ($routeProvider) {
 
         $routeProvider.when('/login', {
-                templateUrl: 'assets/app/authentication/login.html',
+                templateUrl: 'assets/app/authentication/view/login.html',
                 controller: 'LoginController'
             }
         );
@@ -85,7 +93,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             }
         );
         $routeProvider.when('/administrador-usuarios', {
-                templateUrl: 'assets/app/authentication/administrador-usuarios.html',
+                templateUrl: 'assets/app/authentication/view/administrador-usuarios.html',
                 controller: 'AdministradorUsuariosController'
             }
         );

@@ -6,38 +6,20 @@
         angular.module("wpc")
             .controller('AdministradorUsuariosController', AdministradorUsuariosController);
 
-        AdministradorUsuariosController.$inject = ['$scope', 'AuthenticationGetUserServices', 'AuthenticationGetRolesServices', 'AuthenticationGetPermissionServices', '$location', '$rootScope', '$window', '$route','$uibModal'];
+        AdministradorUsuariosController.$inject = ['$scope', 'AuthenticationFactory',  '$location', '$rootScope', '$window', '$route','$uibModal'];
 
-        function AdministradorUsuariosController($scope, AuthenticationGetUserServices, AuthenticationGetRolesServices, AuthenticationGetPermissionServices, $location, $rootScope, $window, $route,    $uibModal) {
-            $scope.users = AuthenticationGetUserServices.showAll();
-            $scope.roles = AuthenticationGetRolesServices.show();
+        function AdministradorUsuariosController($scope, AuthenticationFactory,   $location, $rootScope, $window, $route,    $uibModal) {
+            inSession($scope,AuthenticationFactory,$window);
+            $scope.getUsers=function(){
+                $scope.users = AuthenticationFactory.showAll();
+            }
+            $scope.getUsers();
             $scope.permission = [];
             $scope.selectedUser = {};
             $scope.selectedRole = {};
-            $scope.addUser = function () {
-                var user = {user: $scope.nombre, pass: $scope.contrasena, completeName: $scope.nombreCompleto};
 
-
-                AuthenticationGetUserServices.create({
-                    user: $scope.nombre,
-                    pass: sha256($scope.contrasena),
-                    completeName: $scope.nombreCompleto
-                })
-                    .$promise.then(function (data) {
-                        $scope.users = AuthenticationGetUserServices.show();
-                    },
-                    function (error) {
-                        alert(error);
-                    });
-
-            };
-            $scope.editPermission = function (c) {
-                $scope.selectedUser = c;
-                $scope.permission = AuthenticationGetPermissionServices.show({user: $scope.selectedUser.user});
-            };
-            $scope.editInformation = function (c) {
-                $scope.selectedUser = c;
-
+            $scope.getSelectedUser = function () {
+                return $scope.selectedUser;
             };
             $scope.removeUser = function (idx) {
                 $scope.users.splice(idx, 1);
@@ -51,7 +33,18 @@
                         size: 'lg'
                     }
                 );
-            }
+            };
+            $scope.defineRol = function(user){
+
+            $scope.selectedUser=user;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/authentication/view/asociar-rol.html',
+                        controller: 'AsociarRolController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            };
             $scope.saveRole = function () {
                 var permission = {user: $scope.selectedUser.user, roleName: $scope.selectedRole};
                 AuthenticationGetPermissionServices.create({

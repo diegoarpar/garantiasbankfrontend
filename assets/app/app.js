@@ -15,7 +15,7 @@ app.constant('cApp', {
 
         function inSession($scope, AuthenticationFactory, window,principal) {
                         if(!window.sessionStorage.getItem("tenant")){
-                         var rta = AuthenticationFactory.tenant();
+                          var rta = AuthenticationFactory.tenant({origin:location.hostname});
                          rta.$promise.then(function(data) {
                                     if(!data[0]) alert ("este sitio no se encuentra configurado");
                                     if(data[0]){

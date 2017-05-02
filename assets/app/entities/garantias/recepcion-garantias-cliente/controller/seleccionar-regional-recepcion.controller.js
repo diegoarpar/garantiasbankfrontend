@@ -33,7 +33,7 @@
                 }
 
                 $scope.ok = function() {
-                    var subserie = JSON.parse($scope.subserieseleccionada);
+                    var subserie = $scope.subserieseleccionada;
 
                     var subserieRetrive=[{'subserie.key':subserie.key}];
                     var promise=GarantiasServices.showMetadataPost(subserieRetrive);

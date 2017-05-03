@@ -2,9 +2,11 @@ function txtToJson(txtToJson, $scope) {
     $scope.all_columns = [];
     var head = true;
     var json=[];
+
     for (var i = 0; i < txtToJson.length; i++) {
-        txtToJson[i]=txtToJson[i].replace('"','');
-        txtToJson[i]=txtToJson[i].replace(';',',');
+
+        txtToJson[i]=txtToJson[i].split('"').join('');
+        txtToJson[i]=txtToJson[i].split(';').join(',');
         var headrow=txtToJson[0];
         var headcols=txtToJson[0].split(",");
 

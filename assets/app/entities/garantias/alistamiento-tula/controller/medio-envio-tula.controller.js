@@ -13,8 +13,11 @@
 
 
          inSession($scope,AuthenticationFactory,$window);
+                $scope.medioEnvioSeleccionado={};
+                $scope.listaMedioEnvio=[{value:"Tula",name:"Tula"},{value:"Caja_X200",name:"Caja X200"},{value:"Caja_X300",name:"Caja X300"}];
                 $scope.code = "";
                 $scope.type = "CODE128B";
+
                 $scope.downloadBarCode = function() {
                 var element = angular.element($("img")[0]);
                 var toPdf=element[0].currentSrc;
@@ -34,6 +37,7 @@
 
                 };
                 $scope.ok = function() {
+                debugger;
                     var envio ={numero:$scope.code,precinto:$scope.tula,medio:$scope.medioEnvioSeleccionado};
                     $scope.sendTula(envio);
                     $uibModalInstance.dismiss($scope);

@@ -3,12 +3,9 @@
         <h4>Seleccione el medio de envío</h4>
     </div>
 
-        <span>Medio:</span>      <select ng-model="medioEnvioSeleccionado" >
-                                    <option value="{{f}}">Tula</option>
-                                    <option value="{{f}}">Caja X200</option>
-                                    <option value="{{f}}">Caja X300</option>
-                                </select>
-    </div>
+        <span>Medio:</span>      <select ng-model="medioEnvioSeleccionado"
+                                    ng-options="f as f.value for f in listaMedioEnvio" />
+
             Precinto:
             <input ng-model="tula"/>
 

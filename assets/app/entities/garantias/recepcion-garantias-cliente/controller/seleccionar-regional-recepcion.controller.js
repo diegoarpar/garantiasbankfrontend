@@ -47,9 +47,9 @@
                                         $scope.fields.push(data[0].subserie.metadata[i]);
                                         }
                                      var ingreso={};
-                                         ingreso.regional=JSON.parse($scope.regionalSeleccionada);
-                                         ingreso.subserie=JSON.parse($scope.subserieseleccionada);
-                                         ingreso.empresa=JSON.parse($scope.fondoSeleccionado);
+                                         $scope.regionalSeleccionada instanceof String? ingreso.regional=JSON.parse($scope.regionalSeleccionada):ingreso.regional=$scope.regionalSeleccionada;
+                                         $scope.subserieseleccionada instanceof String? ingreso.subserie=JSON.parse($scope.subserieseleccionada):ingreso.subserie=$scope.subserieseleccionada;
+                                         $scope.fondoSeleccionado instanceof String? ingreso.empresa=JSON.parse($scope.fondoSeleccionado):ingreso.empresa=$scope.fondoSeleccionado;
 
                                      $scope.setIngreso(ingreso);
                                 }else{

@@ -3,20 +3,31 @@
         <h4>Seleccione el medio de envío</h4>
     </div>
 
-        <span>Medio:</span>      <select ng-model="medioEnvioSeleccionado"
-                                    ng-options="f as f.value for f in listaMedioEnvio" />
-
-            Precinto:
-            <input ng-model="tula"/>
-
-
-        <button ng-if="!code" class="btn btn-success" ng-click="generateBarcode()">Generar</button>
-        <div>
-
-            <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
-            <div>    <span class="text-align-center">{{ code }}</span></div>
+    <div  >
+        <div >
+            <label>Medio:</label>
+            <select ng-model="medioEnvioSeleccionado"
+                    ng-options="f as f.value for f in listaMedioEnvio" ></select>
         </div>
-        <button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
+
+        <div >
+            <label >Precinto</label>
+            <input ng-model="tula"/>
+        </div>
+
+        <div ">
+            <label >Guía</label>
+            <input ng-model="guia"/>
+        </div>
+    </div>
+    <button ng-if="!code" class="btn btn-success" ng-click="generateBarcode()">Generar</button>
+    <div>
+
+        <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
+        <div>    <span class="text-align-center">{{ code }}</span></div>
+
+    </div>
+    <button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
     <div class="modal-footer">
         <button class="btn btn-success" ng-click="ok()">Confirmar</button>
         <button class="btn" ng-click="cancel()">Cancelar</button>

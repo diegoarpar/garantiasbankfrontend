@@ -115,3 +115,16 @@ var generateBarCodePDF = function (code, document, text) {
     $("#bcTarget").barcode("", "code128", {output: "svg"});
 
 };
+
+var downloadPDF= function (pdfName, image, dateList){
+         var doc = new jsPDF('p', 'mm');
+         doc.addImage(image, 'PNG', 10, 10);
+         var y=41;
+         for(var i=0;i<dateList.length;i++){
+            doc.text(10, y, dateList[i].name+': '+dateList[i].value);
+            y+=10;
+         }
+         var fileName="sample-file.pdf";
+         if(pdfName!=null)fileName=pdfName;
+         doc.save(fileName);
+}

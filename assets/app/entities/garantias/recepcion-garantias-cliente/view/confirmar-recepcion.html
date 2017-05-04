@@ -9,7 +9,14 @@
     <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
     <div>    <span class="text-align-center">{{ code }}</span></div>
 </div>
-<button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
+<div  class="col-4">
+    <label >Valija</label>
+    <input class="text-align-center" ng-model="valija"/>
+
+    <label >Precinto</label>
+    <input class="text-align-center" ng-model="precinto"/>
+    <button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
+</div>
 <div class="modal-footer">
     <button class="btn btn-success" ng-click="ok()">Confirmar</button>
     <button class="btn" ng-click="cancel()">Cancelar</button>

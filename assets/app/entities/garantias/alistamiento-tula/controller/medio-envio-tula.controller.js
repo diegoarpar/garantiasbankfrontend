@@ -21,11 +21,8 @@
                 $scope.downloadBarCode = function() {
                 var element = angular.element($("img")[0]);
                 var toPdf=element[0].currentSrc;
-
-                     var doc = new jsPDF('p', 'mm');
-                             doc.addImage(toPdf, 'PNG', 10, 10);
-                             doc.text(40, 41, 'Código '+$scope.code);
-                             doc.save('sample-file.pdf');
+                var dateList=[{name:"Código",value:$scope.code},{name:"Guía",value:$scope.guia},{name:"Precinto",value:$scope.tula},{name:"Medio de envío",value:$scope.medioEnvioSeleccionado.value}];
+                downloadPDF("label.pdf",toPdf,dateList);
                 };
                 $scope.generateBarcode = function() {
                     $scope.code = '';

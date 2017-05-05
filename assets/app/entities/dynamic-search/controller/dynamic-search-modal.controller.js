@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['AuthenticationFactory','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window'];
+        DynamicSearchModalController.$inject = ['AuthenticationFactory','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController'];
 
-        function DynamicSearchModalController(AuthenticationFactory,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window) {
+        function DynamicSearchModalController(AuthenticationFactory,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController) {
 
             inSession($scope,AuthenticationFactory,$window);
             $scope.entity = ShareService.get();
@@ -99,10 +99,44 @@
 
             $scope.pdfUrlArray = {};
             function retrieve(url) {
-                ShowFiles.retrieve(url).success(function (data) {
+
+                CMSController.findFile({fileId:url});
+                /*ShowFiles.retrieve(url).success(function (data) {
                     var file = new Blob([data], {type: 'application/pdf'});
                     $scope.pdfUrlArray[url] = URL.createObjectURL(file);
-                });
+                });*/
+            }
+            $scope.newDate=function (date) {
+
+            }
+            $scope.retrieveFile=function (url,fileName) {
+
+                var promise=CMSController.findFile({fileId:url});
+                promise.$promise.then(function(data){
+
+                   var contentType = "application/octet-stream";
+                   var urlCreator = window.URL || window.webkitURL || window.mozURL || window.msURL;
+                   if (urlCreator) {
+                       var blob = new Blob([data], { type: contentType });
+                       var url = urlCreator.createObjectURL(blob);
+                       var a = document.createElement("a");
+                       document.body.appendChild(a);
+                       a.style = "display: none";
+                       a.href = url;
+                       a.download = fileName; //you may assign this value from header as well
+                       a.click();
+                       window.URL.revokeObjectURL(url);
+                   }
+
+
+
+                    }
+
+                );
+                /*ShowFiles.retrieve(url).success(function (data) {
+                    var file = new Blob([data], {type: 'application/pdf'});
+                    $scope.pdfUrlArray[url] = URL.createObjectURL(file);
+                });*/
             }
 
             $scope.pdfName = 'Relativity: The Special and General Theory by Albert Einstein';

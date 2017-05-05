@@ -28,15 +28,19 @@
             <th> Visualizar</th>
         </tr>
         </thead>
-        <tr ng-repeat="row in listOfFiles" ng-click="openModal(row)">
+        <tr ng-repeat="row in listOfFiles" >
             <td>{{row.fileName}}</td>
-            <td>{{getDate(row.garid.date) | date:'short'}}</td>
+            <td>{{row.fechaCarga}}</td>
             <td>
-                <button type="submit"
-                        ng-click="retrieve(row.fileName)"
+                <button type="submit" ng-if="false"
+                        ng-click="openModal(row)"
                         class="btn btn-info btn-sm">
                     <span class="glyphicon glyphicon-eye-open"></span>
                     <span class="hidden-xs hidden-sm"></span>
+                </button>
+                <button class="btn green"
+                        ng-click="retrieveFile(row.fileId,row.fileName)">
+                        Descargar
                 </button>
             </td>
         </tr>

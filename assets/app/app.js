@@ -9,6 +9,9 @@ app.constant('ApiAuth', {
 app.constant('ApiGarantias', {
     url: 'http://localhost:2020/garantias/'
 });
+app.constant('ApiFiles', {
+    url: 'http://localhost:2024/CMS/'
+});
 app.constant('cApp', {
     tenant: ''
 });

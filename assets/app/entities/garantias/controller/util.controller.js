@@ -128,3 +128,24 @@ var downloadPDF= function (pdfName, image, dateList){
          if(pdfName!=null)fileName=pdfName;
          doc.save(fileName);
 }
+
+function construirTabla( table, dataSet,ngTableParams,$filter){
+
+   var data = dataSet;
+	table = new ngTableParams({
+		page: 1,
+		count: 1000,
+		sorting: {processkey:'asc'}
+	}, {
+		total: dataSet.length,
+
+		getData: function ($defer, params) {
+				params.total(dataSet.length);
+				data = params.sorting() ? $filter('orderBy')(dataSet, params.orderBy()) : dataSet;
+				data = params.filter() ? $filter('filter')(data, params.filter()) : dataSet;
+				data = data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+				$defer.resolve(data);
+		}
+	});
+
+}

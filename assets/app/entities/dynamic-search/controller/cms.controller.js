@@ -23,8 +23,7 @@
                     url:ApiFiles.url+"FileServices",
                     headers: headers2,
                     method: 'GET',
-                    isArray: false,
-                    params: {'@param': '@param'},
+                    params: {'@param': '@param'}
                 },
                 showPost: {
                     url:ApiFiles.url+'retrive',

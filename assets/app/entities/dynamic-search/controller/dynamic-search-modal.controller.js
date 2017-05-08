@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['AuthenticationFactory','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController'];
+        DynamicSearchModalController.$inject = ['AuthenticationFactory','ApiFiles','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController','$http'];
 
-        function DynamicSearchModalController(AuthenticationFactory,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController) {
+        function DynamicSearchModalController(AuthenticationFactory,ApiFiles,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController,$http) {
 
             inSession($scope,AuthenticationFactory,$window);
             $scope.entity = ShareService.get();
@@ -40,12 +40,26 @@
                 $scope.$apply(function () {
                     //add the file object to the scope's files collection
                     $scope.files.push(args.file);
-                    for (var i = 0; i < $scope.files.length; i++)
-                        UploadFilesService.create({
+                    for (var i = 0; i < $scope.files.length; i++){
+                        var promise=UploadFilesService.create({
                             files: $scope.files[i],
                             model: $scope.model,
                             garid: $scope.garantiaid
                         });
+                        promise.$promise.then(function(){
+                            alert("archivo guardado");
+                            $scope.files=[];
+                            ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
+                                                                                            function (data) {
+                                                                                                $scope.listOfFiles = data;
+                                                                                            },
+                                                                                            function (error) {
+
+                                                                                            }
+                                                                                        );
+                        });
+                    }
+                    //$scope.files=[];
                 });
             });
 
@@ -53,8 +67,22 @@
             $scope.log = [];
             $scope.$watch('files', function () {
                 // $scope.upload($scope.files);
-                for (var i = 0; i < $scope.files.length; i++)
-                    UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
+                for (var i = 0; i < $scope.files.length; i++){
+                   var promise= UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
+                    promise.$promise.then(function(){
+                                                alert("archivo guardado");
+                                                $scope.files=[];
+                                                ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
+                                                                function (data) {
+                                                                    $scope.listOfFiles = data;
+                                                                },
+                                                                function (error) {
+
+                                                                }
+                                                            );
+                                            });
+                }
+                //$scope.files=[];
             });
             $scope.$watch('file', function () {
             //alert("upload file");
@@ -110,34 +138,24 @@
 
             }
             $scope.retrieveFile=function (url,fileName) {
+                 var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
 
-                var promise=CMSController.findFile({fileId:url});
-                promise.$promise.then(function(data){
+                debugger;
 
-                   var contentType = "application/octet-stream";
-                   var urlCreator = window.URL || window.webkitURL || window.mozURL || window.msURL;
-                   if (urlCreator) {
-                       var blob = new Blob([data], { type: contentType });
-                       var url = urlCreator.createObjectURL(blob);
-                       var a = document.createElement("a");
-                       document.body.appendChild(a);
-                       a.style = "display: none";
-                       a.href = url;
-                       a.download = fileName; //you may assign this value from header as well
-                       a.click();
-                       window.URL.revokeObjectURL(url);
-                   }
-
-
-
-                    }
-
-                );
-                /*ShowFiles.retrieve(url).success(function (data) {
-                    var file = new Blob([data], {type: 'application/pdf'});
-                    $scope.pdfUrlArray[url] = URL.createObjectURL(file);
-                });*/
+                $http({
+                    url: ApiFiles.url+"FileServices",
+                    method: "GET",
+                    params: {fileId:url},
+                    responseType: 'arraybuffer'
+                 }).success(function (data, status, headers, config) {
+                       var blob = new Blob([data], {type:"application/octet-stream"});
+                      saveAs(blob, fileName);
+                   }).error(function (data, status, headers, config) {
+                       //upload failed
+                   });
+                //var promise=CMSController.findFile({fileId:url});
             }
+
 
             $scope.pdfName = 'Relativity: The Special and General Theory by Albert Einstein';
             $scope.scroll = 0;
@@ -166,3 +184,30 @@
 
 
     })();
+
+    function base64ToArrayBuffer(base64,window) {
+
+            //var binaryString =  window.atob(base64);
+            var binaryString =  base64;
+            var binaryLen = binaryString.length;
+            var bytes = new Uint8Array(binaryLen);
+            for (var i = 0; i < binaryLen; i++)        {
+                var ascii = binaryString.charCodeAt(i);
+                bytes[i] = ascii;
+            }
+            return bytes;
+        }
+        var saveByteArray = (function (data,name) {
+        debugger;
+
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+                var blob = new Blob(data, {type: "octet/stream"}),
+                    url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = name;
+                a.click();
+                window.URL.revokeObjectURL(url);
+
+            });

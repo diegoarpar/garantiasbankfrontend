@@ -9,8 +9,8 @@
         GarantiasServices.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
         function GarantiasServices($resource, ApiGarantias, $rootScope, $window, $scope) {
-        var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
-         var url = ApiGarantias.url + 'insertGarantias';
+        var headers2= getGenericHeader($window);
+        var url = ApiGarantias.url + 'insertGarantias';
             return $resource(url, {}, {
                 create: {
                     method: 'POST',
@@ -32,6 +32,7 @@
                     isArray: true,
                     params: {'@param': '@param'}
                 },
+                /*-----------TRD---- */
                 showtrd: {
                     url:ApiGarantias.url+'trd',
                     headers: headers2,
@@ -51,7 +52,7 @@
                       params: {'@param': '@param'},
                       isArray: false,
                       data: '@data'
-                  },
+                  },/*-----------REGIONAL---- */
                 showregional: {
                     url:ApiGarantias.url+'regional',
                     headers: headers2,
@@ -65,7 +66,9 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },showMetadataPost: {
+                },/*-----------METADATA---- */
+
+                showMetadataPost: {
                       url:ApiGarantias.url+'metadata/retrive',
                       headers: headers2,
                       method: 'POST',
@@ -87,6 +90,20 @@
                     data: '@data'
                 },saveChangesMetadata: {
                     url:ApiGarantias.url+'metadata/savechanges',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
+                },
+                /*-----------MENU---- */
+                showmenu: {
+                    url:getUrlServices(ApiGarantias,'menu'),
+                    headers: headers2,
+                    method: 'GET',
+                    isArray: true
+                },createmenu: {
+                    url:getUrlServices(ApiGarantias,'menu'),
                     method: 'POST',
                     headers: headers2,
                     params: {'@param': '@param'},

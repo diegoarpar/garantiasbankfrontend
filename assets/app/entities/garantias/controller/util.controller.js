@@ -149,7 +149,28 @@ function construirTabla( $scope, dataSet,ngTableParams,$filter){
 	});
     return table;
 }
-
+function getGenericHeader(window){
+    var headers= {'Authorization': 'Bearer ' + window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+    return headers;
+}
+function getUrlServices(rootServices,service){
+        switch (service) {
+            case "garantias":
+                // Blah
+                break;
+            case "menu":
+                return rootServices.url+"menu";
+            case "trd":
+            // Blah
+                break;
+            case "regional":
+            // Blah
+                break;
+            case "metadata":
+            // Blah
+                break;
+        }
+}
 function handleSubmitServicePromise(promise,message){
     var _document=document;
     var img = document.createElement("IMG");        // Create a <button> element

@@ -129,23 +129,48 @@ var downloadPDF= function (pdfName, image, dateList){
          doc.save(fileName);
 }
 
-function construirTabla( table, dataSet,ngTableParams,$filter){
+function construirTabla( $scope, dataSet,ngTableParams,$filter){
 
-   var data = dataSet;
-	table = new ngTableParams({
+    $scope.data = dataSet;
+	var table = new ngTableParams({
 		page: 1,
-		count: 1000,
-		sorting: {processkey:'asc'}
+		count: 1000
+
 	}, {
 		total: dataSet.length,
 
 		getData: function ($defer, params) {
 				params.total(dataSet.length);
-				data = params.sorting() ? $filter('orderBy')(dataSet, params.orderBy()) : dataSet;
-				data = params.filter() ? $filter('filter')(data, params.filter()) : dataSet;
-				data = data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-				$defer.resolve(data);
+				$scope.data = params.sorting() ? $filter('orderBy')(dataSet, params.orderBy()) : dataSet;
+				$scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : dataSet;
+				$scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+				$defer.resolve($scope.data);
 		}
 	});
+    return table;
+}
 
+function handleSubmitServicePromise(promise,message){
+    var _document=document;
+    var img = document.createElement("IMG");        // Create a <button> element
+    img.src="assets/image/logos/alistamientoProcesando.jpg";
+
+    _document.body.appendChild(img);
+
+
+
+    promise.$promise.then(function successCallback(data) {
+            if(message) alert(message);
+
+             _document.body.removeChild(img);
+
+        }, function errorCallback(response) {
+
+          var message = response.statusText;
+          if(response.data)
+            if(response.data.message)message+=response.data.message;
+          alert(message)
+           _document.body.removeChild(img);
+
+        });
 }

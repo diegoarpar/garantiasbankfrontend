@@ -17,9 +17,12 @@
             $scope.columns = [];
             $scope.digital = [];
             $scope.digitalu = [];
+            $scope.dataTable = [];
             $scope.numero = [];
             $scope.regionales = CamposParametricosServices.show({nombreparametrica: "origen"});
             $scope.regional={};
+            $scope.tablaGarantias=construirTabla( $scope, $scope.digital,ngTableParams,$filter);
+
             $scope.setRegional = function (data) {
                 $scope.regional=JSON.parse( data);
             }
@@ -107,8 +110,16 @@
                     $scope.digital = data;
                     fillColumns(data, $scope);
                     generateColumns($scope.all_columns,$scope);
+
+                    $scope.tablaGarantias=construirTabla($scope,  $scope.digital,ngTableParams,$filter);
                 });
             };
+            $scope.mark_all=function(){
+                for(var i=0;i<$scope.data.length;i++){
+                    $scope.data[i].enviadoTula=(!$scope.data[i].enviadoTula);
+                }
+
+            }
             $scope.sendTula = function (envio) {
                 var documentosEnviados=[];
                 for(var i=0;i<$scope.digital.length;i++){
@@ -158,21 +169,5 @@
 
         }
 
-        function construirTabla($scope, digital, ngTableParams, $filter) {
-            $scope.data = digital;
-            $scope.tablaGarantias = new ngTableParams({
-                page: 1,
-                count: 2000,
-                sorting: {firstname: 'asc'}
-            }, {
-                total: digital.length,
-                getData: function ($defer, params) {
-                    params.total(digital.length);
-                    $scope.data = params.sorting() ? $filter('orderBy')(digital, params.orderBy()) : digital;
-                    $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : digital;
-                    $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    $defer.resolve($scope.data);
-                }
-            });
-        }
+
     })();

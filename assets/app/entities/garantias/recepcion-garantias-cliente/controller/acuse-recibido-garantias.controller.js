@@ -104,8 +104,11 @@
                     for(var i=0;i<$scope.digital.length;i++){
                         $scope.digital[i].ingreso=$scope.ingreso;
                     }
-                    GarantiasServices.create($scope.digital);
-                    alert("REGISTRO REALIZADO CON EL ACUSE " + $scope.numero[0].number);
+                    var promise = GarantiasServices.create($scope.digital);
+
+                    var message="REGISTRO REALIZADO CON EL ACUSE " + $scope.numero[0].number;
+                    handleSubmitServicePromise(promise,message);
+
                     $scope.numero = [];
                     $scope.digital = [];
                     $scope.all_columns = [];
@@ -149,6 +152,7 @@
 
                 if (listColumns[i].title == value) {
                     if (listColumns[i].columnName == undefined) {
+                        alert("Existe un valor sin equivalente");
                         throw("Existe un valor sin equivalente");
                         return "NOK";
                     }
@@ -166,6 +170,7 @@
                     if (!row[newColumnName]) {
                         row[newColumnName] = $scope.digital[i][e];
                     } else {
+                        alert("Columna " + newColumnName + " repetida");
                         throw ("Columna " + newColumnName + " repetida");
                     }
 

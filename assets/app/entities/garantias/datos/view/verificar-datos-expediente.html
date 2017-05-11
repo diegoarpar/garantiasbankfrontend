@@ -11,7 +11,7 @@
 <div ng-if="t.metadata.length>0" ng-repeat="t in tipodocumento" >
     <h4>{{t.value}}</h4>
     <div ng-if="m.fieldType=='datos'" ng-repeat="m in t.metadata">
-        <input readonly="true" ng-model="m.key"/>:<input  type="checkbox" ng-model="m.result"/>
+        <input readonly="true" ng-model="m.key"/>:<input  type="{{m.fieldPrototype}}" ng-model="m.result"/>
     </div>
 </div>
 

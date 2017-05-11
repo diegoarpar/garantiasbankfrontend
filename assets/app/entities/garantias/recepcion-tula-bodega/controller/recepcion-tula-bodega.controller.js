@@ -66,7 +66,8 @@
 
             $scope.checkInTula = function () {
                 concatGarantia($scope);
-                GarantiasServices.update($scope.digitalu);
+                var promise=GarantiasServices.update($scope.digitalu);
+                handleSubmitServicePromise(promise,null);
                 $scope.digital = [];
                 $scope.digitalu = [];
             };
@@ -117,14 +118,11 @@
 
         function concatGarantia($scope) {
             var cont = 0;
-            var validaciones={};
-                validaciones.validacionidoneidad=false;
-                validaciones.validacioncompletitud=false;
-                validaciones.validaciondatos=false;
+
 
             for (var i = 0; i < $scope.digital.length; i++) {
                 if ($scope.digital[i].garantiaRecibida) {
-                    $scope.digital[i].validaciones = validaciones;
+
                     $scope.digital[i].envio.recibido=true;
                     delete $scope.digital[i].garantiaRecibida;
                     $scope.digitalu.push($scope.digital[i]);

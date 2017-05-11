@@ -49,8 +49,7 @@
 
             $scope.ok = function() {
                 var row = $scope.rowDetail;
-                row=concatGontenido(row);
-                row=concatIdoneidad(row,$scope.subserie, $scope.tipodocumento);
+                row=concatStageRow("idoneidad",row,$scope.subserie, $scope.tipodocumento);
                 var parameter=[];
                 parameter[0]=row;
 
@@ -60,7 +59,10 @@
                 promise.$promise.then(function (data){
                     if(data!=null){
                         $scope.rowToSave[0].idoneidad._date=data[0].number;
-                        GarantiasServices.update(parameter);
+                         $scope.cleanDigital();
+                        var promise=GarantiasServices.update(parameter);
+
+                        handleSubmitServicePromise(promise,null);
                     }
                 });
 
@@ -81,34 +83,6 @@
             };
 
         }
-        function concatGontenido(row) {
-            var validaciones={};
-            validaciones.validacionidoneidad=true;
-            validaciones.validacioncompletitud=true;
-            validaciones.validaciondatos=false;
 
-            row.validaciones=validaciones;
-            return row;
-        }
-        function concatIdoneidad(row,subserie,tipodocumento) {
-            row.idoneidad={};
-            row.idoneidad.general=[];
-            row.idoneidad.tipoDocumento={};
-            for(var i=0;i<subserie.length;i++){
-                for(var j=0;j<subserie[i].metadata.length;j++){
-                    if(subserie[i].metadata[j]["fieldType"]=="idoneidad"){
-                        row.idoneidad.general.push(subserie[i].metadata[j]);
-                    }
-                }
-            }
-            for(var i=0;i<tipodocumento.length;i++){
-                for(var j=0;j<tipodocumento[i].metadata.length;j++){
-                    row.idoneidad.tipoDocumento[tipodocumento[i].key]=[];
-                    if(tipodocumento[i].metadata[j]["fieldType"]=="idoneidad"){
-                        row.idoneidad.tipoDocumento[tipodocumento[i].key].push(tipodocumento[i].metadata[j]);
-                    }
-                }
-            }
-            return row;
-        }
+
     })();

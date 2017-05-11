@@ -222,6 +222,7 @@
         }
           $scope.getMetadatoFromNode=function(nodes){
             var metadatos=[];
+            debugger;
             for(var i=0;i<nodes.length;i++){
                 if(nodes[i].nombreparametrica=="metadato"){
                    metadatos[metadatos.length]=nodes[i];
@@ -326,7 +327,8 @@
                     trd[i]["tipodocumento"]=tipodocumento;
                 }
                 $scope.trdssubseries=[];
-                GarantiasServices.saveChangesMetadata(trd);
+                var promise=GarantiasServices.saveChangesMetadata(trd);
+                handleSubmitServicePromise(promise,null);
                 $scope.retrive();
                };
           $scope.retrive = function (context) {

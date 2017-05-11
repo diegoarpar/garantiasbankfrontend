@@ -50,7 +50,12 @@
                                 promise.$promise.then(function (data){
                                     if(data.length>0){
                                         if(data[0].nodes!=undefined){
-                                            $scope.actualVariable.nodes=JSON.parse(data[0].nodes);
+                                            try{
+                                                $scope.actualVariable.nodes=JSON.parse(data[0].nodes);
+                                            }catch(e){
+                                                $scope.actualVariable.nodes=data[0].nodes;
+
+                                            }
                                         }
                                     }
 

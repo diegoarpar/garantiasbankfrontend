@@ -106,12 +106,14 @@
                 var parameters=[];
                 parameters[0]=consulta;
                 $scope.digital = GarantiasServices.showPost(parameters);
+                showWaiteImage(true);
                 $scope.digital.$promise.then(function (data) {
                     $scope.digital = data;
                     fillColumns(data, $scope);
                     generateColumns($scope.all_columns,$scope);
 
                     $scope.tablaGarantias=construirTabla($scope,  $scope.digital,ngTableParams,$filter);
+                    showWaiteImage(false);
                 });
             };
             $scope.mark_all=function(){
@@ -120,20 +122,33 @@
                 }
 
             }
+            $scope.newProperties=[];
+            $scope.setNewProperties=function(newProperties){
+                $scope.newProperties=newProperties;
+            }
+            $scope.ingreso={};
+            $scope.setIngreso=function(ingreso){
+                    $scope.ingreso=ingreso;
+            }
             $scope.sendTula = function (envio) {
                 var documentosEnviados=[];
+
                 for(var i=0;i<$scope.digital.length;i++){
                     if($scope.digital[i].enviadoTula){
                         delete $scope.digital[i].enviadoTula;
                         $scope.digital[i].envio=envio;
                         $scope.digital[i].ingreso.enviadoTula=true;
                         documentosEnviados.push($scope.digital[i]);
+                        for(var j=0;j<$scope.newProperties.length;j++){
+                            $scope.digital[i].envio[$scope.newProperties[j].name]=$scope.newProperties[j].value;
+                        }
                     }
 
                 }
-                GarantiasServices.update(documentosEnviados);
-                alert("REGISTRO REALIZADO CON EL ID " + envio.numero);
+                var promise =GarantiasServices.update(documentosEnviados);
+                handleSubmitServicePromise(promise,"REGISTRO REALIZADO CON EL ID " + envio.numero);
                 $scope.digital = [];
+                $scope.tablaGarantias=construirTabla( $scope, $scope.digital,ngTableParams,$filter);
 
             };
             $scope.showContent = function ($fileContent) {

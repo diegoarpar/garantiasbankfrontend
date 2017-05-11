@@ -171,27 +171,64 @@ function getUrlServices(rootServices,service){
                 break;
         }
 }
+function showWaiteImage(showImage){
+        var _document=document;
+        if(showImage==true){
+            var img = _document.getElementById("waitingImage");
+            if(img==null){
+                img = document.createElement("IMG");        // Create a <button> element
+                img.src="assets/image/logos/alistamientoProcesando.jpg";
+                img.id="waitingImage";
+                _document.body.appendChild(img);
+            }
+        }else{
+            var img = _document.getElementById("waitingImage");
+            if(img!=null){
+                _document.body.removeChild(img);
+            }
+        }
+}
 function handleSubmitServicePromise(promise,message){
-    var _document=document;
-    var img = document.createElement("IMG");        // Create a <button> element
-    img.src="assets/image/logos/alistamientoProcesando.jpg";
-
-    _document.body.appendChild(img);
-
-
-
+    showWaiteImage(true);
     promise.$promise.then(function successCallback(data) {
             if(message) alert(message);
-
-             _document.body.removeChild(img);
-
+            showWaiteImage(false);
         }, function errorCallback(response) {
-
+            showWaiteImage(false);
           var message = response.statusText;
           if(response.data)
             if(response.data.message)message+=response.data.message;
           alert(message)
-           _document.body.removeChild(img);
+
 
         });
 }
+
+function concatStageRow(name,row,subserie,tipodocumento){
+
+            if(row.validaciones==null)row.validaciones={};
+            row.validaciones[name]=true;
+            row[name]={};
+            row[name].general=[];
+            row[name].tipoDocumento={};
+            for(var i=0;i<subserie.length;i++){
+                for(var j=0;j<subserie[i].metadata.length;j++){
+                    if(subserie[i].metadata[j]["fieldType"]=="idoneidad"){
+                        row[name].general.push(subserie[i].metadata[j]);
+                    }
+                }
+            }
+            for(var i=0;i<tipodocumento.length;i++){
+                for(var j=0;j<tipodocumento[i].metadata.length;j++){
+                    if(row[name].tipoDocumento[tipodocumento[i].key]==null)
+                    row[name].tipoDocumento[tipodocumento[i].key]=[];
+                    if(tipodocumento[i].metadata[j]["fieldType"]==name){
+                        row[name].tipoDocumento[tipodocumento[i].key].push(tipodocumento[i].metadata[j]);
+                    }
+                }
+            }
+
+            return row;
+
+}
+

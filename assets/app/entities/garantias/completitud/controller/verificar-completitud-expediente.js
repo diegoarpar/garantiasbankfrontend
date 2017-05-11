@@ -47,10 +47,10 @@
                 return rowDetailShow(row);
             };
 
+
             $scope.ok = function() {
                 var row = $scope.rowDetail;
-                row=concatGontenido(row);
-                row=concatCompletitud(row,$scope.subserie, $scope.tipodocumento);
+                row=concatStageRow("completitud",row,$scope.subserie, $scope.tipodocumento);
                 var parameter=[];
                 parameter[0]=row;
 
@@ -60,7 +60,9 @@
                 promise.$promise.then(function (data){
                     if(data!=null){
                         $scope.rowToSave[0].completitud._date=data[0].number;
-                        GarantiasServices.update(parameter);
+                        var promise=GarantiasServices.update(parameter);
+                        $scope.cleanDigital();
+                        handleSubmitServicePromise(promise,null);
                     }
                 });
 
@@ -83,35 +85,5 @@
             };
 
         }
-        function concatGontenido(row) {
-            var validaciones={};
-            validaciones.validacionidoneidad=false;
-            validaciones.validacioncompletitud=true;
-            validaciones.validaciondatos=false;
 
-            row.validaciones=validaciones;
-            return row;
-        }
-        function concatCompletitud(row,subserie,tipodocumento) {
-            row.completitud={};
-            row.completitud.general=[];
-            row.completitud.tipoDocumento={};
-            for(var i=0;i<subserie.length;i++){
-                for(var j=0;j<subserie[i].metadata.length;j++){
-                    if(subserie[i].metadata[j]["fieldType"]=="completitud"){
-                        row.completitud.general.push(subserie[i].metadata[j]);
-                    }
-                }
-            }
-            for(var i=0;i<tipodocumento.length;i++){
-                for(var j=0;j<tipodocumento[i].metadata.length;j++){
-                    row.completitud.tipoDocumento[tipodocumento[i].key]=[];
-                    if(tipodocumento[i].metadata[j]["fieldType"]=="completitud"){
-                        row.completitud.tipoDocumento[tipodocumento[i].key].push(tipodocumento[i].metadata[j]);
-                    }
-                }
-            }
-
-            return row;
-        }
     })();

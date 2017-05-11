@@ -2,13 +2,13 @@
 (function () {
         'use strict';
         angular.module("wpc")
-            .controller('ConfirmarRecepcionController', ConfirmarRecepcionController);
+            .controller('ConfirmarCargaDirectaController', ConfirmarCargaDirectaController);
 
-        ConfirmarRecepcionController.$inject =
+        ConfirmarCargaDirectaController.$inject =
             ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
 
-        function ConfirmarRecepcionController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService, CamposGenericosServices,
+        function ConfirmarCargaDirectaController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService, CamposGenericosServices,
                                  CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance) {
 
 
@@ -39,7 +39,7 @@
                 var dateList=[];
                 for(var i =0;i<$scope.subserie.length;i++)
                     for(var j =0;j<$scope.subserie[i].metadata.length;j++){
-                        if($scope.subserie[i].metadata[j].fieldType=="recepcion")
+                        if($scope.subserie[i].metadata[j].fieldType=="carguedirecto")
                         dateList.push({name:$scope.subserie[i].metadata[j].value,value:$scope.subserie[i].metadata[j].result});
                     }
                 downloadPDF("label.pdf",toPdf,dateList);
@@ -59,7 +59,7 @@
 
                 for(var i =0;i<$scope.subserie.length;i++)
                     for(var j =0;j<$scope.subserie[i].metadata.length;j++){
-                        if($scope.subserie[i].metadata[j].fieldType=="recepcion")
+                        if($scope.subserie[i].metadata[j].fieldType=="carguedirecto")
                         newProperties.push({name:$scope.subserie[i].metadata[j].key,value:$scope.subserie[i].metadata[j].result});
                     }
                 $scope.setNewProperties(newProperties);

@@ -4,13 +4,13 @@
 (function () {
         'use strict';
         angular.module("wpc")
-            .controller('AcuseRecibidoGarantiasController', AcuseRecibidoGarantiasController);
+            .controller('CargaDirectaController', CargaDirectaController);
 
-        AcuseRecibidoGarantiasController.$inject =
+        CargaDirectaController.$inject =
             ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
                 'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal','$timeout'];
 
-        function AcuseRecibidoGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
+        function CargaDirectaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
                                                   GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal,$timeout) {
             inSession($scope,AuthenticationFactory,$window);
 
@@ -26,8 +26,8 @@
 
             $scope.openModal = function () {
                 var modalInstance = $uibModal.open({
-                        templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',
-                        controller: 'SeleccionarRegionalController',
+                        templateUrl: 'assets/app/entities/garantias/carga-directa/view/seleccionar-regional-carga-directa.html',
+                        controller: 'SeleccionarRegionalCargaDirectaController',
                         scope: $scope,
                         size: 'lg'
                     }
@@ -36,8 +36,8 @@
             };
             $scope.confirmarPlanillaModal = function () {
                 var modalInstance2 = $uibModal.open({
-                        templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/confirmar-recepcion.html',
-                        controller: 'ConfirmarRecepcionController',
+                        templateUrl: 'assets/app/entities/garantias/carga-directa/view/carga-directa-confirmar-recepcion.html',
+                        controller: 'ConfirmarCargaDirectaController',
                         scope: $scope,
                         size: 'lg'
                     }
@@ -108,9 +108,14 @@
                     changeColumnName($scope, $scope.all_columns);
                     for(var i=0;i<$scope.digital.length;i++){
                         $scope.digital[i].ingreso=$scope.ingreso;
+                        $scope.digital[i].ingreso.cargaMasiva=true;
                         for(var j=0;j<$scope.newProperties.length;j++){
                             $scope.digital[i][$scope.newProperties[j].name]=$scope.newProperties[j].value;
                         }
+                        var listVacio=[];
+                        concatStageRow("completitud",$scope.digital[i],listVacio,listVacio);
+                        concatStageRow("idoneidad",$scope.digital[i],listVacio,listVacio);
+                        concatStageRow("datos",$scope.digital[i],listVacio,listVacio);
                     }
 
                     var promise = GarantiasServices.create($scope.digital);

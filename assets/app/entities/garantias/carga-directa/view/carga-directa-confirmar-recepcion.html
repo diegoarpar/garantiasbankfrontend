@@ -12,7 +12,7 @@
 <div  class="col-4">
     <div ng-if="t.metadata.length>0" ng-repeat="t in subserie" >
 
-        <div ng-if="m.fieldType=='recepcion'" ng-repeat="m in t.metadata">
+        <div ng-if="m.fieldType=='carguedirecto'" ng-repeat="m in t.metadata">
             <input readonly="true" ng-model="m.value"/>:<input  type="{{m.fieldPrototype}}" ng-model="m.result"/>
         </div>
     </div>

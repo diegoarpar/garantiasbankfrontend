@@ -70,6 +70,11 @@ app.config(['$routeProvider', function ($routeProvider) {
                 controller: 'AlistamientoTulaController'
             }
         );
+        $routeProvider.when('/carga-directa-bodega', {
+                templateUrl: 'assets/app/entities/garantias/carga-directa/view/carga-directa-garantias.html',
+                controller: 'CargaDirectaController'
+            }
+        );
         $routeProvider.when('/product-list-acuse-recibido-garantia', {
                 templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/acuse-recibido-garantias.html',
                 controller: 'AcuseRecibidoGarantiasController'

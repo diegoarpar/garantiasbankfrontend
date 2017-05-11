@@ -12,7 +12,11 @@
                                     <option ng-repeat="r in regionales" value="{{r}}">{{r.location+"-"+ r.value}}</option>
                                 </select>
     </div>
-
+    <div>
+    <span>Documentos  a recibir:</span>    <select  ng-model="subserieseleccionada"
+                                                ng-options="r['subserie'] as  r['subserie'].value for r in subseries">
+    </select>
+    </div>
     <div class="modal-footer">
         <button class="btn btn-success" ng-click="ok()">Cargar planilla</button>
         <button class="btn" ng-click="cancel()">Cancelar</button>

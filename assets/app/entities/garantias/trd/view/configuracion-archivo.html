@@ -65,6 +65,7 @@
 
         <span ng-if="node.nombreparametrica">{{node.nombreparametrica}} :</span>
         <span ng-if="node.nombreparametrica">{{node.value}}</span>
+        <span ng-if="node.fieldPrototype"> tipo {{node.fieldPrototype}}</span>
         <a  ng-if="node.nombreparametrica=='metadato'"  class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
                 class="glyphicon glyphicon-remove"></span></a>
         <a   ng-if="node.nombreparametrica!='metadato'"  class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="openModal(this)" style="margin-right: 8px;"><span

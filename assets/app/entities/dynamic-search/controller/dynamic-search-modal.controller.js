@@ -50,13 +50,13 @@
                             alert("archivo guardado");
                             $scope.files=[];
                             ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
-                                                                                            function (data) {
-                                                                                                $scope.listOfFiles = data;
-                                                                                            },
-                                                                                            function (error) {
+                                        function (data) {
+                                            $scope.listOfFiles = data;
+                                        },
+                                        function (error) {
 
-                                                                                            }
-                                                                                        );
+                                        }
+                                    );
                         });
                     }
                     //$scope.files=[];
@@ -138,12 +138,13 @@
 
             }
             $scope.retrieveFile=function (url,fileName) {
-                 var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+                 var headers2= getGenericHeader($window);
 
                 debugger;
 
                 $http({
                     url: ApiFiles.url+"FileServices",
+                    headers:headers2,
                     method: "GET",
                     params: {fileId:url},
                     responseType: 'arraybuffer'

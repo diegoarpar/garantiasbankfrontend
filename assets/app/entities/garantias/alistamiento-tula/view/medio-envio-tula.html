@@ -3,6 +3,14 @@
         <h4>Seleccione el medio de envío</h4>
     </div>
 
+
+    <button ng-if="!code" class="btn btn-success" ng-click="generateBarcode()">Generar</button>
+    <div>
+
+        <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
+        <div>    <span class="text-align-center">{{ code }}</span></div>
+
+    </div>
     <div  >
         <div >
             <label>Medio:</label>
@@ -10,22 +18,12 @@
                     ng-options="f as f.value for f in listaMedioEnvio" ></select>
         </div>
 
-        <div >
-            <label >Precinto</label>
-            <input ng-model="tula"/>
+        <div ng-if="t.metadata.length>0" ng-repeat="t in subserie" >
+
+            <div ng-if="m.fieldType=='alistamiento'" ng-repeat="m in t.metadata">
+                <input readonly="true" ng-model="m.value"/>:<input  type="{{m.fieldPrototype}}" ng-model="m.result"/>
+            </div>
         </div>
-
-        <div ">
-            <label >Guía</label>
-            <input ng-model="guia"/>
-        </div>
-    </div>
-    <button ng-if="!code" class="btn btn-success" ng-click="generateBarcode()">Generar</button>
-    <div>
-
-        <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
-        <div>    <span class="text-align-center">{{ code }}</span></div>
-
     </div>
     <button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
     <div class="modal-footer">

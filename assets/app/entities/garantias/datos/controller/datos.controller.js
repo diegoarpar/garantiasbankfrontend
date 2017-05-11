@@ -75,22 +75,25 @@
                                tula: $scope.tula,
                                "ingreso.enviadoTula": true,
                                "envio.recibido": true,
-                               "validaciones.validacioncompletitud": true,
-                               "validaciones.validacionidoneidad": true,
-                               "validaciones.validaciondatos": false
+                               "validaciones.completitud": true,
+                               "validaciones.idoneidad": true,
+                               "validaciones.datos": null
                            };
                $scope.digital = GarantiasServices.showPost(consulta);
                $scope.digital.$promise.then(function (data) {
+                   showWaiteImage(true);
                    $scope.digital = data;
                    fillColumns(data, $scope);
+                   showWaiteImage(false);
 
                });
             };
-
+             $scope.cleanDigital=function(){$scope.digital=[];};
             $scope.saveCompleteInfoRow = function () {
                 completeRowDetail($scope);
                 concatGontenido($scope);
-                GarantiasServices.update($scope.digitalu);
+                var promise=GarantiasServices.update($scope.digitalu);
+                handleSubmitServicePromise(promise,null);
                 $scope.digital = [];
                 $scope.digitalu = [];
                 $scope.showmodal = false;

@@ -35,10 +35,17 @@
                 $scope.ok = function() {
                     var empresa = JSON.parse($scope.fondoSeleccionado);
                     var regional = JSON.parse($scope.regionalSeleccionada);
-                    var consulta={"ingreso.empresa.key":empresa.key,"ingreso.regional.key":regional.key,enviadoTula:null};
+                    var consulta={"ingreso.empresa.key":empresa.key,"ingreso.regional.key":regional.key,"envio.numero":null};
 
                     $scope.setRegional($scope.regionalSeleccionada);
+                    var ingreso={};
+                         $scope.regionalSeleccionada instanceof String? ingreso.regional=JSON.parse($scope.regionalSeleccionada):ingreso.regional=$scope.regionalSeleccionada;
+                         $scope.subserieseleccionada instanceof String? ingreso.subserie=JSON.parse($scope.subserieseleccionada):ingreso.subserie=$scope.subserieseleccionada;
+                         $scope.fondoSeleccionado instanceof String? ingreso.empresa=JSON.parse($scope.fondoSeleccionado):ingreso.empresa=$scope.fondoSeleccionado;
+
+                     $scope.setIngreso(ingreso);
                     $scope.loadPlanillaToTula(consulta);
+
                     $uibModalInstance.dismiss($scope);
                 };
 

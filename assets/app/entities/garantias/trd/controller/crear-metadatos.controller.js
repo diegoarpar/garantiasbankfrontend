@@ -19,6 +19,7 @@
 
                   var nodeData = $scope.actualVariable;
                   if(nodeData.nodes==undefined){nodeData.nodes=[]}
+
                   nodeData.nodes.push({
                     fieldType: $scope.campo.fieldType,
                     fieldPrototype: $scope.campo.fieldPrototype,

@@ -15,9 +15,15 @@
   --blue: #00b;
   --buttonSucces:#d81e05;
   --fullwidth: 100%;
-
+  --loadinIcon: url(../image/logos/loadingIcon.gif) !important;
 }
 
+.loadingIcon{
+    height:100%;
+    width:100%;
+    position:fixed;
+    background:var(--loadinIcon);
+}
 .btn-success{
     background-color:var(--buttonSucces) !important;
     border:none;

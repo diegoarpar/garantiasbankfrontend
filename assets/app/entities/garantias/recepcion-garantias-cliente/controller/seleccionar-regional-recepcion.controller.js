@@ -17,6 +17,7 @@
             $scope.regionales=[];
             $scope.subseries=[];
                 $scope.cargarRegionales = function(value) {
+
                     var regionalSeleccionada=$scope.fondoSeleccionado;
                     var fondo3=[{'fondo.key':regionalSeleccionada.key}];
 

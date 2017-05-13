@@ -149,6 +149,16 @@ function construirTabla( $scope, dataSet,ngTableParams,$filter){
 	});
     return table;
 }
+function setStyleSheet(tenant){
+
+    var link=document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.media = 'screen';
+      link.href = 'assets/css/'+tenant+'.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+
+}
 function getGenericHeader(window){
     var headers= {'Authorization': 'Bearer ' + window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
     return headers;
@@ -176,17 +186,22 @@ function showWaiteImage(showImage){
         if(showImage==true){
             var img = _document.getElementById("waitingImage");
             if(img==null){
-                img = document.createElement("IMG");        // Create a <button> element
-                img.src="assets/image/logos/alistamientoProcesando.jpg";
+                img = document.createElement("IMG");
+                img.setAttribute("class","loadingIcon");
+                img.src="assets/image/logos/loadingIcon.gif";
                 img.id="waitingImage";
+
                 _document.body.appendChild(img);
+
             }
         }else{
             var img = _document.getElementById("waitingImage");
             if(img!=null){
                 _document.body.removeChild(img);
+
             }
         }
+
 }
 function handleSubmitServicePromise(promise,message){
     showWaiteImage(true);
@@ -232,3 +247,53 @@ function concatStageRow(name,row,subserie,tipodocumento){
 
 }
 
+function getMenu(){
+
+    var data={};
+    data.nodes=[
+                 {href:"#/product-list-portales",label:"Inicio",image:"",controller:""}
+                ,{href:"",label:"Bodega",image:"",controller:""}
+                ,{href:"",label:"Consultas funcionarios",image:"",controller:""}
+                ,{href:"",label:"Administracion",image:"",controller:""}
+                ];
+    data.nodes[1].nodes=[
+                 {href:"",label:"Recepción",image:"",controller:""}
+                ,{href:"",label:"Punteo",image:"",controller:""}
+                ,{href:"",label:"Consultas y Carga de archivos",image:"",controller:""}
+                 ];
+    data.nodes[1].nodes[0].nodes=[
+                 {href:"#/product-list-acuse-recibido-garantia",label:"1. Recepción de documentos",image:"",controller:""}
+                 ,{href:"#/product-list-alistamiento-tulas",label:"2. Alistar unidades de carga selladas",image:"",controller:""}
+                 ,{href:"#/carga-directa-bodega",label:"3. Carga Directa y Masiva",image:"",controller:""}
+
+                 ];
+    data.nodes[1].nodes[1].nodes=[
+                 {href:"#/product-list-recepcion-tulas-bodega",label:"1. Recepción de unidades de carga",image:"",controller:""}
+                 ,{href:"#/product-list-recepcion-garantia-contenido",label:"2. Validación de completitud",image:"",controller:""}
+                 ,{href:"#/product-list-recepcion-garantia-idoneidad",label:"3. Validación de idoneidad",image:"",controller:""}
+                 ,{href:"#/product-list-recepcion-garantia-datos",label:"4. Validación de datos",image:"",controller:""}
+                 ,{href:"#/ubicacion-garantias",label:"5. Ubicación en bodega",image:"",controller:""}
+
+                 ];
+    data.nodes[1].nodes[2].nodes=[
+                 {href:"#/dynamic-search",label:"1. Consultas",image:"",controller:""}
+                 ];
+    data.nodes[2].nodes=[
+                 {href:"",label:"Consultas" ,image:"",controller:""}
+                 ];
+    data.nodes[2].nodes[0].nodes=[
+                                 {href:"dynamic-search-functionary",label:"Consultas funcionarios",image:"",controller:""}
+                                 ];
+    data.nodes[3].nodes=[
+                 {href:"",label:"Administración",controller:""}
+                 ];
+    data.nodes[3].nodes[0].nodes=[
+                 {href:"#/administrador-usuarios",label:"Gestión de Usuarios",image:"",controller:""}
+                 ,{href:"#/administrador-camposParametricos",label:"Gestión de tablas paramétricas",image:"",controller:""}
+                 ,{href:"#/administrador-archivo",label:"Administrar Archivo",image:"",controller:""}
+                 ,{href:"#/organigrama",label:"Administrar Organigrama",image:"",controller:""}
+                 ,{href:"#/regionales",label:"Administrar Regionales",image:"",controller:""}
+                 ];
+
+                 return data;
+}

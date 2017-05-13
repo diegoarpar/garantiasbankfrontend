@@ -97,12 +97,12 @@
                     data: '@data'
                 },
                 /*-----------MENU---- */
-                showmenu: {
+                showMenu: {
                     url:getUrlServices(ApiGarantias,'menu'),
                     headers: headers2,
                     method: 'GET',
                     isArray: true
-                },createmenu: {
+                },createMenu: {
                     url:getUrlServices(ApiGarantias,'menu'),
                     method: 'POST',
                     headers: headers2,

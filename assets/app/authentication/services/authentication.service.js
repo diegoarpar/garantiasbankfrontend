@@ -12,6 +12,7 @@
         var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
         var url = ApiAuth.url + 'getToken';
             return $resource(url, {}, {
+                /********** users*/
                 show: {
                     method: 'GET',
                     headers:headers2,
@@ -32,20 +33,6 @@
                     url : ApiAuth.url+'users/logIn',
                     params: {'@param': '@param'},
                 },
-                showRoles: {
-                    url : ApiAuth.url+'roles/outToken',
-                    method: 'GET',
-                    headers:headers2,
-                    params: {'@param': '@param'},
-                    isArray: true
-                },
-                createRoles: {
-                    url : ApiAuth.url+'roles',
-                    method: 'POST',
-                    headers:headers2,
-                    params: {'@param': '@param'},
-                    isArray: false
-                },
                 createUser: {
                     url : ApiAuth.url+'users',
                     method: 'POST',
@@ -57,21 +44,40 @@
                     method: 'PUT',
                      params: {id: '@id'}
                      },
+                userByToken: {
+                   url:ApiAuth.url+'users/getByToken',
+                   headers:headers2,
+                   method: 'GET',
+                   isArray: true
+                   },
+                delete: {
+                   method: 'DELETE',
+                   params: {id: '@id'}
+                },
+                /*************roles**************/
+                showRoles: {
+                    url : ApiAuth.url+'roles/outToken',
+                    method: 'GET',
+                    headers:headers2,
+                    params: {'@param': '@param'},
+                    isArray: true
+                },
+
+                createRoles: {
+                    url : ApiAuth.url+'roles',
+                    method: 'POST',
+                    headers:headers2,
+                    params: {'@param': '@param'},
+                    isArray: false
+                },
+
+                /*******tenant*/
                 tenant: {
                     url:ApiAuth.url+'tenant',
                     method: 'GET',
                     isArray: true
-                    },
-                userByToken: {
-                    url:ApiAuth.url+'users/getByToken',
-                    headers:headers2,
-                    method: 'GET',
-                    isArray: true
-                    },
-                delete: {
-                    method: 'DELETE',
-                    params: {id: '@id'}
-                }
+                    }
+
             })
         }
 

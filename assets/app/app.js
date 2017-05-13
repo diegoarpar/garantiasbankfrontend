@@ -16,29 +16,33 @@ app.constant('cApp', {
     tenant: ''
 });
 
-        function inSession($scope, AuthenticationFactory, window,principal) {
-                        if(!window.sessionStorage.getItem("tenant")){
-                          var rta = AuthenticationFactory.tenant({origin:location.hostname});
-                         rta.$promise.then(function(data) {
-                                    if(!data[0]) alert ("este sitio no se encuentra configurado");
-                                    if(data[0]){
-                                        window.sessionStorage["tenant"]=data[0].name
-                                        window.location.reload();
 
-                                    }
-                                 });
+function inSession($scope, AuthenticationFactory, window,principal) {
+                if(!window.sessionStorage.getItem("tenant")){
 
-                        }
-
-                        if(!principal){
-                            if(!window.localStorage.getItem("token")){
-                                alert("Para hacer uso de los módulos, es necesario ingresar");
-                                window.location.href = '#/product-list-portales';
+                 var rta = AuthenticationFactory.tenant({origin:location.hostname});
+                 rta.$promise.then(function(data) {
+                            if(!data[0]) alert ("este sitio no se encuentra configurado");
+                            if(data[0]){
+                                window.sessionStorage["tenant"]=data[0].name;
+                                window.location.reload();
+                                setStyleSheet(data[0].name);
                             }
-                        }
-                        //alert (cApp.tenant);
+                         });
 
-          }
+                }else{
+                    setStyleSheet(window.sessionStorage.getItem("tenant"));
+                }
+
+                if(!principal){
+                    if(!window.localStorage.getItem("token")){
+                        alert("Para hacer uso de los módulos, es necesario ingresar");
+                        window.location.href = '#/product-list-portales';
+                    }
+                }
+                //alert (cApp.tenant);
+
+  }
 
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -140,7 +144,9 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'ConfiguracionRegionalController'
                             }
         );
-        $routeProvider.otherwise({redirectTo: '/'});
+
+        $routeProvider.otherwise({});
+        //$routeProvider.otherwise({redirectTo: '/'});
     }
     ]
 );

@@ -46,7 +46,9 @@
                 var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
 
                 var promise = GarantiasServices.showMetadataPost(parameter);
+
                 promise.$promise.then(function(data){
+
                     if(data!=null){
 
                         $scope.columnsMetadata=[];
@@ -61,6 +63,7 @@
                                 }
                             }
                         }
+
                     }
                 });
             }
@@ -77,6 +80,7 @@
             }
 
             function buscar() {
+             showWaiteImage(true);
                 var searchVector = [];
                 for (var i = 0; i < $scope.lista.length; i++) {
                     searchVector[i] = {
@@ -100,16 +104,18 @@
                     search.endDate = $scope.data.endDate.getTime();
                 }
 
-                DynamicSearch.searchWithMetadata(search).success(function (data) {
 
+                DynamicSearch.searchWithMetadata(search).success(function (data) {
                     $scope.searchResults = data;
 
                     fillColumns(data,$scope);
                     update_columns($scope);
                     $scope.generateColumns=$scope.all_columns;
+                    showWaiteImage(false);
 
                 }).error(function (error) {
                     alert(error)
+                    showWaiteImage(false);
                 })
             }
 

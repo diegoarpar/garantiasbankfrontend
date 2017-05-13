@@ -11,7 +11,7 @@
         function NavBarController(AuthenticationFactory,$scope, ProductServices, $location, $uibModal,$window) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.inSession=false;
-
+            $scope.menu=getMenu();
             $scope.userLogIn=[];
             $scope.logOut=function(){
                 $window.localStorage.removeItem('token');

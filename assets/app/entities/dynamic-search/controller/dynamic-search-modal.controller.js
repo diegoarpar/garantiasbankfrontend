@@ -40,6 +40,8 @@
                 $scope.$apply(function () {
                     //add the file object to the scope's files collection
                     $scope.files.push(args.file);
+                    if($scope.files.length>0)
+                    showWaiteImage(true);
                     for (var i = 0; i < $scope.files.length; i++){
                         var promise=UploadFilesService.create({
                             files: $scope.files[i],
@@ -48,6 +50,7 @@
                         });
                         promise.$promise.then(function(){
                             alert("archivo guardado");
+                            showWaiteImage(false);
                             $scope.files=[];
                             ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
                                         function (data) {
@@ -68,19 +71,21 @@
             $scope.$watch('files', function () {
                 // $scope.upload($scope.files);
                 for (var i = 0; i < $scope.files.length; i++){
+                    showWaiteImage(true);
                    var promise= UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
                     promise.$promise.then(function(){
-                                                alert("archivo guardado");
-                                                $scope.files=[];
-                                                ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
-                                                                function (data) {
-                                                                    $scope.listOfFiles = data;
-                                                                },
-                                                                function (error) {
+                        alert("archivo guardado");
+                        $scope.files=[];
+                        showWaiteImage(false);
+                        ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
+                                        function (data) {
+                                            $scope.listOfFiles = data;
+                                        },
+                                        function (error) {
 
-                                                                }
-                                                            );
-                                            });
+                                        }
+                                    );
+                    });
                 }
                 //$scope.files=[];
             });
@@ -92,6 +97,8 @@
             });
 
             function upload(files) {
+
+                showWaiteImage(true);
                 if (files && files.length) {
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
@@ -104,13 +111,15 @@
                                 },
                                 headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')}
                             }).then(function (resp) {
+
+                                showWaiteImage(false);
                                 $timeout(function () {
                                     $scope.log.unshift('file: ' +
                                         resp.config.data.file.name +
                                         ', Response: ' + JSON.stringify(resp.data));
                                 });
                             }, null, function (evt) {
-
+                                showWaiteImage(false);
                                 var progressPercentage = parseInt(100.0 *
                                     evt.loaded / evt.total);
                                 $scope.log.unshift('progress: ' + progressPercentage +
@@ -140,8 +149,7 @@
             $scope.retrieveFile=function (url,fileName) {
                  var headers2= getGenericHeader($window);
 
-                debugger;
-
+            showWaiteImage(true);
                 $http({
                     url: ApiFiles.url+"FileServices",
                     headers:headers2,
@@ -151,8 +159,10 @@
                  }).success(function (data, status, headers, config) {
                        var blob = new Blob([data], {type:"application/octet-stream"});
                       saveAs(blob, fileName);
+                      showWaiteImage(false);
                    }).error(function (data, status, headers, config) {
                        //upload failed
+                      showWaiteImage(false);
                    });
                 //var promise=CMSController.findFile({fileId:url});
             }

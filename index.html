@@ -5,6 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html ng-app="wpc">
+
 <head>
     <title>GESTION DE ARCHIVO DE GARANTÍAS</title>
     <meta charset="UTF-8">
@@ -13,23 +14,8 @@ and open the template in the editor.
     <link rel="stylesheet" href="assets/css/angular/angular-ui-tree.css">
     <link rel="stylesheet" href="assets/css/bootstrap/ng-table.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap/xeditable.css">
-    <link rel="stylesheet" href="assets/css/app.css">
 
-    <style type="text/css">
-        .collapse {
-            position: inherit;
-        }
 
-        .collapse.in {
-            height: auto; /* this style already exists in bootstrap.css */
-            overflow: visible; /* this one doesn't. Add it! */
-
-        }
-
-        .panel-group .panel {
-            overflow: visible;
-        }
-    </style>
 </head>
 <body>
 <div class="slide-animate-container">
@@ -80,24 +66,20 @@ and open the template in the editor.
 <script type="text/javascript" src="assets/js/angular/angular-io-barcode.min.js"></script>
 
 
-<script src="assets/app/config/server.js"></script>
 <script src="assets/app/app.js"></script>
 
-<script src="assets/app/category.service.js"></script>
-<script src="assets/app/main.controller.js"></script>
 <script src="assets/app/navbar/nav-bar.controller.js"></script>
 <script src="assets/app/on-read-file.directive.js"></script>
 <script src="assets/app/upload-file.directive.js"></script>
 
 <script src="assets/app/authentication/services/authentication.service.js"></script>
-<script src="assets/app/authentication/services/authentication-getUsers.service.js"></script>
-<script src="assets/app/authentication/services/authentication-getRoles.service.js"></script>
-<script src="assets/app/authentication/services/authentication-getPermission.service.js"></script>
+
 
 <script src="assets/app/authentication/controller/login.controller.js"></script>
 <script src="assets/app/authentication/controller/crear-usuario.controller.js"></script>
 <script src="assets/app/authentication/controller/administrador-usuarios.controller.js"></script>
 <script src="assets/app/authentication/controller/asociar-rol.controller.js"></script>
+<script src="assets/app/authentication/controller/crear-menu.controller.js"></script>
 
 <script src="assets/app/entities/user/user-list.controller.js"></script>
 <script src="assets/app/entities/user/user-detail.controller.js"></script>
@@ -126,8 +108,7 @@ and open the template in the editor.
 <script src="assets/app/entities/garantias/ubicacion/controller/ubicacion-garantia.js"></script>
 
 
-<script src="assets/app/entities/garantias/menus/controller/administrar-menus.controller.js"></script>
-<script src="assets/app/entities/garantias/menus/controller/crear-menu.controller.js"></script>
+
 
 <script src="assets/app/entities/product/product-sede-electronica.controller.js"></script>
 <script src="assets/app/entities/product/product.service.js"></script>

@@ -6,12 +6,14 @@
         angular.module("wpc")
             .controller('NavBarController', NavBarController);
 
-        NavBarController.$inject = ['AuthenticationFactory','$scope', 'ProductServices', '$location', '$uibModal','$window'];
+        NavBarController.$inject = ['AuthenticationFactory','GarantiasServices','$scope', 'ProductServices', '$location', '$uibModal','$window'];
 
-        function NavBarController(AuthenticationFactory,$scope, ProductServices, $location, $uibModal,$window) {
+        function NavBarController(AuthenticationFactory,GarantiasServices,$scope, ProductServices, $location, $uibModal,$window) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.inSession=false;
-            $scope.menu=getMenu();
+            $scope.menu={};
+
+
             $scope.userLogIn=[];
             $scope.logOut=function(){
                 $window.localStorage.removeItem('token');
@@ -22,7 +24,16 @@
                var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
                     logIn.$promise.then(
                         function (data){
-                        $scope.userLogIn=data[0];
+                        if(data){
+                            $scope.userLogIn=data[0];
+                            var promise=GarantiasServices.showMenu({user:$scope.userLogIn.user});
+                                promise.$promise.then(function(data){
+                                        if(data)if(data.length>0)
+                                        $scope.menu=data[0];
+                                    }
+                                );
+                        }
+
                         }
                     );
             }

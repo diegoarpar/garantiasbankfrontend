@@ -139,6 +139,16 @@ app.config(['$routeProvider', function ($routeProvider) {
                         controller: 'ConfiguracionOrganigramaController'
                     }
         );
+        $routeProvider.when('/dynamic-search', {
+                                templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search.html',
+                                controller: 'DynamicSearchController'
+                            }
+                );
+        $routeProvider.when('/dynamic-search-functionary', {
+                                templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-functionary.html',
+                                controller: 'DynamicSearchController'
+                            }
+                );
         $routeProvider.when('/regionales', {
                                 templateUrl: 'assets/app/entities/garantias/regionales/view/administrar-regionales.html',
                                 controller: 'ConfiguracionRegionalController'

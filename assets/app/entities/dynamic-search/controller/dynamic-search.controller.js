@@ -23,7 +23,7 @@
             $scope.openEndDate = openEndDate;
             $scope.openModal = openModal;
             $scope.switchBoolean = switchBoolean;
-
+            $scope.openModalFunctionary=openModalFunctionary;
             $scope.dateOptions = {
                 formatYear: 'yy',
                 startingDay: 1
@@ -150,7 +150,17 @@
                     }
                 );
             }
+            function openModalFunctionary(entity) {
 
+                ShareService.set(entity);
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal-functionary.html',
+                        controller: 'DynamicSearchModalController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
             function switchBoolean(key) {
                 $scope.all_columns[r].checked = !$scope.all_columns[key].checked;
             }

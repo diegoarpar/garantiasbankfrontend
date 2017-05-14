@@ -251,7 +251,7 @@ function getMenu(){
 
     var data={};
     data.nodes=[
-                 {href:"#/product-list-portales",label:"Inicio",image:"",controller:""}
+                 {href:"product-list-portales",label:"Inicio",image:"",controller:""}
                 ,{href:"",label:"Bodega",image:"",controller:""}
                 ,{href:"",label:"Consultas funcionarios",image:"",controller:""}
                 ,{href:"",label:"Administracion",image:"",controller:""}
@@ -268,15 +268,15 @@ function getMenu(){
 
                  ];
     data.nodes[1].nodes[1].nodes=[
-                 {href:"#/product-list-recepcion-tulas-bodega",label:"1. Recepción de unidades de carga",image:"",controller:""}
-                 ,{href:"#/product-list-recepcion-garantia-contenido",label:"2. Validación de completitud",image:"",controller:""}
-                 ,{href:"#/product-list-recepcion-garantia-idoneidad",label:"3. Validación de idoneidad",image:"",controller:""}
-                 ,{href:"#/product-list-recepcion-garantia-datos",label:"4. Validación de datos",image:"",controller:""}
-                 ,{href:"#/ubicacion-garantias",label:"5. Ubicación en bodega",image:"",controller:""}
+                 {href:"product-list-recepcion-tulas-bodega",label:"1. Recepción de unidades de carga",image:"",controller:""}
+                 ,{href:"product-list-recepcion-garantia-contenido",label:"2. Validación de completitud",image:"",controller:""}
+                 ,{href:"product-list-recepcion-garantia-idoneidad",label:"3. Validación de idoneidad",image:"",controller:""}
+                 ,{href:"product-list-recepcion-garantia-datos",label:"4. Validación de datos",image:"",controller:""}
+                 ,{href:"ubicacion-garantias",label:"5. Ubicación en bodega",image:"",controller:""}
 
                  ];
     data.nodes[1].nodes[2].nodes=[
-                 {href:"#/dynamic-search",label:"1. Consultas",image:"",controller:""}
+                 {href:"dynamic-search",label:"1. Consultas",image:"",controller:""}
                  ];
     data.nodes[2].nodes=[
                  {href:"",label:"Consultas" ,image:"",controller:""}
@@ -288,11 +288,11 @@ function getMenu(){
                  {href:"",label:"Administración",controller:""}
                  ];
     data.nodes[3].nodes[0].nodes=[
-                 {href:"#/administrador-usuarios",label:"Gestión de Usuarios",image:"",controller:""}
-                 ,{href:"#/administrador-camposParametricos",label:"Gestión de tablas paramétricas",image:"",controller:""}
-                 ,{href:"#/administrador-archivo",label:"Administrar Archivo",image:"",controller:""}
-                 ,{href:"#/organigrama",label:"Administrar Organigrama",image:"",controller:""}
-                 ,{href:"#/regionales",label:"Administrar Regionales",image:"",controller:""}
+                 {href:"administrador-usuarios",label:"Gestión de Usuarios",image:"",controller:""}
+                 ,{href:"administrador-camposParametricos",label:"Gestión de tablas paramétricas",image:"",controller:""}
+                 ,{href:"administrador-archivo",label:"Administrar Archivo",image:"",controller:""}
+                 ,{href:"organigrama",label:"Administrar Organigrama",image:"",controller:""}
+                 ,{href:"regionales",label:"Administrar Regionales",image:"",controller:""}
                  ];
 
                  return data;

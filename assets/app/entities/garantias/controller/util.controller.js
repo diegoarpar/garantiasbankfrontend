@@ -262,9 +262,9 @@ function getMenu(){
                 ,{href:"",label:"Consultas y Carga de archivos",image:"",controller:""}
                  ];
     data.nodes[1].nodes[0].nodes=[
-                 {href:"#/product-list-acuse-recibido-garantia",label:"1. Recepción de documentos",image:"",controller:""}
-                 ,{href:"#/product-list-alistamiento-tulas",label:"2. Alistar unidades de carga selladas",image:"",controller:""}
-                 ,{href:"#/carga-directa-bodega",label:"3. Carga Directa y Masiva",image:"",controller:""}
+                 {href:"product-list-acuse-recibido-garantia",label:"1. Recepción de documentos",image:"",controller:""}
+                 ,{href:"product-list-alistamiento-tulas",label:"2. Alistar unidades de carga selladas",image:"",controller:""}
+                 ,{href:"carga-directa-bodega",label:"3. Carga Directa y Masiva",image:"",controller:""}
 
                  ];
     data.nodes[1].nodes[1].nodes=[

@@ -151,12 +151,17 @@ function construirTabla( $scope, dataSet,ngTableParams,$filter){
 }
 function setStyleSheet(tenant){
 
+
+    console.log("configure css for "+tenant);
     var link=document.createElement('link');
       link.rel = 'stylesheet';
       link.type = 'text/css';
       link.media = 'screen';
       link.href = 'assets/css/'+tenant+'.css';
       document.getElementsByTagName('head')[0].appendChild(link);
+
+    var logo = document.getElementById("logoTenant");
+        logo.src="./assets/image/logos/"+tenant+".png";
 
 }
 function getGenericHeader(window){

@@ -154,7 +154,11 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'ConfiguracionRegionalController'
                             }
         );
-
+        $routeProvider.when('/modalFiltro', {
+                                        templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
+                                        controller: 'FiltrarBusquedaController'
+                                    }
+                );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

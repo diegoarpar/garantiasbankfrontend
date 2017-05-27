@@ -64,30 +64,37 @@
                 $scope.digital[idx] = angular.copy($scope.digital.selected);
                 $scope.reset();
             };
-
-            $scope.catchGarantias = function () {
+            $scope.aditionalFilter={
+                                 "ingreso.enviadoTula": true,
+                                 "envio.recibido": true,
+                                 "validaciones.completitud": true,
+                                 "validaciones.idoneidad": true,
+                                 "validaciones.datos": null
+                             };
+            $scope.setResultSearch = function (promise) {
                $scope.mapColumns = [];
                $scope.columns = [];
                $scope.all_columns = [];
-               if($scope.tula=="")$scope.tula=undefined;
-               var consulta=[];
-                   consulta[0]={
-                               tula: $scope.tula,
-                               "ingreso.enviadoTula": true,
-                               "envio.recibido": true,
-                               "validaciones.completitud": true,
-                               "validaciones.idoneidad": true,
-                               "validaciones.datos": null
-                           };
-               $scope.digital = GarantiasServices.showPost(consulta);
-               $scope.digital.$promise.then(function (data) {
+               $scope.digital=[];
+               promise.$promise.then(function (data) {
                    showWaiteImage(true);
-                   $scope.digital = data;
-                   fillColumns(data, $scope);
+                   if(data!=null){
+                       $scope.digital = data;
+                       fillColumns(data, $scope);
+                   }
                    showWaiteImage(false);
 
                });
             };
+             $scope.openModalFiltro = function () {
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
+                        controller: 'FiltrarBusquedaController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
              $scope.cleanDigital=function(){$scope.digital=[];};
             $scope.saveCompleteInfoRow = function () {
                 completeRowDetail($scope);

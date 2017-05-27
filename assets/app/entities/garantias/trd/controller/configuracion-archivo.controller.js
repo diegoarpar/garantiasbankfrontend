@@ -222,7 +222,7 @@
         }
           $scope.getMetadatoFromNode=function(nodes){
             var metadatos=[];
-            debugger;
+
             for(var i=0;i<nodes.length;i++){
                 if(nodes[i].nombreparametrica=="metadato"){
                    metadatos[metadatos.length]=nodes[i];

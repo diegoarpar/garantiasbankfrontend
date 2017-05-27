@@ -8,10 +8,10 @@
 
         RecepcionTulaBodegaController.$inject =
             ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window'];
+                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
         function RecepcionTulaBodegaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                               GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window) {
+                                               GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -71,29 +71,35 @@
                 $scope.digital = [];
                 $scope.digitalu = [];
             };
-            $scope.consultarTulas = function () {
+            $scope.openModalFiltro = function () {
+
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
+                        controller: 'FiltrarBusquedaController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
+             $scope.aditionalFilter={
+                                        //"envio.precinto": $scope.tula,
+                                        "ingreso.enviadoTula": true,
+                                        //"envio.numero": $scope.idtula,
+                                         "envio.recibido": null
+                                    };
+            $scope.setResultSearch = function (promise) {
+
                 $scope.mapColumns = [];
                 $scope.columns = [];
                 $scope.all_columns = [];
-                var consulta=[];
-                if($scope.idtula==""){
-                    $scope.idtula=undefined;
-                }
-                if($scope.tula==""){
-                    $scope.tula=undefined;
-                }
-                consulta[0]={
-                            "envio.precinto": $scope.tula,
-                            "ingreso.enviadoTula": true,
-                            "envio.numero": $scope.idtula,
-                             "envio.recibido": null
-                        };
-                $scope.digital = GarantiasServices.showPost(consulta);
-                $scope.digital.$promise.then(function (data) {
-                    $scope.digital = data;
-                    fillColumns(data, $scope);
-
+                $scope.digital=[];
+                promise.$promise.then(function (data){
+                    if(data!=null){
+                        $scope.digital = data;
+                        fillColumns(data, $scope);
+                    }
                 });
+
             };
 
             $scope.showContent = function ($fileContent) {

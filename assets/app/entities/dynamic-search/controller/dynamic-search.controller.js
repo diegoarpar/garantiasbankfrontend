@@ -50,20 +50,7 @@
                 promise.$promise.then(function(data){
 
                     if(data!=null){
-
-                        $scope.columnsMetadata=[];
-                        for(var i=0;i<data.length;i++){
-                            for(var j=0;j<data[i].subserie.metadata.length;j++){
-                                $scope.columnsMetadata.push({fieldType:data[i].subserie.metadata[j].fieldType,key:data[i].subserie.metadata[j].key,value:data[i].subserie.metadata[j].value})
-                            }
-                            for(var j=0;j<data[i].tipodocumento.length;j++){
-                                for(var k=0;k<data[i].tipodocumento[j].metadata.length;k++){
-                                    $scope.columnsMetadata.push({fieldType:data[i].tipodocumento[j].metadata[k].fieldType,key:data[i].tipodocumento[j].metadata[k].key,value:data[i].tipodocumento[j].metadata[k].value})
-
-                                }
-                            }
-                        }
-
+                        $scope.columnsMetadata=getMetadataFactoryToSearch(data);
                     }
                 });
             }

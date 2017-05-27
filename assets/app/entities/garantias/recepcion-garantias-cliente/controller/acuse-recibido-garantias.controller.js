@@ -162,7 +162,7 @@
             for (var i = 0; i < listColumns.length; i++) {
 
                 if (listColumns[i].title == value) {
-                    if (listColumns[i].columnName == undefined) {
+                    if (listColumns[i].columnName == undefined&&listColumns[i].checked) {
                         alert("Existe un valor sin equivalente");
                         throw("Existe un valor sin equivalente");
                         return "NOK";
@@ -178,9 +178,10 @@
                 var row={};
                 for (var e in $scope.digital[i]) {
                     var newColumnName = getChange(e, listColumns);
-                    if (!row[newColumnName]) {
+
+                    if (!row[newColumnName]&&newColumnName!=undefined) {
                         row[newColumnName] = $scope.digital[i][e];
-                    } else {
+                    } else if (newColumnName!=undefined) {
                         alert("Columna " + newColumnName + " repetida");
                         throw ("Columna " + newColumnName + " repetida");
                     }

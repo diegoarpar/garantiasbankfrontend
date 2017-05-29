@@ -6,28 +6,27 @@
         angular.module("wpc")
             .controller('FiltrarBusquedaController', FiltrarBusquedaController);
 
-        FiltrarBusquedaController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window','CamposParametricosServices','GarantiasServices','$uibModalInstance'];
+        FiltrarBusquedaController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window','CamposParametricosServices','GarantiasServices'];
 
-        function FiltrarBusquedaController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window,CamposParametricosServices,GarantiasServices,$uibModalInstance)
+        function FiltrarBusquedaController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window,CamposParametricosServices,GarantiasServices)
          {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
             $scope.lista = [];
             $scope.listaBusqueda = [];
             $scope.columnsMetadata=[];
-            $scope.addColumn=function (col) {
+            $scope.addColumn=function (col,index) {
                  $scope.lista.push(col);
-                 $scope.columnsMetadata.splice(col, 1);
+                 $scope.columnsMetadata.splice(index, 1);
              };
-             $scope.removeRow=function (col) {
+             $scope.removeRow=function (col,index) {
 
-                              $scope.lista.splice(col, 1);
+                              $scope.lista.splice(index, 1);
                               $scope.columnsMetadata.push(col);
                           };
             $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
             $scope.subseries=[];
             $scope.ok=function(){
-                debugger;
                 var listToSearch=[];
                 var o={};
                 if($scope.aditionalFilter!=null){
@@ -44,15 +43,20 @@
                 $scope.lista=[];
                 listToSearch=[];
                 $scope.listaBusqueda=[];
-                $uibModalInstance.dismiss('cancel');
+                $scope.$dismiss();
             }
 
             $scope.cancel=function(){
-                debugger;
                 $scope.listaBusqueda=[];
                 $scope.lista=[];
-                $uibModalInstance.dismiss('cancel');
+                $scope.$dismiss();
             }
+            $scope.dateOptions = {formatYear: 'yy', startingDay: 1};
+            $scope.openStartDate=function (){$scope.popupStartDate.opened = true;};
+            $scope.openEndDate=function(){$scope.popupEndDate.opened = true;};
+            $scope.popupStartDate = {opened: false};
+            $scope.popupEndDate = {opened: false};
+            $scope.data={};
             $scope.cargarSubseries = function() {
                 var parameter=[{'fondo.key':$scope.fondoSelected.key}];
                 $scope.subseries=GarantiasServices.showtrdpost(parameter);

@@ -28,6 +28,16 @@
                 formatYear: 'yy',
                 startingDay: 1
             };
+            $scope.openModalFiltro = function () {
+
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
+                        controller: 'FiltrarBusquedaController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
             $scope.popupStartDate = {
                 opened: false
             };
@@ -66,6 +76,24 @@
                 $scope.columnsMetadata.splice(col, 1);
             }
 
+            $scope.setResultSearch = function (promise) {
+
+                showWaiteImage(true);
+                $scope.mapColumns = [];
+                $scope.columns = [];
+                $scope.all_columns = [];
+                $scope.digital=[];
+                promise.$promise.then(function (data){
+                    if(data!=null){
+                        $scope.searchResults = data;
+                        fillColumns(data,$scope);
+                        update_columns($scope);
+                        $scope.generateColumns=$scope.all_columns;
+                    }
+                });
+                showWaiteImage(false);
+
+            };
             function buscar() {
              showWaiteImage(true);
                 var searchVector = [];

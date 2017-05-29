@@ -36,7 +36,7 @@
                 $scope.downloadBarCode = function() {
                 var element = angular.element($("img")[0]);
                 var toPdf=element[0].currentSrc;
-                var dateList=[];
+                var dateList=[{"name":"Codigo", "value":$scope.code}];
                 for(var i =0;i<$scope.subserie.length;i++)
                     for(var j =0;j<$scope.subserie[i].metadata.length;j++){
                         if($scope.subserie[i].metadata[j].fieldType=="alistamiento")

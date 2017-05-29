@@ -116,12 +116,33 @@ var generateBarCodePDF = function (code, document, text) {
 
 };
 
+function getBase64Image(img,width,height) {
+
+    var canvas = document.createElement("canvas");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+
+    ctx.drawImage(img, 0, 0);
+
+    var dataURL = canvas.toDataURL("image/jpeg");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+}
 var downloadPDF= function (pdfName, image, dateList){
+         var logo = new Image();
          var doc = new jsPDF('p', 'mm');
-         doc.addImage(image, 'PNG', 10, 10);
-         var y=41;
+         logo.src=document.getElementById("logoTenant").src;
+         logo.onload = function(){var dataURI = getBase64Image(logo);return dataURI;}
+
+         doc.addImage(logo.onload(), 'PNG', 0, 0,100,30);
+         doc.addImage(image, 'PNG', 40, 35,140,30);
+         var y=70;
+
          for(var i=0;i<dateList.length;i++){
-            doc.text(10, y, dateList[i].name+': '+dateList[i].value);
+            doc.text(42, y, dateList[i].name+': '+dateList[i].value);
             y+=10;
          }
          var fileName="sample-file.pdf";
@@ -152,16 +173,18 @@ function construirTabla( $scope, dataSet,ngTableParams,$filter){
 function setStyleSheet(tenant){
 
 
-    console.log("configure css for "+tenant);
-    var link=document.createElement('link');
-      link.rel = 'stylesheet';
-      link.type = 'text/css';
-      link.media = 'screen';
-      link.href = 'assets/css/'+tenant+'.css';
-      document.getElementsByTagName('head')[0].appendChild(link);
+    if(document.getElementById("logoTenant")!=null){
+        console.log("configure css for "+tenant);
+        var link=document.createElement('link');
+          link.rel = 'stylesheet';
+          link.type = 'text/css';
+          link.media = 'screen';
+          link.href = 'assets/css/'+tenant+'.css';
+          document.getElementsByTagName('head')[0].appendChild(link);
 
-    var logo = document.getElementById("logoTenant");
-        logo.src="./assets/image/logos/"+tenant+".png";
+        var logo = document.getElementById("logoTenant");
+            logo.src="./assets/image/logos/"+tenant+".png";
+    }
 
 }
 function getGenericHeader(window){
@@ -309,11 +332,11 @@ function getMetadataFactoryToSearch(data){
     if(data!=null){
         for(var i=0;i<data.length;i++){
             for(var j=0;j<data[i].subserie.metadata.length;j++){
-                dataList.push({fieldType:data[i].subserie.metadata[j].fieldType,key:data[i].subserie.metadata[j].key,value:data[i].subserie.metadata[j].value})
+                dataList.push({fieldType:data[i].subserie.metadata[j].fieldType,key:data[i].subserie.metadata[j].key,value:data[i].subserie.metadata[j].value,fieldPrototype:data[i].subserie.metadata[j].fieldPrototype})
             }
             for(var j=0;j<data[i].tipodocumento.length;j++){
                 for(var k=0;k<data[i].tipodocumento[j].metadata.length;k++){
-                    dataList.push({fieldType:data[i].tipodocumento[j].metadata[k].fieldType,key:data[i].tipodocumento[j].metadata[k].key,value:data[i].tipodocumento[j].metadata[k].value})
+                    dataList.push({fieldType:data[i].tipodocumento[j].metadata[k].fieldType,key:data[i].tipodocumento[j].metadata[k].key,value:data[i].tipodocumento[j].metadata[k].value,fieldPrototype:data[i].tipodocumento[j].metadata[k].fieldPrototype})
 
                 }
             }

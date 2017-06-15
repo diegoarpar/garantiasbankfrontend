@@ -81,6 +81,12 @@
                     }
                 );
             }
+            $scope.mark_all=function(){
+                            for(var i=0;i<$scope.digital.length;i++){
+                                $scope.digital[i].garantiaRecibida=(!$scope.digital[i].garantiaRecibida);
+                            }
+
+                        }
              $scope.aditionalFilter={
                                         //"envio.precinto": $scope.tula,
                                         "ingreso.enviadoTula": true,

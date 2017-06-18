@@ -149,16 +149,26 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'DynamicSearchController'
                             }
                 );
-        $routeProvider.when('/regionales', {
-                                templateUrl: 'assets/app/entities/garantias/regionales/view/administrar-regionales.html',
+        $routeProvider.when('/dynamic-search-report', {
+                                templateUrl: 'assets/app/entities/garantias/report/view/report-archivo.html',
                                 controller: 'ConfiguracionRegionalController'
                             }
         );
-        $routeProvider.when('/modalFiltro', {
-                                        templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
-                                        controller: 'FiltrarBusquedaController'
+        $routeProvider.when('/regionales', {
+                                        templateUrl: 'assets/app/entities/garantias/regionales/view/administrar-regionales.html',
+                                        controller: 'ConfiguracionRegionalController'
                                     }
                 );
+        $routeProvider.when('/modalFiltro', {
+                                templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
+                                controller: 'FiltrarBusquedaController'
+                            }
+        );
+        $routeProvider.when('/modalReport', {
+                                templateUrl: 'assets/app/entities/modal/filtro/view/filtro-reportes.html',
+                                controller: 'FiltrarBusquedaController'
+                            }
+        );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

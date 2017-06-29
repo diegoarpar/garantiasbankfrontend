@@ -1,8 +1,24 @@
-var app = angular.module('wpc', ['xeditable', 'ngRoute', 'ui.bootstrap','ngTable', 'ngTableToCsv', 'ngResource', 'ngFileUpload', 'pdf', 'ui.router','ngAria','ngAnimate','ngMaterial','ngSanitize', 'mgcrea.ngStrap', 'ngStorage','ui.tree','io-barcode']);
+var app = angular.module('wpc', ['xeditable'
+                        , 'ngRoute'
+                        , 'ui.bootstrap'
+                        ,'ngTable'
+                        , 'ngTableToCsv'
+                        , 'ngResource'
+                        , 'ngFileUpload'
+                        , 'pdf'
+                        , 'ui.router'
+                        ,'ngAria'
+                        ,'ngAnimate'
+                        ,'ngMaterial'
+                        ,'md.data.table'
+                        ,'ngSanitize'
+                        , 'mgcrea.ngStrap'
+                        , 'ngStorage'
+                        ,'ui.tree'
+                        ,'io-barcode'
+                        ]);
 
-app.constant('ApiApp', {
-    url: 'http://institucion.certicamara.co/reports/api/insert-database/'
-})
+
 app.constant('ApiAuth', {
     url: 'http://localhost:2022/autentication/'
 });
@@ -151,7 +167,7 @@ app.config(['$routeProvider', function ($routeProvider) {
                 );
         $routeProvider.when('/dynamic-search-report', {
                                 templateUrl: 'assets/app/entities/garantias/report/view/report-archivo.html',
-                                controller: 'ConfiguracionRegionalController'
+                                controller: 'ReporteArchivoController'
                             }
         );
         $routeProvider.when('/regionales', {
@@ -169,6 +185,11 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'FiltrarBusquedaController'
                             }
         );
+        $routeProvider.when('/modalBarras', {
+                                        templateUrl: 'assets/app/entities/modal/filtro/view/modal-barras.html',
+                                        controller: 'GenerarBarrasController'
+                                    }
+                );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

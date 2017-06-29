@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['AuthenticationFactory','ApiFiles','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController','$http'];
+        DynamicSearchModalController.$inject = ['AuthenticationFactory','ApiFiles','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController','$http','$uibModal'];
 
-        function DynamicSearchModalController(AuthenticationFactory,ApiFiles,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController,$http) {
+        function DynamicSearchModalController(AuthenticationFactory,ApiFiles,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController,$http,$uibModal) {
 
             inSession($scope,AuthenticationFactory,$window);
             $scope.entity = ShareService.get();
@@ -24,6 +24,22 @@
                 row["key"]=rowSelected;
                 return rowDetailShow(row);
             }
+            $scope.getBarCode=function(){
+                return $scope.entity.envio.numero;
+            };
+            $scope.getBarCodeSubserie=function(){
+                return $scope.entity.ingreso.subserie;
+            };
+            $scope.modalBarCode=function(entity){
+                  $scope.entity=entity;
+                  var modalInstance = $uibModal.open({
+                                          templateUrl: 'assets/app/entities/modal/filtro/view/modal-barras.html',
+                                          controller: 'GenerarBarrasController',
+                                          scope: $scope,
+                                          size: 'lg'
+                                      }
+                                  );
+                };
             ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
                 function (data) {
                     $scope.listOfFiles = data;

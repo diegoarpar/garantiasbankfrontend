@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('NavBarController', NavBarController);
 
-        NavBarController.$inject = ['AuthenticationFactory','GarantiasServices','$scope', 'ProductServices', '$location', '$uibModal','$window'];
+        NavBarController.$inject = ['AuthenticationFactory','GarantiasServices','$scope',  '$location', '$uibModal','$window'];
 
-        function NavBarController(AuthenticationFactory,GarantiasServices,$scope, ProductServices, $location, $uibModal,$window) {
+        function NavBarController(AuthenticationFactory,GarantiasServices,$scope,  $location, $uibModal,$window) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.inSession=false;
             $scope.menu={};

@@ -12,8 +12,7 @@
 
     function DynamicSearch($http, ApiGarantias, $window) {
         var baseUrl = ApiGarantias.url + 'search';
-        var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
-
+        var headers2= getGenericHeader($window);
         return {
             getMetaData: function (id, date) {
                 var config = {

@@ -33,7 +33,10 @@
                     o=JSON.parse(JSON.stringify($scope.aditionalFilter));
                 }
                 for(var i=0;i<$scope.lista.length;i++){
-                        o[$scope.lista[i].key]=$scope.lista[i].toSearch;
+                        var fieldKey=$scope.lista[i].key;
+                        var fieldType=$scope.lista[i].fieldType;
+                        if(fieldType=="alistamiento")fieldKey="envio."+fieldKey;
+                        o[fieldKey]=$scope.lista[i].toSearch;
                 }
                 listToSearch.push(o);
                 var promise=GarantiasServices.showPost(listToSearch);
@@ -45,7 +48,11 @@
                 $scope.listaBusqueda=[];
                 $scope.$dismiss();
             }
+            $scope.okReport=function(){
+                    $scope.ok();
+                    $scope.loadReport($scope.reporteSeleccionado);
 
+                }
             $scope.cancel=function(){
                 $scope.listaBusqueda=[];
                 $scope.lista=[];
@@ -61,6 +68,13 @@
                 var parameter=[{'fondo.key':$scope.fondoSelected.key}];
                 $scope.subseries=GarantiasServices.showtrdpost(parameter);
             }
+            $scope.cargarMetadatosReportes=function(){
+                $scope.cargarMetadatos();
+                var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
+
+                var promise = GarantiasServices.showReportPost(parameter);
+                $scope.reportes=promise;
+            };
             $scope.cargarMetadatos = function() {
                 var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
 

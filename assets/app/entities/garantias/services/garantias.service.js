@@ -66,7 +66,8 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },/*-----------METADATA---- */
+                },
+                /*-----------METADATA---- */
 
                 showMetadataPost: {
                       url:ApiGarantias.url+'metadata/retrive',
@@ -90,6 +91,36 @@
                     data: '@data'
                 },saveChangesMetadata: {
                     url:ApiGarantias.url+'metadata/savechanges',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
+                },
+                /*-----------METADATA---- */
+
+                showReportPost: {
+                      url:ApiGarantias.url+'report/retrive',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: true
+                  },
+                showReport: {
+                    url:ApiGarantias.url+'report',
+                    headers: headers2,
+                    method: 'GET',
+                    params: {'@param': '@param'},
+                    isArray: true
+                },createReport: {
+                    url:ApiGarantias.url+'report',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
+                },saveChangesReport: {
+                    url:ApiGarantias.url+'report/savechanges',
                     method: 'POST',
                     headers: headers2,
                     params: {'@param': '@param'},

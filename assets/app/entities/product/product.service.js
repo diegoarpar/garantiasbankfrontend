@@ -6,10 +6,10 @@
         angular.module("wpc")
             .factory('ProductServices', ProductServices);
 
-        ProductServices.$inject = ['$resource', 'ApiApp', '$window'];
+        ProductServices.$inject = ['$resource',  '$window'];
 
-        function ProductServices($resource, ApiApp, $window) {
-            return $resource(ApiApp.url + 'getAllProduct', {}, {
+        function ProductServices($resource,  $window) {
+            return $resource('getAllProduct', {}, {
                 show: {
                     method: 'GET',
                     isArray: true,

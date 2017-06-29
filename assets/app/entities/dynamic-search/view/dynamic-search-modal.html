@@ -8,6 +8,10 @@
 
     <div class="modal-body">
         <!--div class="row"-->
+            <div>
+
+                <button class="btn" ng-click="modalBarCode(entity)">Código de Barras</button>
+            </div>
             <div ng-if="rowDetailShow(key)" class="col-md-6 col-lg-6" ng-repeat="(key,value) in entity">
                 <div  class="form-group">
                     <label for="{{key}}">{{key}}</label>

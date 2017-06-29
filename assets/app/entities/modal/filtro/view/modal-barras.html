@@ -1,0 +1,19 @@
+<div  close="cancel()">
+    <div class="modal-header">
+        <h4>Seleccione los filtros</h4>
+    </div>
+
+    <div class="modal-body">
+        <button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
+        <button ng-if="!code" class="btn btn-success" ng-click="generateBarcode()">Generar</button>
+        <div>
+
+            <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
+            <div>    <span class="text-align-center">{{ code }}</span></div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" ng-click="cancel()">Cancelar</button>
+    </div>
+</div>

@@ -6,10 +6,10 @@
         angular.module("wpc")
             .factory('ReportServicesTelefonica', ReportServicesTelefonica);
 
-        ReportServicesTelefonica.$inject = ['$resource', 'ApiApp', '$rootScope', '$window'];
+        ReportServicesTelefonica.$inject = ['$resource',  '$rootScope', '$window'];
 
-        function ReportServicesTelefonica($resource, ApiApp, $rootScope, $window) {
-            return $resource(ApiApp.url + 'getAllDigitalizacionByProcessAndDate', {}, {
+        function ReportServicesTelefonica($resource,  $rootScope, $window) {
+            return $resource('getAllDigitalizacionByProcessAndDate', {}, {
                 show: {
                     method: 'GET',
                     isArray: true,

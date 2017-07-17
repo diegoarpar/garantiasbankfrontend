@@ -27,7 +27,7 @@
             };
             $scope.removeRow = function (index) {
                 $scope.digital.splice(index, 1);
-                construirTabla($scope, $scope.digital, ngTableParams, $filter);
+                $scope.tablaGarantias=construirTabla($scope, $scope.digital, ngTableParams, $filter);
             };
             $scope.addRow = function () {
                 $scope.inserted = {
@@ -103,6 +103,7 @@
                     if(data!=null){
                         $scope.digital = data;
                         fillColumns(data, $scope);
+                        //$scope.tablaGarantias=construirTabla($scope, $scope.digital,ngTableParams,$filter);
                     }
                 });
 
@@ -142,21 +143,5 @@
             }
         }
 
-        function construirTabla($scope, digital, ngTableParams, $filter) {
-            $scope.data = digital;
-            $scope.tablaGarantias = new ngTableParams({
-                page: 1,
-                count: 2000,
-                sorting: {firstname: 'asc'}
-            }, {
-                total: digital.length,
-                getData: function ($defer, params) {
-                    params.total(digital.length);
-                    $scope.data = params.sorting() ? $filter('orderBy')(digital, params.orderBy()) : digital;
-                    $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : digital;
-                    $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    $defer.resolve($scope.data);
-                }
-            });
-        }
+
     })();

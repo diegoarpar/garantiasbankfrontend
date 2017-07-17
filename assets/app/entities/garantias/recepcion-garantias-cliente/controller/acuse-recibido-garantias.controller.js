@@ -160,7 +160,6 @@
 
         function getChange(value, listColumns) {
             for (var i = 0; i < listColumns.length; i++) {
-
                 if (listColumns[i].title == value) {
                     if (listColumns[i].columnName == undefined&&listColumns[i].checked) {
                         alert("Existe un valor sin equivalente");
@@ -170,7 +169,15 @@
                     return listColumns[i].columnName;
                 }
             }
-            return value;
+            return undefined;
+        };
+        function getIndex(value, listColumns) {
+            for (var i = 0; i < listColumns.length; i++) {
+                if (listColumns[i].title == value&&listColumns[i].checked) {
+                    return i;
+                }
+            }
+            return undefined;
         };
         function changeColumnName($scope, listColumns) {
             var newDigital=[];
@@ -179,11 +186,14 @@
                 for (var e in $scope.digital[i]) {
                     var newColumnName = getChange(e, listColumns);
 
-                    if (!row[newColumnName]&&newColumnName!=undefined) {
-                        row[newColumnName] = $scope.digital[i][e];
-                    } else if (newColumnName!=undefined) {
-                        alert("Columna " + newColumnName + " repetida");
-                        throw ("Columna " + newColumnName + " repetida");
+                        var indexOldValue=getIndex(e,listColumns);
+                    if(indexOldValue!=undefined&&indexOldValue!=null){
+                        if (!row[newColumnName]&&newColumnName!=undefined&&listColumns[indexOldValue].checked) {
+                            row[newColumnName] = $scope.digital[i][e];
+                        } else if (newColumnName!=undefined&&listColumns[indexOldValue].checked) {
+                            alert("Columna " + newColumnName + " repetida");
+                            throw ("Columna " + newColumnName + " repetida");
+                        }
                     }
 
                 }
@@ -191,21 +201,5 @@
             }
             $scope.digital = newDigital;
         };
-        function construirTabla($scope, digital, ngTableParams, $filter) {
-            $scope.data = digital;
-            $scope.tablaGarantias = new ngTableParams({
-                page: 1,
-                count: 2000,
-                sorting: {firstname: 'asc'}
-            }, {
-                total: digital.length,
-                getData: function ($defer, params) {
-                    params.total(digital.length);
-                    $scope.data = params.sorting() ? $filter('orderBy')(digital, params.orderBy()) : digital;
-                    $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : digital;
-                    $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    $defer.resolve($scope.data);
-                }
-            });
-        }
+
     })();

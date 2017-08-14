@@ -26,7 +26,9 @@
                           };
             $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
             $scope.subseries=[];
-            $scope.ok=function(){
+            $scope.ok=function(setSearchParameters,type){
+
+
                 var listToSearch=[];
                 var o={};
                 if($scope.aditionalFilter!=null){
@@ -38,19 +40,41 @@
                         if(fieldType=="alistamiento")fieldKey="envio."+fieldKey;
                         o[fieldKey]=$scope.lista[i].toSearch;
                 }
+
+                if($scope.fondoSelected!=null){
+                    o["ingreso.empresa.key"]=$scope.fondoSelected.key;
+                 }
+                if($scope.subserieseleccionada!=null){
+                    o["ingreso.subserie.key"]=$scope.subserieseleccionada.key;
+                 }
+
+                if(type=="report"){
+                    if($scope.reporteSeleccionado.query!=null||true){
+                        var oo=o;
+                        o={};
+                        o["$and"]=[oo,{"$or":$scope.reporteSeleccionado.query}];
+                    }
+                }
                 listToSearch.push(o);
                 var promise=GarantiasServices.showPost(listToSearch);
                 handleSubmitServicePromise(promise,null);
                 $scope.setResultSearch(promise);
 
+                if(setSearchParameters){
+                    $scope.setSearchParameters(listToSearch);
+                }
                 $scope.lista=[];
                 listToSearch=[];
                 $scope.listaBusqueda=[];
                 $scope.$dismiss();
+
+
+
             }
             $scope.okReport=function(){
-                    $scope.ok();
+                    $scope.ok(true,"report");
                     $scope.loadReport($scope.reporteSeleccionado);
+
 
                 }
             $scope.cancel=function(){

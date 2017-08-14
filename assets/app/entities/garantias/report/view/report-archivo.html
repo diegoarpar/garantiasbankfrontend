@@ -1,24 +1,16 @@
 <h3 ng-init="openModalFilterReportes()">Reportes {{reporte.nombre}}</h3>
-
-
-<mdt-table save-row-callback="saveRowCallback(row)">
-    <mdt-header-row>
-        <mdt-column align-rule="left">Dessert (100g serving)</mdt-column>
-        <mdt-column align-rule="right">Calories</mdt-column>
-        <mdt-column align-rule="right">Fat (g)</mdt-column>
-        <mdt-column align-rule="right">Carbs (g)</mdt-column>
-        <mdt-column align-rule="right">Protein (g)</mdt-column>
-        <mdt-column align-rule="right">Sodium (mg)</mdt-column>
-        <mdt-column align-rule="right">Calcium (%)</mdt-column>
-        <mdt-column align-rule="right">Iron (%)</mdt-column>
-    </mdt-header-row>
-    <mdt-row ng-repeat="item in results">
-        <mdt-cell>{{item.envio.numero}}</mdt-cell>
-        <mdt-cell>{{item.fat}}</mdt-cell>
-        <mdt-cell>{{item.carbs}}</mdt-cell>
-        <mdt-cell>{{item.protein}}</mdt-cell>
-        <mdt-cell>{{item.sodium}}</mdt-cell>
-        <mdt-cell>{{item.calcium}}</mdt-cell>
-        <mdt-cell>{{item.iron}}</mdt-cell>
-    </mdt-row>
-</mdt-table>
+<button ng-click="openModalFilterReportes()" class="btn green">Buscar</button>
+<div>
+    <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
+           class="table table-condensed table-bordered table-striped ng-scope ng-table">
+        <thead>
+        <tr>
+            <th ng-repeat="r in reporte.columns" >{{ r.name }}
+            </th>
+        </tr>
+        </thead>
+        <tr ng-repeat="row in results" >
+            <td ng-repeat="r in reporte.columns" >{{row[r.value]}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,45 @@
+<h2>Asociar permisos para {{selectedUser.nombreCompleto}}</h2>
+
+<div  class="col-md-4">
+
+    <div class="row">
+        <span>Tipo:</span>
+        <select ng-model="selectedPermissionType" ng-options="x.DESCRIPCION for x in permissionsType" ng-change="getPermissionsType()">
+        </select>
+    </div>
+
+    <div class="row">
+        <span>Objeto :</span>
+        <select ng-model="selectedObject" ng-options="x.DESCRIPCION for x in objectsPermissions" ng-change="getPermissionsObject()">
+        </select>
+    </div>
+    <div class="row">
+        <span>Permiso :</span>
+        <select ng-model="selectedPermission" ng-options="x.DESCRIPCION for x in permissions">
+        </select>
+    </div>
+    <div class="row">
+        <input type="submit" value="Agregar" ng-click="add()" class="btn green"/>
+    </div>
+</div>
+    <table ng-table="tableRoles" class="table" >
+
+    <tr>
+        <th >TIPO</th>
+        <th >OBJETO</th>
+        <th >VALOR</th>
+        <th >Opciones</th>
+    </tr>
+    <tr ng-repeat ="p in userPermisions" >
+        <td    >{{p.type}}</td>
+        <td    >{{p.name}}</td>
+        <td    >{{p.value}}</td>
+        <td    >
+            <button class="btn green" ng-click="remove($index)" >X</button>
+        </td>
+    </tr>
+</table>
+
+
+<input type="submit" value="Guardar Cambios" ng-click="ok()" class="btn green"/>
+<button class="btn" ng-click="cancel()">Cancelar</button>

@@ -52,7 +52,20 @@
                     if($scope.reporteSeleccionado.query!=null||true){
                         var oo=o;
                         o={};
-                        o["$and"]=[oo,{"$or":$scope.reporteSeleccionado.query}];
+                        var query=JSON.stringify($scope.reporteSeleccionado.query);
+                        do{ query=query.replace("___or","$or"); }while(query.indexOf("___or")>=0);
+                        do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
+                        do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
+                        $scope.reporteSeleccionado.query=JSON.parse(query);
+
+                        var query=JSON.stringify($scope.reporteSeleccionado.columns);
+                        do{ query=query.replace("___or","$or"); }while(query.indexOf("___or")>=0);
+                        do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
+                        do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
+                         $scope.reporteSeleccionado.columns=JSON.parse(query);
+                        o["$and"]=$scope.reporteSeleccionado.query;
+                        o["$and"].push(oo);
+
                     }
                 }
                 listToSearch.push(o);

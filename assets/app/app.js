@@ -20,13 +20,16 @@ var app = angular.module('wpc', ['xeditable'
 
 
 app.constant('ApiAuth', {
-    url: 'http://localhost:2022/autentication/'
+    url: 'http://archivo.diego.com.co:8081/autentication/'
+    //2022
 });
 app.constant('ApiGarantias', {
-    url: 'http://localhost:2020/garantias/'
+    url: 'http://archivo.diego.com.co:8081/garantias/'
+    //2020
 });
 app.constant('ApiFiles', {
-    url: 'http://localhost:2024/CMS/'
+    url: 'http://archivo.diego.com.co:8081/CMS/'
+    //2024
 });
 app.constant('cApp', {
     tenant: ''
@@ -34,20 +37,22 @@ app.constant('cApp', {
 
 
 function inSession($scope, AuthenticationFactory, window,principal) {
-                if(!window.sessionStorage.getItem("tenant")){
+                if(!window.localStorage.getItem("tenant")){
                  console.log("verify "+location.hostname);
                  var rta = AuthenticationFactory.tenant({origin:location.hostname});
                  rta.$promise.then(function(data) {
                             if(!data[0]) alert ("este sitio no se encuentra configurado");
                             if(data[0]){
-                                window.sessionStorage["tenant"]=data[0].name;
-                                window.location.reload();
+                                window.localStorage["tenant"]=data[0].name;
+
+                                //window.location.reload();
                                 setStyleSheet(data[0].name);
+                                window.location.href=window.location.href;
                             }
                          });
 
                 }else{
-                    setStyleSheet(window.sessionStorage.getItem("tenant"));
+                    setStyleSheet(window.localStorage.getItem("tenant"));
                 }
 
                 if(!principal){
@@ -190,6 +195,11 @@ app.config(['$routeProvider', function ($routeProvider) {
                                         controller: 'GenerarBarrasController'
                                     }
                 );
+        $routeProvider.when('/AdministrarPermisos', {
+                                templateUrl: 'assets/app/authentication/view/administrador-permisos.html',
+                                controller: 'AdministradorPermisosController'
+                            }
+        );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

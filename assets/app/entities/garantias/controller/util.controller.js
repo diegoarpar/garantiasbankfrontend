@@ -174,7 +174,6 @@ function setStyleSheet(tenant){
 
 
     if(document.getElementById("logoTenant")!=null){
-        console.log("configure css for "+tenant);
         var link=document.createElement('link');
           link.rel = 'stylesheet';
           link.type = 'text/css';
@@ -188,7 +187,7 @@ function setStyleSheet(tenant){
 
 }
 function getGenericHeader(window){
-    var headers= {'Authorization': 'Bearer ' + window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+    var headers= {'Authorization': 'Bearer ' + window.localStorage.getItem('token')+","+window.localStorage.getItem("tenant")};
     return headers;
 }
 function getUrlServices(rootServices,service){
@@ -256,7 +255,7 @@ function concatStageRow(name,row,subserie,tipodocumento){
             row[name].tipoDocumento={};
             for(var i=0;i<subserie.length;i++){
                 for(var j=0;j<subserie[i].metadata.length;j++){
-                    if(subserie[i].metadata[j]["fieldType"]=="idoneidad"){
+                    if(subserie[i].metadata[j]["fieldType"]==name){
                         row[name].general.push(subserie[i].metadata[j]);
                     }
                 }

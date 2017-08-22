@@ -36,18 +36,27 @@
             };
 
             $scope.editMenus = function(user){
-            $scope.selectedUser=user;
-            var modalInstance = $uibModal.open({
-                    templateUrl: 'assets/app/authentication/view/administrar-menus.html',
-                    controller: 'CrearMenuController',
-                    scope: $scope,
-                    size: 'lg'
-                }
-            );
+                $scope.selectedUser=user;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/authentication/view/administrar-menus.html',
+                        controller: 'CrearMenuController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            };
+            $scope.editPermisions = function(user){
+                $scope.selectedUser=user;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/authentication/view/administrador-permisos.html',
+                        controller: 'AdministradorPermisosController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
             };
             $scope.defineRol = function(user){
-
-            $scope.selectedUser=user;
+                $scope.selectedUser=user;
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/authentication/view/asociar-rol.html',
                         controller: 'AsociarRolController',

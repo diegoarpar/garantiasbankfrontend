@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tr ng-repeat="row in results" >
-            <td ng-repeat="r in reporte.columns" >{{row[r.value]}}</td>
+            <td ng-repeat="r in reporte.columns" >{{getValue(row,r.value)}}</td>
         </tr>
     </table>
 </div>

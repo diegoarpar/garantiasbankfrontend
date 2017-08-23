@@ -48,24 +48,40 @@
             };
 
             $scope.ok = function() {
-                var row = $scope.rowDetail;
-                row=concatStageRow("idoneidad",row,$scope.subserie, $scope.tipodocumento);
-                var parameter=[];
-                parameter[0]=row;
+            if(!$scope.masivo){
+                           var row = $scope.rowDetail;
+                           row=concatStageRow("idoneidad",row,$scope.subserie, $scope.tipodocumento);
+                           var parameter=[];
+                           parameter[0]=row;
 
-                $scope.rowToSave=parameter;
+                           $scope.rowToSave=parameter;
 
-                var promise = NumberService.getNumber('');
-                promise.$promise.then(function (data){
-                    if(data!=null){
-                        $scope.rowToSave[0].idoneidad._date=data[0].number;
-                         $scope.cleanDigital();
-                        var promise=GarantiasServices.update(parameter);
+                           var promise = NumberService.getNumber('');
+                           promise.$promise.then(function (data){
+                               if(data!=null){
+                                   $scope.rowToSave[0].idoneidad._date=data[0].number;
+                                    $scope.cleanDigital();
+                                   var promise=GarantiasServices.update(parameter);
 
-                        handleSubmitServicePromise(promise,null);
-                    }
-                });
-
+                                   handleSubmitServicePromise(promise,null);
+                               }
+                           });
+                }else{
+                    var promise = NumberService.getNumber('');
+                    promise.$promise.then(function (data){
+                        if(data!=null){
+                            for(var i=0;i<$scope.idoneidadMasivo.length;i++){
+                                var row = $scope.idoneidadMasivo[i];
+                                row=concatStageRow("idoneidad",row,$scope.subserie, $scope.tipodocumento);
+                                row.idoneidad._date=data[0].number;
+                                $scope.idoneidadMasivo[i]=row;
+                            }
+                            var promise=GarantiasServices.update($scope.idoneidadMasivo);
+                            handleSubmitServicePromise(promise,null);
+                        }
+                    });
+                     $scope.cleanDigital();
+                }
                 $uibModalInstance.dismiss('cancel');
             };
 

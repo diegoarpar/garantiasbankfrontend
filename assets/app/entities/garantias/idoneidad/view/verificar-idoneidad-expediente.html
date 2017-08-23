@@ -1,10 +1,12 @@
 
 <h2  >VERIFICACION DE IDONEIDAD</h2>
 <div class="content">
-    <div ng-if="rowDetailShow(d)" ng-repeat="d in rowDetailP">
-        <input readonly="true" ng-model="d.key"/>:
-        <input readonly="true"  ng-model="d.value"/>
+    <div ng-if="!masivo">
+        <div ng-if="rowDetailShow(d)" ng-repeat="d in rowDetailP">
+            <input readonly="true" ng-model="d.key"/>:
+            <input readonly="true"  ng-model="d.value"/>
 
+        </div>
     </div>
     <div ng-if="s.metadata.length>0" ng-repeat="s in subserie">
         <div ng-if="m.fieldType=='idoneidad'" ng-repeat="m in s.metadata">

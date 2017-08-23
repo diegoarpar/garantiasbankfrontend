@@ -49,26 +49,45 @@
 
 
             $scope.ok = function() {
-                var row = $scope.rowDetail;
-                row=concatStageRow("completitud",row,$scope.subserie, $scope.tipodocumento);
-                var parameter=[];
-                parameter[0]=row;
+                if(!$scope.masivo){
+                    var row = $scope.rowDetail;
+                    row=concatStageRow("completitud",row,$scope.subserie, $scope.tipodocumento);
+                    var parameter=[];
+                    parameter[0]=row;
 
-                $scope.rowToSave=parameter;
+                    $scope.rowToSave=parameter;
 
-                var promise = NumberService.getNumber('');
-                promise.$promise.then(function (data){
-                    if(data!=null){
-                        $scope.rowToSave[0].completitud._date=data[0].number;
-                        var promise=GarantiasServices.update(parameter);
-                        $scope.cleanDigital();
-                        handleSubmitServicePromise(promise,null);
-                    }
-                });
+                    var promise = NumberService.getNumber('');
+                    promise.$promise.then(function (data){
+                        if(data!=null){
+                            $scope.rowToSave[0].completitud._date=data[0].number;
+                            var promise=GarantiasServices.update(parameter);
+                            $scope.cleanDigital();
+                            handleSubmitServicePromise(promise,null);
+                        }
+                    });
 
 
 
-                $uibModalInstance.dismiss('cancel');
+
+                }else{
+
+                    var promise = NumberService.getNumber('');
+                    promise.$promise.then(function (data){
+                        if(data!=null){
+                            for(var i=0;i<$scope.completitudMasivo.length;i++){
+                                var row = $scope.completitudMasivo[i];
+                                row=concatStageRow("completitud",row,$scope.subserie, $scope.tipodocumento);
+                                row.completitud._date=data[0].number;
+                                $scope.completitudMasivo[i]=row;
+                            }
+                            var promise=GarantiasServices.update($scope.completitudMasivo);
+                            handleSubmitServicePromise(promise,null);
+                        }
+                    });
+                     $scope.cleanDigital();
+                }
+                 $uibModalInstance.dismiss('cancel');
             };
 
             $scope.cancel = function() {

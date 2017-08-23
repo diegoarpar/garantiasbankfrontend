@@ -20,6 +20,10 @@
             $scope.numero = [];
             $scope.showmodal = false;
             $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
+            $scope.visibility=new Map();
+            $scope.validate=function(permission,field){
+                        validateFields($scope,AuthenticationFactory,'IDONEIDAD',$window,document,permission,field);
+            };
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
@@ -64,6 +68,11 @@
                 $scope.digital[idx] = angular.copy($scope.digital.selected);
                 $scope.reset();
             };
+            $scope.mark_all=function(){
+                for(var i=0;i<$scope.digital.length;i++){
+                    $scope.digital[i].selected=true;
+                }
+            };
             $scope.aditionalFilter={
                                   "ingreso.enviadoTula": true,
                                   "envio.recibido": true,
@@ -87,7 +96,28 @@
 
                });
             };
+            $scope.openModalFiltroMasivo = function () {
+               $scope.idoneidadMasivo=[];
+                for(var i=0;i<$scope.digital.length;i++){
+                    if($scope.digital[i].selected){
+                        var object=JSON.parse(JSON.stringify($scope.digital[i]));
+                        delete object["selected"];
+                        $scope.idoneidadMasivo.push(object);
+                    }
 
+                }
+
+                if($scope.idoneidadMasivo.length==0)return;
+                $scope.masivo=true;
+                $scope.rowDetail=object;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/idoneidad/view/verificar-idoneidad-expediente.html',
+                        controller: 'VerificarIdoneidadExpedienteController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
              $scope.openModalFiltro = function () {
 
                 var modalInstance = $uibModal.open({

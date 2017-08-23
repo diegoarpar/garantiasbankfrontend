@@ -5,7 +5,10 @@
         <button class="btn green" ng-click="openModalFiltro()">Consultar Garantias</button>
 
     </div>
-
+    <div id='buttonMasivo', ng-init="validate('COMPLETITUD_MASIVO','buttonMasivo')">
+        <label ng-click="mark_all()"> Marcar/desmarcar todos</label>
+        <button class="btn green" ng-click="openModalFiltroMasivo()">Validar Completitud Masiva</button>
+    </div>
     <div class="form-group">
         <div class="col-sm-12">
             <div data-toggle="collapse" data-target="#demo" class="ui-content">Ver Columnas</div>
@@ -19,10 +22,7 @@
             </div>
         </div>
     </div>
-    <div id='buttonMasivo', ng-init="validate('COMPLETITUD_MASIVO','buttonMasivo')">
-        <label ng-click="mark_all()"> Marcar/desmarcar todos</label>
-        <button class="btn green" ng-click="openModalFiltroMasivo()">Validar Completitud Masiva</button>
-    </div>
+
     <h3>VERIFICAR CONTENIDO GARANTIA</h3>
 
     <div class="span3">

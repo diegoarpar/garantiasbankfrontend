@@ -72,7 +72,11 @@
                 $scope.digital[idx] = angular.copy($scope.digital.selected);
                 $scope.reset();
             };
-
+            $scope.mark_all=function(){
+                for(var i=0;i<$scope.digital.length;i++){
+                    $scope.digital[i].selected=true;
+                }
+            };
             $scope.aditionalFilter={
                                    "ingreso.enviadoTula": true,
                                    "envio.recibido": true,
@@ -118,6 +122,7 @@
             $scope.openModal = function (idx,object) {
                 $scope.masivo=false;
                 $scope.rowDetail=object;
+                delete $scope.rowDetail["selected"];
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/garantias/completitud/view/verificar-completitud-expediente.html',
                         controller: 'VerificarCompletitudExpedienteController',
@@ -128,7 +133,17 @@
             }
 
             $scope.openModalFiltroMasivo = function () {
+               $scope.completitudMasivo=[];
+                for(var i=0;i<$scope.digital.length;i++){
+                    if($scope.digital[i].selected){
+                        var object=JSON.parse(JSON.stringify($scope.digital[i]));
+                        delete object["selected"];
+                        $scope.completitudMasivo.push(object);
+                    }
 
+                }
+
+                if($scope.completitudMasivo.length==0)return;
                 $scope.masivo=true;
                 $scope.rowDetail=object;
                 var modalInstance = $uibModal.open({

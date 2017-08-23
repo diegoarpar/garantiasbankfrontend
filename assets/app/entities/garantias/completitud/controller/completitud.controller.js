@@ -20,6 +20,14 @@
             $scope.numero = [];
             $scope.showmodal = false;
             $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
+            $scope.visibility=new Map();
+            $scope.validate=function(permission,field){
+
+
+                        validateFields($scope,AuthenticationFactory,'COMPLETITUD',$window,document,permission,field);
+
+            };
+
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
@@ -108,6 +116,20 @@
                 update_columns($scope);
             }, true);
             $scope.openModal = function (idx,object) {
+                $scope.masivo=false;
+                $scope.rowDetail=object;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/completitud/view/verificar-completitud-expediente.html',
+                        controller: 'VerificarCompletitudExpedienteController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
+
+            $scope.openModalFiltroMasivo = function () {
+
+                $scope.masivo=true;
                 $scope.rowDetail=object;
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/garantias/completitud/view/verificar-completitud-expediente.html',

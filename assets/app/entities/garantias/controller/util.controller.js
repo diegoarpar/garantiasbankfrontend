@@ -346,3 +346,38 @@ function getMetadataFactoryToSearch(data){
     return dataList;
 
 }
+
+function validateFields($scope,autenticationUser, object,window,document,permission,field){
+
+    if($scope.visibility.get(permission)==null){
+    var promise=autenticationUser.userByToken({"token":window.localStorage.getItem('token')});
+    promise.$promise.then(function (data){
+        if(!!data&&data.length>0){
+            var promise2=autenticationUser.showPermissions({"user":data[0].user,"name":object,"value":permission});
+            promise2.$promise.then(function (data2){
+                for(var i=0;i<data2.length;i++){
+
+                    if(data2[i].value==permission){
+                        $scope.visibility.set(permission,true)
+
+                        return;
+                    }
+
+                }
+                $scope.visibility.set(permission,false)
+                deleteNode(document,field);
+            });
+        }
+
+    }
+
+    );
+    }else if($scope.visibility.get(permission)==false){
+            deleteNode(document,field);
+    }
+
+}
+
+function deleteNode(document,field){
+    document.getElementById(field).outerHTML='';
+}

@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('NavBarController', NavBarController);
 
-        NavBarController.$inject = ['AuthenticationFactory','GarantiasServices','$scope',  '$location', '$uibModal','$window'];
+        NavBarController.$inject = ['ShareService','AuthenticationFactory','GarantiasServices','$scope',  '$location', '$uibModal','$window'];
 
-        function NavBarController(AuthenticationFactory,GarantiasServices,$scope,  $location, $uibModal,$window) {
+        function NavBarController(ShareService,AuthenticationFactory,GarantiasServices,$scope,  $location, $uibModal,$window) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.inSession=false;
             $scope.menu={};
@@ -26,6 +26,7 @@
                         function (data){
                         if(data){
                             $scope.userLogIn=data[0];
+                            ShareService.setUser($scope.userLogIn.user);
                             var promise=GarantiasServices.showMenu({user:$scope.userLogIn.user});
                                 promise.$promise.then(function(data){
                                         if(data)if(data.length>0)

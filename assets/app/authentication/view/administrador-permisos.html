@@ -25,16 +25,16 @@
     <table ng-table="tableRoles" class="table" >
 
     <tr>
-        <th >TIPO</th>
-        <th >OBJETO</th>
-        <th >VALOR</th>
-        <th >Opciones</th>
+        <th>TIPO</th>
+        <th>OBJETO</th>
+        <th>VALOR</th>
+        <th>Opciones</th>
     </tr>
     <tr ng-repeat ="p in userPermisions" >
-        <td    >{{p.type}}</td>
-        <td    >{{p.name}}</td>
-        <td    >{{p.value}}</td>
-        <td    >
+        <td>{{p.type}}</td>
+        <td>{{p.name}}</td>
+        <td>{{p.value}}</td>
+        <td>
             <button class="btn green" ng-click="remove($index)" >X</button>
         </td>
     </tr>

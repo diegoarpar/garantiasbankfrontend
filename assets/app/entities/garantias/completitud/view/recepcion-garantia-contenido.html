@@ -19,11 +19,16 @@
             </div>
         </div>
     </div>
+    <div id='buttonMasivo', ng-init="validate('COMPLETITUD_MASIVO','buttonMasivo')">
+        <label ng-click="mark_all()"> Marcar/desmarcar todos</label>
+        <button class="btn green" ng-click="openModalFiltroMasivo()">Validar Completitud Masiva</button>
+    </div>
     <h3>VERIFICAR CONTENIDO GARANTIA</h3>
 
     <div class="span3">
         <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
                class="table table-striped table-hover table-condensed ">
+            <th></th>
             <th></th>
             <th ng-repeat="d in columns">{{d.title}}</th>
             <tr ng-repeat="c in digital" ng-include="getTemplate(c)">
@@ -32,6 +37,9 @@
     </div>
 
     <script type="text/ng-template" id="display">
+        <td id="thMasivo", ng-init="validate('COMPLETITUD_MASIVO','thMasivo')">
+            <input type="checkbox" ng-model="c.selected"/>
+        </td>
         <td>
             <button ng-click="openModal($index,c)" class="btn green" data-toggle="modal" data-target="#myModal"
                     contenteditable="false">Verificar Contenido

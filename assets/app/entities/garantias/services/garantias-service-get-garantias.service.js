@@ -9,7 +9,7 @@
         GarantiasServiceGetGarantias.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
         function GarantiasServiceGetGarantias($resource, ApiGarantias, $rootScope, $window) {
-            var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+            var headers2= getGenericHeader($window);
              var url = ApiGarantias.url + 'insertGarantias';
             return $resource(ApiGarantias.url + 'getGarantias', {}, {
                 show: {

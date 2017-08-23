@@ -14,7 +14,7 @@
                     method: 'POST',
                     isArray: true,
                     params: {},
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
+                    headers: getGenericHeader($window),
                     data: '@data'
                 }
             });

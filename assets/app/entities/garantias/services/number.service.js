@@ -9,7 +9,7 @@
         NumberService.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
 
         function NumberService($resource, ApiGarantias, $rootScope, $window) {
-         var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+         var headers2= getGenericHeader($window);
          var url = ApiGarantias.url + 'getNumber';
             return $resource(url, {}, {
                 getNumber: {

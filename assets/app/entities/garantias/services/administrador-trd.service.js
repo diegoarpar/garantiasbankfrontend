@@ -9,7 +9,7 @@
         TRDServices.$inject = ['$resource', 'ApiGarantias', '$window', '$route'];
 
         function TRDServices($resource, ApiGarantias, $window, $route) {
-            var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+            var headers2= getGenericHeader($window);
             var url = ApiGarantias.url + 'config/garantias-parametricvalues';
             return $resource(url, {}, {
                 create: {

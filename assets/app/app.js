@@ -45,9 +45,9 @@ function inSession($scope, AuthenticationFactory, window,principal) {
                             if(data[0]){
                                 window.localStorage["tenant"]=data[0].name;
 
-                                //window.location.reload();
+                                window.location.reload();
                                 setStyleSheet(data[0].name);
-                                window.location.href=window.location.href;
+                                //window.location.href=window.location.href;
                             }
                          });
 

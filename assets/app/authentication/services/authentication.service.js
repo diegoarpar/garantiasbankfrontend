@@ -10,6 +10,7 @@
 
         function AuthenticationFactory($resource, ApiAuth, $window, $route) {
         var headers2= getGenericHeader($window);
+        var userLogin="";
         var url = ApiAuth.url + 'getToken';
             return $resource(url, {}, {
                 /********** users*/

@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('LoginControl', LoginController);
 
-        LoginController.$inject = ['$scope', 'AuthenticationFactory', '$location', '$uibModalInstance', '$rootScope', '$window', '$route'];
+        LoginController.$inject = ['$scope','ShareService', 'AuthenticationFactory', '$location', '$uibModalInstance', '$rootScope', '$window', '$route'];
 
-        function LoginController($scope, AuthenticationFactory, $location, $uibModalInstance, $rootScope, $window, $route) {
+        function LoginController($scope, ShareService,AuthenticationFactory, $location, $uibModalInstance, $rootScope, $window, $route) {
             inSession($scope,AuthenticationFactory,$window,true);
             // callback for ng-click 'createNewUser':
             $scope.ok = function () {
@@ -25,6 +25,7 @@
                     }
                     else {
                         $scope.token = data.token;
+                        ShareService.setUser(data.user);
                         $uibModalInstance.dismiss('cancel');
                         $window.localStorage.setItem('token', $scope.token);
                         $window.location.reload();

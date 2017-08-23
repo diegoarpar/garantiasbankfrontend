@@ -10,9 +10,11 @@
 
     ShareService.$inject = [];
 
+
     function ShareService() {
         var savedData = {}
         var contxt;
+        var _user;
         function set(data) {
             savedData = data;
         }
@@ -27,8 +29,15 @@
         function setContxt(nContext){
                     contxt= nContext;
                 }
-
+        function setUser(user){
+            _user=user;
+        }
+        function getUser(){
+                    return _user;
+                }
         return {
+            setUser:setUser,
+            getUser:getUser,
             set: set,
             get: get,
             getContext: getContext,

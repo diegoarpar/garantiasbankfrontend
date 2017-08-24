@@ -69,8 +69,17 @@
                 $scope.reset();
             };
             $scope.mark_all=function(){
+                var actualValue=null;
                 for(var i=0;i<$scope.digital.length;i++){
-                    $scope.digital[i].selected=true;
+                    if(actualValue==null){
+                        actualValue=$scope.digital[i].selected;
+                        if(!actualValue){
+                            actualValue=true;
+                        }else{
+                            actualValue=false;
+                        }
+                    }
+                    $scope.digital[i].selected=actualValue;
                 }
             };
             $scope.aditionalFilter={
@@ -119,7 +128,6 @@
                 );
             }
              $scope.openModalFiltro = function () {
-
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
                         controller: 'FiltrarBusquedaController',
@@ -147,7 +155,9 @@
             }, true);
 
             $scope.openModal = function (idx,object) {
+                $scope.masivo=false;
                 $scope.rowDetail=object;
+                delete $scope.rowDetail["selected"];
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/garantias/idoneidad/view/verificar-idoneidad-expediente.html',
                         controller: 'VerificarIdoneidadExpedienteController',

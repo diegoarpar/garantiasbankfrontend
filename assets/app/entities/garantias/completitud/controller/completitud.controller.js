@@ -22,10 +22,7 @@
             $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
             $scope.visibility=new Map();
             $scope.validate=function(permission,field){
-
-
                         validateFields($scope,AuthenticationFactory,'COMPLETITUD',$window,document,permission,field);
-
             };
 
             $scope.createNewUser = function () {
@@ -73,8 +70,17 @@
                 $scope.reset();
             };
             $scope.mark_all=function(){
+                var actualValue=null;
                 for(var i=0;i<$scope.digital.length;i++){
-                    $scope.digital[i].selected=true;
+                    if(actualValue==null){
+                        actualValue=$scope.digital[i].selected;
+                        if(!actualValue){
+                            actualValue=true;
+                        }else{
+                            actualValue=false;
+                        }
+                    }
+                    $scope.digital[i].selected=actualValue;
                 }
             };
             $scope.aditionalFilter={

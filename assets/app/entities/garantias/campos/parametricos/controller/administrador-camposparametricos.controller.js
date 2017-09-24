@@ -6,44 +6,40 @@
         angular.module("wpc")
             .controller('CamposParametricosController', CamposParametricosController);
 
-        CamposParametricosController.$inject = ['AuthenticationFactory','$scope', 'CamposParametricosServices',  '$location', '$rootScope', '$window', '$route'];
+        CamposParametricosController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route'];
 
-        function CamposParametricosController(AuthenticationFactory,$scope, CamposParametricosServices, $location, $rootScope, $window, $route) {
-            inSession($scope,AuthenticationFactory,$window);
+        function CamposParametricosController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route) {
+            inSession($scope,AuthenticationFactory,$window,false);
             $scope.campo = {};
-            $scope.parametrics = CamposParametricosServices.show();
+            $scope.parametrics = GarantiasServices.showParametric();
             $scope.parametricst = [];
             $scope.add = function () {
-                $scope.campo.tenant=window.sessionStorage.getItem("tenant");
                 $scope.parametricst.push($scope.campo);
-                $scope.rta = CamposParametricosServices.create($scope.parametricst);
-                $scope.parametrics = CamposParametricosServices.show();
-                $scope.parametrics.$promise.then(function (data) {
-                    $scope.parametrics = CamposParametricosServices.show();
+                var rta = GarantiasServices.createParametric($scope.parametricst);
+
+                rta.$promise.then(function (data){
+                    var rta2 = GarantiasServices.showParametric();
+                            rta2.$promise.then(function (data){
+                                 $scope.parametrics = data;
+                            });
                 });
+
 
                 $scope.parametricst = [];
                 $scope.campo = {};
             }
             $scope.remove = function (idx) {
+                $scope.parametricst = [];
                 $scope.parametricst.push($scope.parametrics[idx]);
-                var response = CamposParametricosServices
-                    .remove({
+                var rta = GarantiasServices.removeParametric({
                             nombreparametrica: $scope.parametrics[idx].nombreparametrica,
-                            key: $scope.parametrics[idx].key,
-                            tenant: window.sessionStorage.getItem("tenant")
-                        },
-                        function (success) {
-                            $scope.parametrics = CamposParametricosServices.show();
-                            $scope.parametrics.$promise.then(function (data) {
-                                $scope.parametrics = data;
-                            });
-
-                            $scope.parametricst = [];
-                            $scope.campo = {};
-                        },
-                        function (error) {
-                            alert("error")
+                            key: $scope.parametrics[idx].key
+                        });
+                        rta.$promise.then(function (data){
+                            var rta2 = GarantiasServices.showParametric();
+                                rta2.$promise.then(function (data){
+                                     $scope.parametrics = data;
+                                });
                         });
 
             }

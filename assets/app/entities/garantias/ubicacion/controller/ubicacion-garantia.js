@@ -7,11 +7,11 @@
             .controller('UbicacionGarantiasController', UbicacionGarantiasController);
 
         UbicacionGarantiasController.$inject =
-            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window'];
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService',
+                 '$location', 'ngTableParams', '$filter', '$window'];
 
-        function UbicacionGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                              CamposEspecificosServices, $location, ngTableParams, $filter, $window) {
+        function UbicacionGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService,
+                                               $location, ngTableParams, $filter, $window) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -19,7 +19,6 @@
             $scope.digitalu = [];
             $scope.numero = [];
             $scope.showmodal = false;
-            $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };
@@ -97,7 +96,7 @@
                 $scope.selectedRowIndex = idx;
                 $scope.rowDetails = [];
                 $scope.rowDetail = [];
-                datosFillComplementarios($scope, $scope.selectedRow.tipogarantia, CamposEspecificosServices);
+                datosFillComplementarios($scope, $scope.selectedRow.tipogarantia);
                 for (var key in c) {
                     if (!$scope.rowDetails[key] && key.indexOf("$") === -1 && key !== "toJSON") {
                         $scope.rowDetails[key] = key;

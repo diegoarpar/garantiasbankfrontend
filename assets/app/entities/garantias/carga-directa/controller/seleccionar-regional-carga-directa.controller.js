@@ -5,15 +5,15 @@
             .controller('SeleccionarRegionalCargaDirectaController', SeleccionarRegionalCargaDirectaController);
 
         SeleccionarRegionalCargaDirectaController.$inject =
-            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
+            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService',
+                '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
 
-        function SeleccionarRegionalCargaDirectaController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance) {
+        function SeleccionarRegionalCargaDirectaController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService,
+                                 $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance) {
 
 
          inSession($scope,AuthenticationFactory,$window);
-            $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
+            $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo'});
             $scope.regionales=[];
             $scope.subseries=[];
                 $scope.cargarRegionales = function(value) {

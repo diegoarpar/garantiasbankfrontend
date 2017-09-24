@@ -7,11 +7,11 @@
             .controller('DatosController', DatosController);
 
         DatosController.$inject =
-            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService',
+             '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
-        function DatosController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices, $location, ngTableParams, $filter, $window,$uibModal) {
+        function DatosController(AuthenticationFactory,$scope, GarantiasServices, NumberService, $location, ngTableParams,
+            $filter, $window,$uibModal) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -19,7 +19,7 @@
             $scope.digitalu = [];
             $scope.numero = [];
             $scope.showmodal = false;
-            $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
+
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };

@@ -5,11 +5,11 @@
             .controller('ReporteArchivoController', ReporteArchivoController);
 
         ReporteArchivoController.$inject =
-            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
+            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService',
+                '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
 
-        function ReporteArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
+        function ReporteArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService,
+                                  $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
 
         //db.archivo_mapfre.find({"$and":[{"ingreso.empresa.key":"MAPFRE"},{"$or":[{"NUMERO_FINANCIAMIENTO":"10011500082"},{"NUMERO_FINANCIAMIENTO":"10011500255"}]}]})
 

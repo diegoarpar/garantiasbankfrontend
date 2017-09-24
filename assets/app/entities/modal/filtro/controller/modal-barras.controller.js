@@ -6,9 +6,11 @@
         angular.module("wpc")
             .controller('GenerarBarrasController', GenerarBarrasController);
 
-        GenerarBarrasController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window','CamposParametricosServices','GarantiasServices'];
+        GenerarBarrasController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch',
+        '$uibModal', '$location', 'ShareService','$window','GarantiasServices'];
 
-        function GenerarBarrasController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window,CamposParametricosServices,GarantiasServices)
+        function GenerarBarrasController(AuthenticationFactory,$scope, DynamicSearch,
+         $uibModal, $location, ShareService,$window,GarantiasServices)
          {
 
             inSession($scope,AuthenticationFactory,$window);

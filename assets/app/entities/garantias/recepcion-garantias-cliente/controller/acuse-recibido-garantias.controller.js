@@ -7,11 +7,11 @@
             .controller('AcuseRecibidoGarantiasController', AcuseRecibidoGarantiasController);
 
         AcuseRecibidoGarantiasController.$inject =
-            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal','$timeout'];
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService',
+                 '$location', 'ngTableParams', '$filter', '$window','$uibModal','$timeout'];
 
-        function AcuseRecibidoGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                                  GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal,$timeout) {
+        function AcuseRecibidoGarantiasController(AuthenticationFactory,$scope, GarantiasServices, NumberService,
+                                                  $location, ngTableParams, $filter, $window,$uibModal,$timeout) {
             inSession($scope,AuthenticationFactory,$window);
 
 
@@ -22,8 +22,6 @@
             $scope.digitalu = [];
             $scope.numero = [];
             $scope.fields=[{},{}];
-            //$scope.fields = CamposGenericosServices.show({tenant:window.sessionStorage.getItem("tenant"),fieldType: "datos", garantiaType: "-1"});
-
             $scope.openModal = function () {
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/garantias/recepcion-garantias-cliente/view/seleccionar-regional-recepcion.html',

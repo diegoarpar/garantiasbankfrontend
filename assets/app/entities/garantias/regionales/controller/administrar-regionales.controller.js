@@ -5,16 +5,16 @@
             .controller('ConfiguracionRegionalController', ConfiguracionRegionalController);
 
         ConfiguracionRegionalController.$inject =
-            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
+            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService',
+                 '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
 
-        function ConfiguracionRegionalController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
+        function ConfiguracionRegionalController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService,
+                                  $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
 
 
          inSession($scope,AuthenticationFactory,$window);
 
-         var datafondo=CamposParametricosServices.show({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
+         var datafondo=GarantiasServices.showParametric({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
             datafondo.$promise.then(function(data){
                 for(var i=0;i<data.length;i++){
                     delete (data[i]._id);

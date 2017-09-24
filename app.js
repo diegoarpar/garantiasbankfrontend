@@ -170,11 +170,7 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'DynamicSearchController'
                             }
                 );
-        $routeProvider.when('/dynamic-search-report', {
-                                templateUrl: 'assets/app/entities/garantias/report/view/report-archivo.html',
-                                controller: 'ReporteArchivoController'
-                            }
-        );
+
         $routeProvider.when('/regionales', {
                                         templateUrl: 'assets/app/entities/garantias/regionales/view/administrar-regionales.html',
                                         controller: 'ConfiguracionRegionalController'
@@ -185,11 +181,7 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'FiltrarBusquedaController'
                             }
         );
-        $routeProvider.when('/modalReport', {
-                                templateUrl: 'assets/app/entities/modal/filtro/view/filtro-reportes.html',
-                                controller: 'FiltrarBusquedaController'
-                            }
-        );
+
         $routeProvider.when('/modalBarras', {
                                         templateUrl: 'assets/app/entities/modal/filtro/view/modal-barras.html',
                                         controller: 'GenerarBarrasController'
@@ -200,6 +192,26 @@ app.config(['$routeProvider', function ($routeProvider) {
                                 controller: 'AdministradorPermisosController'
                             }
         );
+        $routeProvider.when('/AdministrarPermisos', {
+                                        templateUrl: 'assets/app/authentication/view/administrador-permisos.html',
+                                        controller: 'AdministradorPermisosController'
+                                    }
+                );
+        $routeProvider.when('/modalReport', {
+                                     templateUrl: 'assets/app/entities/modal/filtro/view/filtro-reportes.html',
+                                     controller: 'FiltrarBusquedaController'
+                                 }
+             );
+        $routeProvider.when('/dynamic-search-report', {
+                                        templateUrl: 'assets/app/entities/garantias/report/view/report-archivo.html',
+                                        controller: 'ReporteArchivoController'
+                                    }
+                );
+        $routeProvider.when('/administrador-reportes', {
+                                                templateUrl: 'assets/app/entities/garantias/report/view/report-administrator.html',
+                                                controller: 'ReportAdministratorController'
+                                            }
+                        );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

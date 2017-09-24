@@ -5,22 +5,22 @@
             .controller('ConfiguracionArchivoController', ConfiguracionArchivoController);
 
         ConfiguracionArchivoController.$inject =
-            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
+            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService'
+                , '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
 
-        function ConfiguracionArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
+        function ConfiguracionArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService,
+                                $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
 
 
          inSession($scope,AuthenticationFactory,$window);
 
-         var datafondo=CamposParametricosServices.show({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
-         var datasubfondo=CamposParametricosServices.show({nombreparametrica:'subfondo',tenant:window.sessionStorage.getItem("tenant")});
-         var dataseccion=CamposParametricosServices.show({nombreparametrica:'seccion',tenant:window.sessionStorage.getItem("tenant")});
-         var datasubseccion=CamposParametricosServices.show({nombreparametrica:'subseccion',tenant:window.sessionStorage.getItem("tenant")});
-         var dataserie=CamposParametricosServices.show({nombreparametrica:'serie',tenant:window.sessionStorage.getItem("tenant")});
-         var datasubserie=CamposParametricosServices.show({nombreparametrica:'subserie',tenant:window.sessionStorage.getItem("tenant")});
-         var datatipodocumento=CamposParametricosServices.show({nombreparametrica:'tipodocumento',tenant:window.sessionStorage.getItem("tenant")});
+         var datafondo=GarantiasServices.showParametric({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
+         var datasubfondo=GarantiasServices.showParametric({nombreparametrica:'subfondo',tenant:window.sessionStorage.getItem("tenant")});
+         var dataseccion=GarantiasServices.showParametric({nombreparametrica:'seccion',tenant:window.sessionStorage.getItem("tenant")});
+         var datasubseccion=GarantiasServices.showParametric({nombreparametrica:'subseccion',tenant:window.sessionStorage.getItem("tenant")});
+         var dataserie=GarantiasServices.showParametric({nombreparametrica:'serie',tenant:window.sessionStorage.getItem("tenant")});
+         var datasubserie=GarantiasServices.showParametric({nombreparametrica:'subserie',tenant:window.sessionStorage.getItem("tenant")});
+         var datatipodocumento=GarantiasServices.showParametric({nombreparametrica:'tipodocumento',tenant:window.sessionStorage.getItem("tenant")});
 
         $scope.trd={};
         $scope.trd.tipodocumento={};

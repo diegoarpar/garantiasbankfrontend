@@ -1,0 +1,25 @@
+<div id="page-wrapper">
+    <h3>Listado de reportes parametrizados </h3>
+    </div>
+         <button type="button" class="btn green" ng-click="add()" data-dismiss="modal">Agregar</button>
+    </div>
+    <h3>LISTA DE REPORTES</h3>
+
+    <table ng-table="tabla" show-filter="true" export-csv="csv" separator=";"
+           class="table table-striped table-hover table-condensed ">
+        <th> Nombre del reporte</th>
+        <th> Fondo</th>
+        <th> Tipo de documento</th>
+        <th> Opciones</th>
+        <tr ng-repeat="c in reports">
+            <td>{{c.nombreparametrica}}</td>
+            <td>{{c.key}}</td>
+            <td>{{c.value}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="remove($index)">Eliminar</button>
+                <button class="btn btn-danger" ng-click="modify($index)">Modificar</button>
+            </td>
+
+        </tr>
+    </table>
+</div>

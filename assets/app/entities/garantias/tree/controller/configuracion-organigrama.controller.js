@@ -5,11 +5,11 @@
             .controller('ConfiguracionOrganigramaController', ConfiguracionOrganigramaController);
 
         ConfiguracionOrganigramaController.$inject =
-            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage'];
+            ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService',
+             '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage'];
 
-        function ConfiguracionOrganigramaController($scope,AuthenticationFactory, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,ngMaterial,$controller,$sessionStorage) {
+        function ConfiguracionOrganigramaController($scope,AuthenticationFactory, GarantiasServices, NumberService,
+                                $location, ngTableParams, $filter, $window,ngMaterial,$controller,$sessionStorage) {
 
 
          inSession($scope,AuthenticationFactory,$window);

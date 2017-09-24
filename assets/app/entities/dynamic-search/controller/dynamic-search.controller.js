@@ -6,9 +6,11 @@
         angular.module("wpc")
             .controller('DynamicSearchController', DynamicSearchController);
 
-        DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window','CamposParametricosServices','GarantiasServices'];
+        DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', '$uibModal', '$location',
+        'ShareService','$window','GarantiasServices'];
 
-        function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window,CamposParametricosServices,GarantiasServices)
+        function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, $uibModal,
+         $location, ShareService,$window,GarantiasServices)
          {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
@@ -45,7 +47,7 @@
                 opened: false
             };
 
-            $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
+            $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo'});
             $scope.subseries=[];
 
             $scope.cargarSubseries = function() {

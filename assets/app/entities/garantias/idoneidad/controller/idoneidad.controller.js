@@ -7,11 +7,11 @@
             .controller('IdoneidadController', IdoneidadController);
 
         IdoneidadController.$inject =
-            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService',
+                '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
-        function IdoneidadController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                     CamposEspecificosServices, $location, ngTableParams, $filter, $window, $uibModal) {
+        function IdoneidadController(AuthenticationFactory,$scope, GarantiasServices, NumberService,
+                                      $location, ngTableParams, $filter, $window, $uibModal) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -19,7 +19,7 @@
             $scope.digitalu = [];
             $scope.numero = [];
             $scope.showmodal = false;
-            $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
+
             $scope.visibility=new Map();
             $scope.validate=function(permission,field){
                         validateFields($scope,AuthenticationFactory,'IDONEIDAD',$window,document,permission,field);

@@ -6,9 +6,11 @@
         angular.module("wpc")
             .controller('FiltrarBusquedaController', FiltrarBusquedaController);
 
-        FiltrarBusquedaController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', 'CamposGenericosServices', '$uibModal', '$location', 'ShareService','$window','CamposParametricosServices','GarantiasServices'];
+        FiltrarBusquedaController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch',
+         '$uibModal', '$location', 'ShareService','$window','GarantiasServices'];
 
-        function FiltrarBusquedaController(AuthenticationFactory,$scope, DynamicSearch, CamposGenericosServices, $uibModal, $location, ShareService,$window,CamposParametricosServices,GarantiasServices)
+        function FiltrarBusquedaController(AuthenticationFactory,$scope, DynamicSearch,
+         $uibModal, $location, ShareService,$window,GarantiasServices)
          {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
@@ -24,7 +26,7 @@
                               $scope.lista.splice(index, 1);
                               $scope.columnsMetadata.push(col);
                           };
-            $scope.fondos=CamposParametricosServices.show({nombreparametrica:'fondo'});
+            $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo'});
             $scope.subseries=[];
             $scope.ok=function(setSearchParameters,type){
 

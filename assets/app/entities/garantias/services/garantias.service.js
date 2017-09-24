@@ -140,7 +140,26 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },
+                },/*-----------PARAMETRIC-VALUES---- */
+                showParametric: {
+                    url:getUrlServices(ApiGarantias,'parametric'),
+                    headers: headers2,
+                    method: 'GET',
+                    isArray: true
+                },createParametric: {
+                    url:getUrlServices(ApiGarantias,'parametric'),
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
+                },removeParametric: {
+                     url:getUrlServices(ApiGarantias,'parametric')+"/delete",
+                     params: {id: '@id'},
+                     method: 'DELETE',
+                     isArray: false,
+                     headers: headers2
+                 },
                 update: {
                     headers: headers2,
                     method: 'PUT',

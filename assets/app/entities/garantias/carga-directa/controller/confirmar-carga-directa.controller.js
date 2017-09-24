@@ -5,11 +5,11 @@
             .controller('ConfirmarCargaDirectaController', ConfirmarCargaDirectaController);
 
         ConfirmarCargaDirectaController.$inject =
-            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
+            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService',
+                '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
 
-        function ConfirmarCargaDirectaController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance) {
+        function ConfirmarCargaDirectaController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService,
+                                  $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance) {
 
 
          inSession($scope,AuthenticationFactory,$window);

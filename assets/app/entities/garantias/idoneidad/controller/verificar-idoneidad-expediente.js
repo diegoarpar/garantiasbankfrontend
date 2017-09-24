@@ -5,11 +5,11 @@
             .controller('VerificarIdoneidadExpedienteController', VerificarIdoneidadExpedienteController);
 
         VerificarIdoneidadExpedienteController.$inject =
-            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposEspecificosServices','CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
+            ['$scope','AuthenticationFactory','ShareService', 'GarantiasServices', 'NumberService',
+                 '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModalInstance'];
 
-        function VerificarIdoneidadExpedienteController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService, CamposGenericosServices,
-                                 CamposEspecificosServices,CamposParametricosServices, $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance)
+        function VerificarIdoneidadExpedienteController($scope,AuthenticationFactory,ShareService, GarantiasServices, NumberService,
+                                  $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModalInstance)
          {
 
 

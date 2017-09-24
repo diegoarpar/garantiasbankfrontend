@@ -197,6 +197,8 @@ function getUrlServices(rootServices,service){
                 break;
             case "menu":
                 return rootServices.url+"menu";
+            case "parametric":
+                return rootServices.url+"config/garantias-parametricvalues";
             case "trd":
             // Blah
                 break;
@@ -321,6 +323,7 @@ function getMenu(){
                  ,{href:"administrador-archivo",label:"Administrar Archivo",image:"",controller:""}
                  ,{href:"organigrama",label:"Administrar Organigrama",image:"",controller:""}
                  ,{href:"regionales",label:"Administrar Regionales",image:"",controller:""}
+                 ,{href:"administrador-reportes",label:"Administrar Reportes",image:"",controller:""}
                  ];
 
                  return data;

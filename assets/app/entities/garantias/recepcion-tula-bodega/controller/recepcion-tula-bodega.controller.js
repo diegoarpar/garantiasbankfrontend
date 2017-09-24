@@ -7,18 +7,17 @@
             .controller('RecepcionTulaBodegaController', RecepcionTulaBodegaController);
 
         RecepcionTulaBodegaController.$inject =
-            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'GarantiasServiceUpdateGarantias', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
+            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService',
+                '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
 
-        function RecepcionTulaBodegaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                               GarantiasServiceUpdateGarantias, $location, ngTableParams, $filter, $window,$uibModal) {
+        function RecepcionTulaBodegaController(AuthenticationFactory,$scope, GarantiasServices, NumberService,
+                                                $location, ngTableParams, $filter, $window,$uibModal) {
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
             $scope.digital = [];
             $scope.digitalu = [];
             $scope.numero = [];
-            $scope.fields = CamposGenericosServices.show({fieldType: "datos", garantiaType: "-1"});
             $scope.createNewUser = function () {
                 $location.path('/user-list');
             };

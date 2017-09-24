@@ -3,15 +3,14 @@
  */
 (function () {
         'use strict';
-        angular.module("wpc")
-            .controller('AlistamientoTulaController', AlistamientoTulaController);
+        angular.module("wpc").controller('AlistamientoTulaController', AlistamientoTulaController);
 
         AlistamientoTulaController.$inject =
-            ['AuthenticationFactory','$scope', 'GarantiasServices', 'NumberService', 'CamposGenericosServices',
-                'CamposParametricosServices', '$location', 'ngTableParams', '$filter', '$window','$uibModal'];
+            ['$scope','AuthenticationFactory','$window','GarantiasServices','ngTableParams',
+            '$filter','$uibModal','$location'];
 
-        function AlistamientoTulaController(AuthenticationFactory,$scope, GarantiasServices, NumberService, CamposGenericosServices,
-                                            CamposParametricosServices, $location, ngTableParams, $filter, $window,$uibModal) {
+        function AlistamientoTulaController($scope,AuthenticationFactory,$window,GarantiasServices,ngTableParams,
+            $filter,$uibModal,$location){
             inSession($scope,AuthenticationFactory,$window);
             $scope.all_columns = [];
             $scope.columns = [];
@@ -19,7 +18,7 @@
             $scope.digitalu = [];
             $scope.dataTable = [];
             $scope.numero = [];
-            $scope.regionales = CamposParametricosServices.show({nombreparametrica: "origen"});
+            $scope.regionales = GarantiasServices.showParametric({nombreparametrica: "origen"});
             $scope.regional={};
             $scope.tablaGarantias=construirTabla( $scope, $scope.digital,ngTableParams,$filter);
 
@@ -34,10 +33,6 @@
                         size: 'lg'
                     }
                 );
-                var promise=modalInstance.closed;
-                    promise.then(function (data){
-
-                    });
 
             };
             $scope.openModalMedioEnvio = function () {
@@ -48,10 +43,6 @@
                         size: 'lg'
                     }
                 );
-                var promise=modalInstance.closed;
-                    promise.then(function (data){
-
-                    });
 
             };
             $scope.createNewUser = function () {
@@ -168,21 +159,21 @@
             }, true);
 
 
-        }
+        };
 
-
-        function generateColumns(vector,$scope) {
-            for(var i=0;i<vector.length;i++){
-                if (vector[i].title != '_id'&&vector[i].title!= 'ingreso') {
-                    $scope.all_columns[i].checked = true;
+     function generateColumns(vector,$scope) {
+                for(var i=0;i<vector.length;i++){
+                    if (vector[i].title != '_id'&&vector[i].title!= 'ingreso') {
+                        $scope.all_columns[i].checked = true;
+                    }
+                    else {
+                    $scope.all_columns[i].checked = false;
+                        $scope.all_columns.slice(i,1);
+                    }
                 }
-                else {
-                $scope.all_columns[i].checked = false;
-                    $scope.all_columns.slice(i,1);
-                }
-            }
 
-        }
+            };
+
 
 
     })();

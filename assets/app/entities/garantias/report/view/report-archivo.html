@@ -1,16 +1,22 @@
-<h3 ng-init="openModalFilterReportes()">Reportes {{reporte.nombre}}</h3>
-<button ng-click="openModalFilterReportes()" class="btn green">Buscar</button>
+<h3 >Reportes Generados</h3>
+<button ng-click="openModalFilterReportes()" class="btn green">Generar nuevo reporte</button>
+<button ng-click="update()" class="btn green">Actualizar</button>
 <div>
-    <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
-           class="table table-condensed table-bordered table-striped ng-scope ng-table">
-        <thead>
-        <tr>
-            <th ng-repeat="r in reporte.columns" >{{ r.name }}
-            </th>
-        </tr>
-        </thead>
-        <tr ng-repeat="row in results" >
-            <td ng-repeat="r in reporte.columns" >{{getValue(row,r.value)}}</td>
+    <table ng-table="tabla" show-filter="true" export-csv="csv" separator=";"
+           class="table table-striped table-hover table-condensed ">
+        <th> Nombre del reporte</th>
+        <th> Estado</th>
+        <th> Fecha de generación</th>
+        <th> Opciones</th>
+        <tr ng-repeat="c in reports">
+            <td>{{c.name}}</td>
+            <td>{{c.generateDate}}</td>
+            <td>{{c.status}}</td>
+            <td>{{c.generatedDate}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="download($index)">Eliminar</button>
+            </td>
+
         </tr>
     </table>
 </div>

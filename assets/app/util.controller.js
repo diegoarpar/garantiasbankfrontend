@@ -82,39 +82,7 @@ var rowDetailShow = function(row){
     return true;
 }
 
-var generateBarCodePDF = function (code, document, text) {
-    var doc = new jsPDF('1', 'mm', [60, 35]);
-    doc.text(0, 5, text);
-    //var htmlBarcode = document.createElement('div');
-    //htmlBarcode.barcode(code, "code128",{output:"svg"});
-    $("#bcTarget").barcode(code, "code128", {output: "svg"});
-    var canvas = document.createElement('canvas');
-    //var canvas = $('micanvas');
-    var imgData = $("#bcTarget")[0].childNodes[0].data;
-    temp_img2 = new Image();
-    temp_img2.src = imgData;
-    //temp_img2.src = htmlBarcode.childNodes[0].data;
-    canvas.id = 'canvas'
-    canvas.visible = false;
-    //canvas.display="none";
-    document.body.appendChild(canvas);
-    canvas.width = 500;
-    canvas.height = 500;
-    var context = canvas.getContext('2d');
-    context.drawImage(temp_img2, 0, 25);
 
-    html2canvas($("#canvas"), {
-            onrendered: function (canvas) {
-                var imgData = canvas.toDataURL('image/png');
-                $("#canvas").hide();
-                doc.addImage(imgData, 'PNG', 1, 0);
-                doc.save('doc.pdf');
-            }
-        }
-    );
-    $("#bcTarget").barcode("", "code128", {output: "svg"});
-
-};
 
 function getBase64Image(img,width,height) {
 
@@ -169,6 +137,18 @@ function construirTabla( $scope, dataSet,ngTableParams,$filter){
 		}
 	});
     return table;
+}
+function openModal($scope,$uibModal,htmlPath,controller){
+
+        var modalInstance = $uibModal.open({
+                templateUrl: htmlPath,
+                controller: controller,
+                scope: $scope,
+                size: 'lg'
+            }
+        );
+
+
 }
 function setStyleSheet(tenant){
 

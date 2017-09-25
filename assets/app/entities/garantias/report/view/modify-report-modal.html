@@ -1,0 +1,37 @@
+<form novalidate>
+    <div class="modal-header">
+<h2 ng-if="isSelectedReport">Modificar Reporte</h2>
+<h2 ng-if="!isSelectedReport">Crear Reporte</h2>
+    </div>
+
+    <div class="modal-body">
+        <span>Nombre del reporte</span> <input type="text" ng-model="selectedReport.nombre" >
+
+        <div>
+            <span>Fondo:</span>
+            <select  ng-model="fondoSelected" ng-change="cargarSubseries(f)"
+                     ng-options="f as f.value for f in fondos">
+            </select>
+
+        </div>
+        <div>
+            <span>Subserie:</span>    <select  ng-model="subserieseleccionada" ng-change="cargarMetadatos()"
+                                                           ng-options="r['subserie'] as r['subserie'].value for r in subseries">
+        </select>
+        </div>
+
+        <div>
+<span>Query</span><textarea ng-model="query" ></textarea>
+<br/>
+        </div>
+        <div>
+            <span>Columns</span><textarea ng-model="columnsR" ></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+<input type="submit" ng-if="!isSelectedReport" value="Agregar" ng-click="save()" class="btn green"/>
+<input type="submit" ng-if="isSelectedReport" value="Guardar Cambios" ng-click="save()" class="btn green"/>
+<button class="btn" ng-click="cancel()">Cancelar</button>
+
+    </div>
+</form>

@@ -97,7 +97,7 @@
                     isArray: false,
                     data: '@data'
                 },
-                /*-----------METADATA---- */
+                /*-----------REPORTS---- */
 
                 showReportPost: {
                       url:ApiGarantias.url+'report/retrive',
@@ -105,6 +105,20 @@
                       method: 'POST',
                       params: {'@param': '@param'},
                       isArray: true
+                  },
+                showGeneratedReportPost: {
+                      url:ApiGarantias.url+'report/retriveReports',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: true
+                  },
+                removeReportPost: {
+                      url:ApiGarantias.url+'report/removePost',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: false
                   },
                 showReport: {
                     url:ApiGarantias.url+'report',
@@ -119,7 +133,14 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },saveChangesReport: {
+                },createBatcherReport: {
+                     url:ApiGarantias.url+'report/sendBatcherReport',
+                     method: 'POST',
+                     headers: headers2,
+                     params: {'@param': '@param'},
+                     isArray: false,
+                     data: '@data'
+                 },saveChangesReport: {
                     url:ApiGarantias.url+'report/savechanges',
                     method: 'POST',
                     headers: headers2,

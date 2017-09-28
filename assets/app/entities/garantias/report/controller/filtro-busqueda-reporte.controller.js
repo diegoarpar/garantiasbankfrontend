@@ -52,7 +52,9 @@
                  var u={};
                  u["reportName"]=$scope.reportName;
                  u["description"]=$scope.description;
-                 u["batcherid"]=$scope.reporteSeleccionado.nombre;
+                 u["batcher"]=$scope.reporteSeleccionado.batcher;
+                 u["template"]=$scope.reporteSeleccionado.template;
+                 u["fileOutExtension"]=$scope.reporteSeleccionado.fileOutExtension;
                 if(type=="report"){
                     if($scope.reporteSeleccionado.query!=null||true){
                         var oo=o;

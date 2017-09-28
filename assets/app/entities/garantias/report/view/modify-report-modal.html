@@ -5,8 +5,18 @@
     </div>
 
     <div class="modal-body">
+        <div>
         <span>Nombre del reporte</span> <input type="text" ng-model="selectedReport.nombre" >
-
+        </div>
+        <div>
+            <span>Nombre del batcher</span> <input type="text" ng-model="selectedReport.batcher" >
+        </div>
+        <div>
+            <span>Plantilla</span> <input type="text" ng-model="selectedReport.template" >
+        </div>
+        <div>
+            <span>Extensión de salida (.pdf)</span> <input type="text" ng-model="selectedReport.fileOutExtension" >
+        </div>
         <div>
             <span>Fondo:</span>
             <select  ng-model="fondoSelected" ng-change="cargarSubseries(f)"

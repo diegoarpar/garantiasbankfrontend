@@ -5,17 +5,38 @@
     <table ng-table="tabla" show-filter="true" export-csv="csv" separator=";"
            class="table table-striped table-hover table-condensed ">
         <th> Nombre del reporte</th>
-        <th> Estado</th>
+        <th> Descripción</th>
         <th> Fecha de generación</th>
+        <th> Estado</th>
+
         <th> Opciones</th>
         <tr ng-repeat="c in reports">
-            <td>{{c.name}}</td>
+            <td>{{c.reportName}}</td>
+            <td>{{c.description}}</td>
             <td>{{c.generateDate}}</td>
-            <td>{{c.status}}</td>
-            <td>{{c.generatedDate}}</td>
+            <td>GENERADO</td>
             <td>
-                <button class="btn btn-danger" ng-click="download($index)">Eliminar</button>
+                <button class="btn btn-danger" ng-click="download($index)">Descargar</button>
             </td>
+
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table ng-table="tabla" show-filter="true" export-csv="csv" separator=";"
+           class="table table-striped table-hover table-condensed ">
+        <th> Nombre del reporte</th>
+        <th> Descripción</th>
+        <th> Fecha de generación</th>
+        <th> Estado</th>
+
+        <th> Opciones</th>
+        <tr ng-repeat="c in reportsN">
+            <td>{{c.reportName}}</td>
+            <td>{{c.description}}</td>
+            <td>{{c.generateDate}}</td>
+            <td>PENDIENTE</td>
 
         </tr>
     </table>

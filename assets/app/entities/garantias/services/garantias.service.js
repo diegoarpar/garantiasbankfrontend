@@ -106,8 +106,21 @@
                       params: {'@param': '@param'},
                       isArray: true
                   },
+                retriveReport: {
+                      url:ApiGarantias.url+'report/retrivereport',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: true
+                  },
                 showGeneratedReportPost: {
                       url:ApiGarantias.url+'report/retriveReports',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: true
+                  },showGeneratedReportPostNotGenerated: {
+                      url:ApiGarantias.url+'report/retriveReportsNotGenerated',
                       headers: headers2,
                       method: 'POST',
                       params: {'@param': '@param'},

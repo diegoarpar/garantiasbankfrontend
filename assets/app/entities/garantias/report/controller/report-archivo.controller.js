@@ -6,10 +6,10 @@
 
         ReporteArchivoController.$inject =
             ['$scope','AuthenticationFactory', 'GarantiasServices', 'NumberService',
-                '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal'];
+                '$location', 'ngTableParams', '$filter', '$window','$controller','$sessionStorage','$uibModal','$http','ApiGarantias'];
 
         function ReporteArchivoController($scope,AuthenticationFactory, GarantiasServices, NumberService,
-                                  $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal) {
+                                  $location, ngTableParams, $filter, $window,$controller,$sessionStorage,$uibModal,$http,ApiGarantias) {
 
          inSession($scope,AuthenticationFactory,$window);
         $scope.reporte={};
@@ -23,6 +23,33 @@
         }
         $scope.update=function(){
             $scope.reports=GarantiasServices.showGeneratedReportPost();
+            $scope.reportsN=GarantiasServices.showGeneratedReportPostNotGenerated();
+        }
+        $scope.download=function(idx){
+            var obj=JSON.parse(JSON.stringify($scope.reports[idx]));
+
+
+            delete obj._id;
+            var headers2= getGenericHeader($window);
+            var fileName=obj.reportName+obj.fileOutExtension;
+            $http({
+                url: ApiGarantias.url+'report/retrivereport',
+                headers:headers2,
+                method: "POST",
+                data: [obj],
+                responseType: 'arraybuffer'
+             }).success(function (data, status, headers, config) {
+                   var blob = new Blob([data], {type:"application/octet-stream"});
+                  saveAs(blob, fileName);
+                  showWaiteImage(false);
+               }).error(function (data, status, headers, config) {
+                   //upload failed
+                  showWaiteImage(false);
+               });
+
+
+
+
         }
         $scope.getValue=function(row,propertie){
             //debugger;

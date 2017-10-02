@@ -64,6 +64,7 @@
                         do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
                         do{ query=query.replace("___eq","$eq"); }while(query.indexOf("___eq")>=0);
                         do{ query=query.replace("___ne","$ne"); }while(query.indexOf("___ne")>=0);
+                        do{ query=query.replace("___elemMatch","$elemMatch"); }while(query.indexOf("___elemMatch")>=0);
                         do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
                         $scope.reporteSeleccionado.query=JSON.parse(query);
 
@@ -72,6 +73,7 @@
                         do{ query=query.replace("___eq","$eq"); }while(query.indexOf("___eq")>=0);
                         do{ query=query.replace("___ne","$ne"); }while(query.indexOf("___ne")>=0);
                         do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
+                        do{ query=query.replace("___elemMatch","$elemMatch"); }while(query.indexOf("___elemMatch")>=0);
                         do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
                          $scope.reporteSeleccionado.columns=JSON.parse(query);
                         o["$and"]=$scope.reporteSeleccionado.query;

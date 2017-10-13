@@ -55,11 +55,12 @@
             $scope.$on("fileSelected", function (event, args) {
                 $scope.$apply(function () {
                     //add the file object to the scope's files collection
+                    openModal($scope,$uibModal,'assets/app/entities/modal/filtro/view/modal-tipo-documento.html','ModalTipoDocumentoController');
                     $scope.files.push(args.file);
                     if($scope.files.length>0)
-                    showWaiteImage(true);
+                    //showWaiteImage(true);
                     for (var i = 0; i < $scope.files.length; i++){
-                        var promise=UploadFilesService.create({
+                        /*var promise=UploadFilesService.create({
                             files: $scope.files[i],
                             model: $scope.model,
                             garid: $scope.garantiaid
@@ -76,7 +77,7 @@
 
                                         }
                                     );
-                        });
+                        });*/
                     }
                     //$scope.files=[];
                 });
@@ -86,9 +87,11 @@
             $scope.log = [];
             $scope.$watch('files', function () {
                 // $scope.upload($scope.files);
+                if(!!$scope.files&&$scope.files.length>0)
+                openModal($scope,$uibModal,'assets/app/entities/modal/filtro/view/modal-tipo-documento.html','ModalTipoDocumentoController');
                 for (var i = 0; i < $scope.files.length; i++){
-                    showWaiteImage(true);
-                   var promise= UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
+                    //showWaiteImage(true);
+                   /*var promise= UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
                     promise.$promise.then(function(){
                         alert("archivo guardado");
                         $scope.files=[];
@@ -101,7 +104,7 @@
 
                                         }
                                     );
-                    });
+                    });*/
                 }
                 //$scope.files=[];
             });

@@ -14,13 +14,14 @@
          {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
-            $scope.lista = [];
-            $scope.listaBusqueda = [];
+            $scope.documentsType = [];
+            $scope.selectedDocumentType={};
             $scope.columnsMetadata=[];
             $scope.addColumn=function (col,index) {
                  $scope.lista.push(col);
                  $scope.columnsMetadata.splice(index, 1);
              };
+
              $scope.removeRow=function (col,index) {
 
                               $scope.lista.splice(index, 1);
@@ -28,67 +29,10 @@
                           };
 
             $scope.ok=function(setSearchParameters,type){
-
-
-                var listToSearch=[];
-                var o={};
-                if($scope.aditionalFilter!=null){
-                    o=JSON.parse(JSON.stringify($scope.aditionalFilter));
-                }
-                for(var i=0;i<$scope.lista.length;i++){
-                        var fieldKey=$scope.lista[i].key;
-                        var fieldType=$scope.lista[i].fieldType;
-                        if(fieldType=="alistamiento")fieldKey="envio."+fieldKey;
-                        o[fieldKey]=$scope.lista[i].toSearch;
-                }
-
-                if($scope.fondoSelected!=null){
-                    o["ingreso.empresa.key"]=$scope.fondoSelected.key;
-                 }
-                if($scope.subserieseleccionada!=null){
-                    o["ingreso.subserie.key"]=$scope.subserieseleccionada.key;
-                 }
-
-                if(type=="report"){
-                    if($scope.reporteSeleccionado.query!=null||true){
-                        var oo=o;
-                        o={};
-                        var query=JSON.stringify($scope.reporteSeleccionado.query);
-                        do{ query=query.replace("___or","$or"); }while(query.indexOf("___or")>=0);
-                        do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
-                        do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
-                        $scope.reporteSeleccionado.query=JSON.parse(query);
-
-                        var query=JSON.stringify($scope.reporteSeleccionado.columns);
-                        do{ query=query.replace("___or","$or"); }while(query.indexOf("___or")>=0);
-                        do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
-                        do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
-                         $scope.reporteSeleccionado.columns=JSON.parse(query);
-                        o["$and"]=$scope.reporteSeleccionado.query;
-                        o["$and"].push(oo);
-
-                    }
-                }
-                listToSearch.push(o);
-                var promise=GarantiasServices.showPost(listToSearch);
-                handleSubmitServicePromise(promise,null);
-                $scope.setResultSearch(promise);
-
-                if(setSearchParameters){
-                    $scope.setSearchParameters(listToSearch);
-                }
-                $scope.lista=[];
-                listToSearch=[];
-                $scope.listaBusqueda=[];
                 $scope.$dismiss();
-
-
-
+                $scope.saveDocumentType($scope.lista,$scope.selectedDocumentType);
             }
             $scope.okReport=function(){
-                    $scope.ok(true,"report");
-                    $scope.loadReport($scope.reporteSeleccionado);
-
 
                 }
             $scope.cancel=function(){
@@ -96,35 +40,42 @@
                 $scope.lista=[];
                 $scope.$dismiss();
             }
-            $scope.dateOptions = {formatYear: 'yy', startingDay: 1};
-            $scope.openStartDate=function (){$scope.popupStartDate.opened = true;};
-            $scope.openEndDate=function(){$scope.popupEndDate.opened = true;};
-            $scope.popupStartDate = {opened: false};
-            $scope.popupEndDate = {opened: false};
-            $scope.data={};
-            $scope.cargarSubseries = function() {
-                var parameter=[{'fondo.key':$scope.fondoSelected.key}];
-                $scope.subseries=GarantiasServices.showtrdpost(parameter);
-            }
-            $scope.cargarMetadatosReportes=function(){
-                $scope.cargarMetadatos();
-                var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
 
-                var promise = GarantiasServices.showReportPost(parameter);
-                $scope.reportes=promise;
-            };
+            $scope.changedDocumentype=function(){
+                $scope.lista=getMetadataFactoryToSearchDocumentType($scope.documentsType,$scope.selectedDocumentType.key);
+            }
+
+
             $scope.cargarMetadatos = function() {
-                var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
+                var parameter=[{'fondo.key':$scope.entity.ingreso.empresa.key,'subserie.key':$scope.entity.ingreso.subserie.key}];
 
                 var promise = GarantiasServices.showMetadataPost(parameter);
                 promise.$promise.then(function(data){
 
                     if(data!=null){
-                        $scope.columnsMetadata=getMetadataFactoryToSearch(data);
+                        $scope.documentsType=data[data.length-1].tipodocumento;
                     }
                 });
             }
+            $scope.cargarMetadatos();
         }
+
+        function getMetadataFactoryToSearchDocumentType(data,documentType){
+            var dataList=[];
+            if(data!=null){
+                    for(var j=0;j<data.length;j++){
+                        if(data[j].key==documentType)
+                        for(var k=0;k<data[j].metadata.length;k++){
+                            dataList.push({fieldType:data[j].metadata[k].fieldType,key:data[j].metadata[k].key,value:data[j].metadata[k].value,fieldPrototype:data[j].metadata[k].fieldPrototype})
+
+                        }
+                    }
+
+            }
+            return dataList;
+
+        }
+
 
 
     })();

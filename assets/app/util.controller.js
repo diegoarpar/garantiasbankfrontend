@@ -330,6 +330,7 @@ function getMetadataFactoryToSearch(data){
 
 }
 
+
 function validateFields($scope,autenticationUser, object,window,document,permission,field){
 
     if($scope.visibility.get(permission)==null){

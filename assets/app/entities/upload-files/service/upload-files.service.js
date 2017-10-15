@@ -23,6 +23,7 @@
                     var formData = new FormData();
 
                     formData.append("fileName", data.model);
+                    formData.append("metadata", data.metadata);
 //                                formData.append("garid", angular.toJson(data.garid));
                     formData.append("timestamp", data.garid.timestamp);
                     formData.append("machineIdentifier", data.garid.machineIdentifier);

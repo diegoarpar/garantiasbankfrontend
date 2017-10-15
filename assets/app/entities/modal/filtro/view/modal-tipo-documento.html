@@ -8,8 +8,8 @@
         <div><span>SubSerie:</span> <input readonly ng-model="entity.ingreso.subserie.value" /></div>
 
         <div>
-            <span>Tipo Documento:</span>    <select  ng-model="subserieseleccionada" ng-change="cargarMetadatos()"
-                                                           ng-options="r['subserie'] as r['subserie'].value for r in subseries">
+            <span>Tipo Documento:</span>    <select  ng-model="selectedDocumentType" ng-change="changedDocumentype()"
+                                                           ng-options="r as r.value for r in documentsType">
             </select>
         </div>
         <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
@@ -30,7 +30,7 @@
 
     </div>
     <div class="modal-footer">
-        <button class="btn btn-success" ng-click="ok()">Consultar</button>
+        <button class="btn btn-success" ng-click="ok()">Guardar</button>
         <button class="btn" ng-click="cancel()">Cancelar</button>
     </div>
 </div>

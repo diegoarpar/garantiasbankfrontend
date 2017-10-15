@@ -52,20 +52,18 @@
             //an array of files selected
             $scope.files = [];
 
-            $scope.$on("fileSelected", function (event, args) {
-                $scope.$apply(function () {
-                    //add the file object to the scope's files collection
-                    openModal($scope,$uibModal,'assets/app/entities/modal/filtro/view/modal-tipo-documento.html','ModalTipoDocumentoController');
-                    $scope.files.push(args.file);
-                    if($scope.files.length>0)
-                    //showWaiteImage(true);
+            $scope.saveDocumentType=function(metadata,documentType){
+                var data={'documentType':documentType,'garId':$scope.entity._id,'metadata':metadata};
+                if($scope.files.length>0)
+                    showWaiteImage(true);
                     for (var i = 0; i < $scope.files.length; i++){
-                        /*var promise=UploadFilesService.create({
+                        var promise=UploadFilesService.create({
                             files: $scope.files[i],
                             model: $scope.model,
-                            garid: $scope.garantiaid
+                            garid: $scope.garantiaid,
+                            metadata: $scope.metadata
                         });
-                        promise.$promise.then(function(){
+                        promise.$promise.then(function(data1){
                             alert("archivo guardado");
                             showWaiteImage(false);
                             $scope.files=[];
@@ -74,39 +72,33 @@
                                             $scope.listOfFiles = data;
                                         },
                                         function (error) {
-
+                                            alert("error al adjuntar el archivo");
+                                            showWaiteImage(false);
                                         }
                                     );
-                        });*/
+                        },
+                         function (error) {
+                             alert("error al adjuntar el archivo");
+                             showWaiteImage(false);
+                         }
+                         );
                     }
-                    //$scope.files=[];
+                    $scope.files=[];
+            }
+            $scope.$on("fileSelected", function (event, args) {
+                $scope.$apply(function () {
+                    openModal($scope,$uibModal,'assets/app/entities/modal/filtro/view/modal-tipo-documento.html','ModalTipoDocumentoController');
+                    $scope.files.push(args.file);
+
                 });
             });
 
 
             $scope.log = [];
             $scope.$watch('files', function () {
-                // $scope.upload($scope.files);
                 if(!!$scope.files&&$scope.files.length>0)
                 openModal($scope,$uibModal,'assets/app/entities/modal/filtro/view/modal-tipo-documento.html','ModalTipoDocumentoController');
-                for (var i = 0; i < $scope.files.length; i++){
-                    //showWaiteImage(true);
-                   /*var promise= UploadFilesService.create({files: $scope.files[i], model: $scope.model, garid: $scope.garantiaid});
-                    promise.$promise.then(function(){
-                        alert("archivo guardado");
-                        $scope.files=[];
-                        showWaiteImage(false);
-                        ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
-                                        function (data) {
-                                            $scope.listOfFiles = data;
-                                        },
-                                        function (error) {
 
-                                        }
-                                    );
-                    });*/
-                }
-                //$scope.files=[];
             });
             $scope.$watch('file', function () {
             //alert("upload file");

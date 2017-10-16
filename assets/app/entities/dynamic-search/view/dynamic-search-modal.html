@@ -29,12 +29,14 @@
         <tr>
             <th> Nombre del archivo</th>
             <th> Fecha de apertura</th>
+            <th> Tipo de documento</th>
             <th> Visualizar</th>
         </tr>
         </thead>
         <tr ng-repeat="row in listOfFiles" >
             <td>{{row.fileName}}</td>
             <td>{{row.fechaCarga}}</td>
+            <td>{{row.metadata.documentType.value}}</td>
             <td>
                 <button type="submit" ng-if="false"
                         ng-click="openModal(row)"

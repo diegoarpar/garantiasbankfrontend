@@ -173,7 +173,7 @@
                     url: ApiFiles.url+"FileServices",
                     headers:headers2,
                     method: "GET",
-                    params: {fileId:url},
+                    params: {internalName:url},
                     responseType: 'arraybuffer'
                  }).success(function (data, status, headers, config) {
                        var blob = new Blob([data], {type:"application/octet-stream"});

@@ -68,6 +68,7 @@
                             files: $scope.files[i],
                             model: $scope.model,
                             garid: $scope.garantiaid,
+                            caseFolder: $scope.garantiaid,
                             metadata: JSON.stringify(data)
                         });
                         promise.$promise.then(function(data1){

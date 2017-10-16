@@ -12,7 +12,9 @@
 
     function ShowFiles($http, ApiGarantias, $window, $resource) {
         var baseUrl = ApiGarantias.url + 'upload';
-        var headers2= {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")};
+        var headers2= getGenericHeader($window);
+        var headers3= getGenericHeader($window);
+        headers3['Content-Type']=undefined;
         return {
             retrieve: function (name) {
                 var params = {
@@ -23,8 +25,7 @@
                     method: 'GET',
                     url: baseUrl + '/retrieve',
                     params: params,
-                    responseType: 'arraybuffer',
-                    headers: {'Authorization': 'Bearer ' + $window.localStorage.getItem('token')},
+                    responseType: 'arraybuffer'
                 };
 
                 return $http(config);
@@ -34,10 +35,7 @@
                     data: {file: '@file'},
                     method: 'POST',
                     isArray: true,
-                    headers: {
-                        'Content-Type': undefined,
-                        'Authorization': 'Bearer ' + $window.localStorage.getItem('token')+","+window.sessionStorage.getItem("tenant")
-                    },
+                    headers: headers3,
                     transformRequest: function (data) {
                         var formData = new FormData();
                         formData.append("timestamp", data.garid.timestamp);

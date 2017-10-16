@@ -53,7 +53,14 @@
             $scope.files = [];
 
             $scope.saveDocumentType=function(metadata,documentType){
-                var data={'documentType':documentType,'garId':$scope.entity._id,'metadata':metadata};
+
+                delete documentType['$$hashKey'];
+                delete documentType['metadata'];
+                delete documentType['_id'];
+                for(var i=0;i<metadata.length;i++){
+                    delete metadata[i]['$$hashKey'];
+                }
+                var data={'documentType':documentType,'metadata':metadata};
                 if($scope.files.length>0)
                     showWaiteImage(true);
                     for (var i = 0; i < $scope.files.length; i++){
@@ -61,7 +68,7 @@
                             files: $scope.files[i],
                             model: $scope.model,
                             garid: $scope.garantiaid,
-                            metadata: $scope.metadata
+                            metadata: JSON.stringify(data)
                         });
                         promise.$promise.then(function(data1){
                             alert("archivo guardado");

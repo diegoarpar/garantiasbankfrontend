@@ -25,13 +25,14 @@
                 return rowDetailShow(row);
             }
             $scope.getBarCode=function(){
-                return $scope.entity.envio.numero;
+                return $scope.barcodenumber;
             };
             $scope.getBarCodeSubserie=function(){
                 return $scope.entity.ingreso.subserie;
             };
             $scope.modalBarCode=function(entity){
                   $scope.entity=entity;
+                  $scope.barcodenumber=$scope.entity.envio.numero;
                   var modalInstance = $uibModal.open({
                                           templateUrl: 'assets/app/entities/modal/filtro/view/modal-barras.html',
                                           controller: 'GenerarBarrasController',
@@ -40,6 +41,17 @@
                                       }
                                   );
                 };
+              $scope.modalBarCodeIn=function(entity){
+                               $scope.entity=entity;
+                               $scope.barcodenumber=entity.ingreso.numero;
+                               var modalInstance = $uibModal.open({
+                                                       templateUrl: 'assets/app/entities/modal/filtro/view/modal-barras.html',
+                                                       controller: 'GenerarBarrasController',
+                                                       scope: $scope,
+                                                       size: 'lg'
+                                                   }
+                                               );
+                             };
             ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
                 function (data) {
                     $scope.listOfFiles = data;

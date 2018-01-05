@@ -301,6 +301,7 @@ function getMenu(){
                  {href:"administrador-usuarios",label:"Gestión de Usuarios",image:"",controller:""}
                  ,{href:"administrador-camposParametricos",label:"Gestión de tablas paramétricas",image:"",controller:""}
                  ,{href:"administrador-archivo",label:"Administrar Archivo",image:"",controller:""}
+                 ,{href:"administrador-camposBusqueda",label:"Administrar de Búsqueda",image:"",controller:""}
                  ,{href:"organigrama",label:"Administrar Organigrama",image:"",controller:""}
                  ,{href:"regionales",label:"Administrar Regionales",image:"",controller:""}
                  ,{href:"administrador-reportes",label:"Administrar Reportes",image:"",controller:""}

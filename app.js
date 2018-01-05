@@ -212,6 +212,11 @@ app.config(['$routeProvider', function ($routeProvider) {
                                                 controller: 'ReportAdministratorController'
                                             }
                         );
+        $routeProvider.when('/administrador-camposBusqueda', {
+                                templateUrl: 'assets/app/entities/garantias/campos/busqueda/view/administrador-camposbusqueda.html',
+                                controller: 'AdministradorCamposBusqueda'
+                            }
+        );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

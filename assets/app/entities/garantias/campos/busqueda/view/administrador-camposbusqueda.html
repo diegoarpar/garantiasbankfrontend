@@ -1,19 +1,41 @@
 <div id="page-wrapper">
-    <h3>CONDIGURACION DE CAMPOS DE BUSQUEDAS </h3>
+    <h3>CONFIGURACION DE CAMPOS PARA BUSQUEDAS </h3>
+    <div>
+        <span>Empresa:</span>
+        <select  ng-model="fondoSelected" ng-change="cargarSubseries(f)"
+                 ng-options="f as f.value for f in fondos">
+        </select>
+
+    </div>
+    <div>
+        <span>Documentos  a buscar:</span>    <select  ng-model="subserieseleccionada" ng-change="cargarMetadatos()"
+                                                       ng-options="r['subserie'] as r['subserie'].value for r in subseries">
+    </select>
+    </div>
+    <div>
+        <span>Tipo:</span>    <select  ng-model="campo.fieldPrototype">
+        <option value="checkbox">Check</option>
+        <option value="text">Texto</option>
+        <option value="numeric">Numérico</option>
+        <option value="date">fecha</option>
+    </select>
+    </div>
+    <div>
+        <span>Condicional:</span>    <select  ng-model="campo.fieldPrototype">
+        <option value="__equal">Igual</option>
+        <option value="__like">Texto</option>
+        <option value="__morethan">Mayor a lo ingresado</option>
+        <option value="__lesstan">Menor a lo ingresado</option>
+    </select>
+    </div>
     <div class="columnstwo"><label for="pname">Nombre del campo :</label> <input id="pname"
                                                                                          ng-model="campo.nombreparametrica">
     </div>
     <div class="columnstwo"><label for="valor">Valor del Campo: </label><input id="valor" ng-model="campo.value"></div>
     <div class="columnstwo"><label for="key">Label del campo :</label> <input id="key" ng-model="campo.key"></div>
 
-    <div>
-        <span>Tipo:</span>    <select  ng-model="campo.fieldPrototype"
-    >
-        <option value="checkbox">Check</option>
-        <option value="text">Texto</option>
-        <option value="numeric">Numérico</option>
-    </select>
-    </div>
+
+
 
     <div class="columnstwo"><label> </label>
         <button type="button" class="btn green" ng-click="add()" data-dismiss="modal">Agregar</button>

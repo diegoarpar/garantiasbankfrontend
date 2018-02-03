@@ -46,24 +46,7 @@
             </ul>
         </div>
 
-        <div >
-            <p class="input-group">
-                Fecha Inicial: <input type="text" class="form-control" uib-datepicker-popup
-                                      ng-model="data.startDate" is-open="popupStartDate.opened"
-                                      datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="openStartDate()"><i
-                                                    class="glyphicon glyphicon-calendar"></i></button>
-                                          </span>
-                Fecha Final: <input type="text" class="form-control" uib-datepicker-popup ng-model="data.endDate"
-                                    is-open="popupEndDate.opened" datepicker-options="dateOptions"
-                                    ng-required="true" close-text="Close"/>
-                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="openEndDate()"><i
-                                                    class="glyphicon glyphicon-calendar"></i></button>
-                                          </span>
-            </p>
-        </div>
+
     </div>
     <div class="modal-footer">
         <button class="btn btn-success" ng-click="okReport()">Consultar</button>

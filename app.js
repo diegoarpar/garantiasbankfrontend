@@ -74,22 +74,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             }
         );
 
-        $routeProvider.when('/product-list-portales', {
-                templateUrl: 'assets/app/entities/product/list-portales.html',
-                controller: 'ProductController'
-            }
-        );
 
-        $routeProvider.when('/product-list-consultaExpedienteDigital', {
-                templateUrl: 'assets/app/entities/product/portal-consulta-expediente-digital.html',
-                controller: 'ProductController'
-            }
-        );
-        $routeProvider.when('/product-list-completitud', {
-                templateUrl: 'assets/app/entities/product/list-completitud.html',
-                controller: 'ProductController'
-            }
-        );
         $routeProvider.when('/product-list-alistamiento-tulas', {
                 templateUrl: 'assets/app/entities/garantias/alistamiento-tula/view/alistamiento-tulas.html',
                 controller: 'AlistamientoTulaController'

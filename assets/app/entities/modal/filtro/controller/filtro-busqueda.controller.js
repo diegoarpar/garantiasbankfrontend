@@ -18,6 +18,7 @@
             $scope.listaBusqueda = [];
             $scope.columnsMetadata=[];
             $scope.addColumn=function (col,index) {
+
                  $scope.lista.push(col);
                  $scope.columnsMetadata.splice(index, 1);
              };
@@ -28,48 +29,11 @@
                           };
             $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo'});
             $scope.subseries=[];
+
             $scope.ok=function(setSearchParameters,type){
 
-
                 var listToSearch=[];
-                var o={};
-                if($scope.aditionalFilter!=null){
-                    o=JSON.parse(JSON.stringify($scope.aditionalFilter));
-                }
-                for(var i=0;i<$scope.lista.length;i++){
-                        var fieldKey=$scope.lista[i].key;
-                        var fieldType=$scope.lista[i].fieldType;
-                        if(fieldType=="alistamiento")fieldKey="envio."+fieldKey;
-                        o[fieldKey]=$scope.lista[i].toSearch;
-                }
-
-                if($scope.fondoSelected!=null){
-                    o["ingreso.empresa.key"]=$scope.fondoSelected.key;
-                 }
-                if($scope.subserieseleccionada!=null){
-                    o["ingreso.subserie.key"]=$scope.subserieseleccionada.key;
-                 }
-
-                if(type=="report"){
-                    if($scope.reporteSeleccionado.query!=null||true){
-                        var oo=o;
-                        o={};
-                        var query=JSON.stringify($scope.reporteSeleccionado.query);
-                        do{ query=query.replace("___or","$or"); }while(query.indexOf("___or")>=0);
-                        do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
-                        do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
-                        $scope.reporteSeleccionado.query=JSON.parse(query);
-
-                        var query=JSON.stringify($scope.reporteSeleccionado.columns);
-                        do{ query=query.replace("___or","$or"); }while(query.indexOf("___or")>=0);
-                        do{ query=query.replace("___and","$and"); }while(query.indexOf("___or")>=0);
-                        do{query=query.replace("___",".");}while(query.indexOf("___")>=0);
-                         $scope.reporteSeleccionado.columns=JSON.parse(query);
-                        o["$and"]=$scope.reporteSeleccionado.query;
-                        o["$and"].push(oo);
-
-                    }
-                }
+                var o=loadSearchParameter($scope);
                 listToSearch.push(o);
                 var promise=GarantiasServices.showPost(listToSearch);
                 handleSubmitServicePromise(promise,null);
@@ -105,25 +69,30 @@
             $scope.data={};
             $scope.cargarSubseries = function() {
                 var parameter=[{'fondo.key':$scope.fondoSelected.key}];
+
                 $scope.subseries=GarantiasServices.showtrdpost(parameter);
             }
             $scope.cargarMetadatosReportes=function(){
+
                 $scope.cargarMetadatos();
                 var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
 
                 var promise = GarantiasServices.showReportPost(parameter);
                 $scope.reportes=promise;
+
             };
             $scope.cargarMetadatos = function() {
-                var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
 
-                var promise = GarantiasServices.showMetadataPost(parameter);
-                promise.$promise.then(function(data){
+                var parameter2=[{'empresa.key':$scope.fondoSelected.key
+                                 ,'subserie.key':$scope.subserieseleccionada.key}
 
-                    if(data!=null){
-                        $scope.columnsMetadata=getMetadataFactoryToSearch(data);
-                    }
+                               ];
+                var rta=GarantiasServices.showParametricSearchPost(parameter2);
+                rta.$promise.then(function(data){
+                    $scope.columnsMetadata=$scope.columnsMetadata=getMetadataFactoryToSearch(data);
                 });
+
+
             }
         }
 

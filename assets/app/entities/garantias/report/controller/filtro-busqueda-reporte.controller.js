@@ -32,23 +32,8 @@
 
 
                 var listToSearch=[];
-                var o={};
-                if($scope.aditionalFilter!=null){
-                    o=JSON.parse(JSON.stringify($scope.aditionalFilter));
-                }
-                for(var i=0;i<$scope.lista.length;i++){
-                        var fieldKey=$scope.lista[i].key;
-                        var fieldType=$scope.lista[i].fieldType;
-                        if(fieldType=="alistamiento")fieldKey="envio."+fieldKey;
-                        o[fieldKey]=$scope.lista[i].toSearch;
-                }
+                var o=loadSearchParameter($scope);
 
-                if($scope.fondoSelected!=null){
-                    o["ingreso.empresa.key"]=$scope.fondoSelected.key;
-                 }
-                if($scope.subserieseleccionada!=null){
-                    o["ingreso.subserie.key"]=$scope.subserieseleccionada.key;
-                 }
                  var u={};
                  u["reportName"]=$scope.reportName;
                  u["description"]=$scope.description;
@@ -127,15 +112,17 @@
                 $scope.reportes=promise;
             };
             $scope.cargarMetadatos = function() {
-                var parameter=[{'fondo.key':$scope.fondoSelected.key,'subserie.key':$scope.subserieseleccionada.key}];
 
-                var promise = GarantiasServices.showMetadataPost(parameter);
-                promise.$promise.then(function(data){
+                var parameter2=[{'empresa.key':$scope.fondoSelected.key
+                                 ,'subserie.key':$scope.subserieseleccionada.key}
 
-                    if(data!=null){
-                        $scope.columnsMetadata=getMetadataFactoryToSearch(data);
-                    }
+                               ];
+                var rta=GarantiasServices.showParametricSearchPost(parameter2);
+                rta.$promise.then(function(data){
+                    $scope.columnsMetadata=$scope.columnsMetadata=getMetadataFactoryToSearch(data);
                 });
+
+
             }
         }
 

@@ -21,8 +21,19 @@
             <th>Columna</th>
             <th>Valor</th>
             <tr ng-repeat="c in lista">
-                <td>{{c.value}}</td>
-                <td><input type="{{c.fieldPrototype}}" ng-model="c.toSearch"></td>
+                <td>{{c.label}}</td>
+                <td ng-if="c.fieldType=='checkbox'"><input ng-if="c.fieldType=='checkbox'" type="checkbox" ng-model="c.toSearch"></td>
+                <td ng-if="c.fieldType=='text' || c.fieldType=='numeric'"><input ng-if="c.fieldType=='text' || c.fieldType=='numeric'" ng-model="c.toSearch"></td>
+                <td ng-if="c.fieldType=='date'">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="c.toSearch"
+                           is-open="popupEndDate.opened" datepicker-options="dateOptions"
+                           ng-required="true" close-text="Close"/>
+                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openEndDate()"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                </td>
+
                 </td>
                 <td>
                     <button ng-click="removeRow(c,$index)" class="btn btn-danger ng-scope">Quitar</button>
@@ -36,29 +47,12 @@
                 Agregar Campo <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                <li ng-if="col.fieldType=='datos'||col.fieldType=='alistamiento'||col.fieldType=='recepcion'||col.fieldType=='carguedirecto'" role="menuitem" ng-repeat="col in columnsMetadata "><span
-                        ng-click="addColumn(col,$index)">{{col.value}}</span></li>
+                <li  ng-click="addColumn(col,$index)" role="menuitem" ng-repeat="col in columnsMetadata "><span
+                        >{{col.label}}</span></li>
             </ul>
         </div>
 
-        <div >
-            <p class="input-group">
-                Fecha Inicial: <input type="text" class="form-control" uib-datepicker-popup
-                                      ng-model="data.startDate" is-open="popupStartDate.opened"
-                                      datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="openStartDate()"><i
-                                                    class="glyphicon glyphicon-calendar"></i></button>
-                                          </span>
-                Fecha Final: <input type="text" class="form-control" uib-datepicker-popup ng-model="data.endDate"
-                                    is-open="popupEndDate.opened" datepicker-options="dateOptions"
-                                    ng-required="true" close-text="Close"/>
-                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="openEndDate()"><i
-                                                    class="glyphicon glyphicon-calendar"></i></button>
-                                          </span>
-            </p>
-        </div>
+
     </div>
     <div class="modal-footer">
         <button class="btn btn-success" ng-click="ok()">Consultar</button>

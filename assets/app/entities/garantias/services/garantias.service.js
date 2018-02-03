@@ -203,7 +203,41 @@
                         //var data = angular.fromJson(res);
                         return res;
                     }
-                },
+                },/*-----------PARAMETRIC SEARCH -VALUES---- */
+                 showParametricSearch: {
+                     url:getUrlServices(ApiGarantias,'parametricSearch'),
+                     headers: headers2,
+                     method: 'GET',
+                     isArray: true
+                 },showParametricSearchPost: {
+                   url:getUrlServices(ApiGarantias,'parametricSearch')+"/post",
+                   headers: headers2,
+                   method: 'POST',
+                   isArray: true
+                 },createParametricSearch: {
+                     url:getUrlServices(ApiGarantias,'parametricSearch'),
+                     method: 'POST',
+                     headers: headers2,
+                     params: {'@param': '@param'},
+                     isArray: false,
+                     data: '@data'
+                 },removeParametricSearch: {
+                      url:getUrlServices(ApiGarantias,'parametricSearch')+"/delete",
+                      params: {id: '@id'},
+                      method: 'DELETE',
+                      isArray: false,
+                      headers: headers2
+                  },
+                 update: {
+                     headers: headers2,
+                     method: 'PUT',
+                     isArray: false,
+                     params: {},
+                     transformResponse: function (res, headers) {
+                         //var data = angular.fromJson(res);
+                         return res;
+                     }
+                 },
                 delete: {method: 'DELETE', params: {id: '@id'}}
             })
         }

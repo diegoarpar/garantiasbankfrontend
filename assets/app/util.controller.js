@@ -179,6 +179,8 @@ function getUrlServices(rootServices,service){
                 return rootServices.url+"menu";
             case "parametric":
                 return rootServices.url+"config/garantias-parametricvalues";
+            case "parametricSearch":
+                return rootServices.url+"config/garantias-parametricsearch";
             case "trd":
             // Blah
                 break;
@@ -312,18 +314,11 @@ function getMenu(){
 
 
 function getMetadataFactoryToSearch(data){
+
     var dataList=[];
     if(data!=null){
         for(var i=0;i<data.length;i++){
-            for(var j=0;j<data[i].subserie.metadata.length;j++){
-                dataList.push({fieldType:data[i].subserie.metadata[j].fieldType,key:data[i].subserie.metadata[j].key,value:data[i].subserie.metadata[j].value,fieldPrototype:data[i].subserie.metadata[j].fieldPrototype})
-            }
-            for(var j=0;j<data[i].tipodocumento.length;j++){
-                for(var k=0;k<data[i].tipodocumento[j].metadata.length;k++){
-                    dataList.push({fieldType:data[i].tipodocumento[j].metadata[k].fieldType,key:data[i].tipodocumento[j].metadata[k].key,value:data[i].tipodocumento[j].metadata[k].value,fieldPrototype:data[i].tipodocumento[j].metadata[k].fieldPrototype})
-
-                }
-            }
+            dataList.push({fieldType:data[i].fieldType,label:data[i].fieldLabel,value:data[i].fieldValue,fieldQuery:data[i].condition})
         }
 
     }
@@ -365,4 +360,39 @@ function validateFields($scope,autenticationUser, object,window,document,permiss
 
 function deleteNode(document,field){
     document.getElementById(field).outerHTML='';
+}
+
+function loadSearchParameter($scope){
+        debugger;
+
+        var o={};
+        if($scope.aditionalFilter!=null){
+            o=JSON.parse(JSON.stringify($scope.aditionalFilter));
+        }
+        for(var i=0;i<$scope.lista.length;i++){
+                var fieldKey=$scope.lista[i].value;
+                var fieldType=$scope.lista[i].fieldType;
+                var fieldQuery=$scope.lista[i].fieldQuery;
+                do{ fieldKey=fieldKey.replace("__","."); }while(fieldKey.indexOf("__")>=0);
+
+                if(fieldQuery=='__equal'){
+                    o[fieldKey]={"$eq":$scope.lista[i].toSearch};
+                }else if(fieldQuery=='__like'){
+                    o[fieldKey]={"$regex":"^"+$scope.lista[i].toSearch+".*","$options": "i" };
+                }else if(fieldQuery=='__morethan'){
+                    o[fieldKey]={"$gte":$scope.lista[i].toSearch};
+                }else if(fieldQuery=='__lesstan'){
+                    o[fieldKey]={"$lte":$scope.lista[i].toSearch};
+                }
+                //o[fieldKey]=$scope.lista[i].toSearch;
+        }
+
+        if($scope.fondoSelected!=null){
+            o["ingreso.empresa.key"]=$scope.fondoSelected.key;
+         }
+        if($scope.subserieseleccionada!=null){
+            o["ingreso.subserie.key"]=$scope.subserieseleccionada.key;
+         }
+
+        return o;
 }

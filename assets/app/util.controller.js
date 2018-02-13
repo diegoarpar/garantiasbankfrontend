@@ -363,7 +363,6 @@ function deleteNode(document,field){
 }
 
 function loadSearchParameter($scope){
-        debugger;
 
         var o={};
         if($scope.aditionalFilter!=null){

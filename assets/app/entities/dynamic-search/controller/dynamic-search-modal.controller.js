@@ -22,6 +22,7 @@
             $scope.rowDetailShow=function(rowSelected){
                  var row={};
                 row["key"]=rowSelected;
+
                 return rowDetailShow(row);
             }
             $scope.getBarCode=function(){

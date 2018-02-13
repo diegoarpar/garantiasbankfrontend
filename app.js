@@ -196,11 +196,7 @@ app.config(['$routeProvider', function ($routeProvider) {
                                                 templateUrl: 'assets/app/entities/garantias/report/view/report-administrator.html',
                                                 controller: 'ReportAdministratorController'
                                             }
-                        );
-        $routeProvider.when('/administrador-camposBusqueda', {
-                                templateUrl: 'assets/app/entities/garantias/campos/busqueda/view/administrador-camposbusqueda.html',
-                                controller: 'AdministradorCamposBusqueda'
-                            }
+
         );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});

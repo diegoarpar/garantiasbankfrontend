@@ -158,6 +158,9 @@
             }
 
             function openModal(entity) {
+
+                !!entity&&!!entity.validaciones?entity.rta_validac="COMPLETITUD:"+entity.validaciones.completitud+" IDONEIDAD: "+entity.validaciones.idoneidad:false;
+
                 ShareService.set(entity);
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',

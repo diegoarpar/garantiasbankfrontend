@@ -1,47 +1,68 @@
 <form novalidate>
     <div class="modal-header">
-<h2 ng-if="isSelectedReport">Modificar Reporte</h2>
-<h2 ng-if="!isSelectedReport">Crear Reporte</h2>
+        <h2 ng-if="isSelectedReport">Modificar Reporte</h2>
+        <h2 ng-if="!isSelectedReport">Crear Reporte</h2>
     </div>
-
     <div class="modal-body">
-        <div>
-        <span>Nombre del reporte</span> <input type="text" ng-model="selectedReport.nombre" >
-        </div>
-        <div>
-            <span>Nombre del batcher</span> <input type="text" ng-model="selectedReport.batcher" >
-        </div>
-        <div>
-            <span>Plantilla</span> <input type="text" ng-model="selectedReport.template" >
-        </div>
-        <div>
-            <span>Extensión de salida (.pdf)</span> <input type="text" ng-model="selectedReport.fileOutExtension" >
-        </div>
-        <div>
-            <span>Fondo:</span>
-            <select  ng-model="fondoSelected" ng-change="cargarSubseries(f)"
-                     ng-options="f as f.value for f in fondos">
-            </select>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Nombre del reporte:</label>
+                <div class="col-sm-7">
+                    <input type="text" ng-model="selectedReport.nombre" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Nombre del batcher:</label>
+                <div class="col-sm-7">
+                    <input type="text" ng-model="selectedReport.batcher" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Plantilla:</label>
+                <div class="col-sm-7">
+                    <input type="text" ng-model="selectedReport.template" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Extensión de salida (.pdf):</label>
+                <div class="col-sm-7">
+                    <input type="text" ng-model="selectedReport.fileOutExtension" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Fondo:</label>
+                <div class="col-sm-7">
+                    <select class="form-control" ng-model="fondoSelected" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos">
+                    </select>
+                </div>
 
-        </div>
-        <div>
-            <span>Subserie:</span>    <select  ng-model="subserieseleccionada" ng-change="cargarMetadatos()"
-                                                           ng-options="r['subserie'] as r['subserie'].value for r in subseries">
-        </select>
-        </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Subserie:</label>
+                <div class="col-sm-7">
+                    <select class="form-control" ng-model="subserieseleccionada" ng-change="cargarMetadatos()" ng-options="r['subserie'] as r['subserie'].value for r in subseries">
+                    </select>
+                </div>
+            </div>
 
-        <div>
-<span>Query</span><textarea ng-model="query" ></textarea>
-<br/>
-        </div>
-        <div>
-            <span>Columns</span><textarea ng-model="columnsR" ></textarea>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Query:</label>
+                <div class="col-sm-7">
+                    <textarea rows="6" class="form-control" ng-model="query"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-sm-offset-1">Columns:</label>
+                <div class="col-sm-7">
+                    <textarea rows="6" ng-model="columnsR" class="form-control"></textarea>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
-<input type="submit" ng-if="!isSelectedReport" value="Agregar" ng-click="save()" class="btn green"/>
-<input type="submit" ng-if="isSelectedReport" value="Guardar Cambios" ng-click="save()" class="btn green"/>
-<button class="btn" ng-click="cancel()">Cancelar</button>
+        <input type="submit" ng-if="!isSelectedReport" value="Agregar" ng-click="save()" class="btn green" />
+        <input type="submit" ng-if="isSelectedReport" value="Guardar Cambios" ng-click="save()" class="btn green" />
+        <button class="btn" ng-click="cancel()">Cancelar</button>
 
     </div>
 </form>

@@ -49,7 +49,7 @@
                         animation: $scope.animationsEnabled,
                         templateUrl: 'assets/app/authentication/view/login.html',
                         controller: 'LoginControl',
-                        size: 'lg',
+                        size: 'md',
                         resolve: {
                             items: function () {
                                 return $scope.items;

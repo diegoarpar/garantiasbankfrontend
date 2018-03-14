@@ -1,12 +1,24 @@
 <div class='navbar'>
-    <form class="navbar-search pull-center">
-        <span>Usuario</span> <input type="text" ng-model="user" class="span2" placeholder="Usuario">
-        <br/>
-        <span>Contraseña</span><input type="password" ng-model="pass" class="span2" placeholder="Contaseña">
+    <form class="navbar-search pull-center form-horizontal">
+        <div class="form-group">
+            <label for="user" class="col-sm-offset-3 col-sm-3 control-label">Usuario</label>
+            <div class="col-sm-4">
+                <input type="text" ng-model="user" name="user" class="form-control" placeholder="Usuario" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pass" class="col-sm-offset-3 col-sm-3 control-label">Contraseña</label>
+            <div class="col-sm-4">
+                <input type="password" ng-model="pass" class="form-control" name="pass" placeholder="Contaseña">
+            </div>
+        </div>
 
-        <input type="submit" value="Ingresar" ng-click="ok()" class="btn green"/>
-        <input type="submit" value="Volver" ng-click="cancel()" class="btn green"/>
+        <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-4">
+                    <input type="submit" value="Ingresar" ng-click="ok()" class="btn green" />
+                    <input type="submit" value="Volver" ng-click="cancel()" class="btn green" />
+            </div>
+        </div>
     </form>
 
 </div>
-

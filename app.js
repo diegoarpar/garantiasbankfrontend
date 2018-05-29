@@ -198,6 +198,12 @@ app.config(['$routeProvider', function ($routeProvider) {
                                             }
 
         );
+        $routeProvider.when('/radicacion-tramite', {
+                                                        templateUrl: 'assets/app/entities/ventanilla/radicacion/view/radicacion-tramite.html',
+                                                        controller: 'VentanillaRadicacionTramiteController'
+                                                    }
+
+                );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

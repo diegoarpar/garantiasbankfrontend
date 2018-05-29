@@ -1,0 +1,33 @@
+<div  close="cancel()">
+    <div class="modal-header">
+        <h4>Seleccione la regional de recepción</h4>
+    </div>
+
+    <div class="modal-body">
+        <div>
+            <label>Empresa:</label>      <select  ng-model="fondoSeleccionado" ng-change="cargarRegionales(r)"
+                                                ng-options="f as f.value for f in fondos" >  </select>
+
+        </div>
+        <div>
+            <label>Regional:</label>    <select  ng-model="regionalSeleccionada"
+                                               ng-options="r as r.location+'-'+ r.value for r in regionales" >  </select>
+
+
+        </div>
+        <div>
+            <label>Trámite:</label>    <select  ng-model="subserieseleccionada"
+                                                ng-options="r['subserie'] as  r['subserie'].value for r in subseries" >  </select>
+
+        </div>
+
+        <div>
+            <label>Información del trámite seleccionado:</label>    <inputText  ng-model="tramiteSeleccionado">  </inputText>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Seleccionar</button>
+        <button class="btn" ng-click="cancel()">Cancelar</button>
+    </div>
+</div>

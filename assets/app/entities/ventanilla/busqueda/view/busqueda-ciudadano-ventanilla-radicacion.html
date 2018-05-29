@@ -1,0 +1,25 @@
+<div  close="cancel()">
+    <div class="modal-header">
+        <h4>Presione en generar para confirmar la recepción y finalmente presione confirmar</h4>
+    </div>
+</div>
+<button ng-if="!code" class="btn btn-success" ng-click="generateBarcode()">Generar</button>
+<div>
+
+    <io-barcode code="{{ code }}" type="{{ type }}" options="options"></io-barcode>
+    <div>    <span class="text-align-center">{{ code }}</span></div>
+</div>
+<div  class="col-4">
+    <div ng-if="t.metadata.length>0" ng-repeat="t in subserie" >
+
+        <div ng-if="m.fieldType=='carguedirecto'" ng-repeat="m in t.metadata">
+            <input readonly="true" ng-model="m.value"/>:<input  type="{{m.fieldPrototype}}" ng-model="m.result"/>
+        </div>
+    </div>
+    <button ng-if="code" class="btn btn-success" ng-click="downloadBarCode()">Descargar</button>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="ok()">Confirmar</button>
+    <button class="btn" ng-click="cancel()">Cancelar</button>
+</div>
+</div>

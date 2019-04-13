@@ -204,6 +204,12 @@ app.config(['$routeProvider', function ($routeProvider) {
                                                     }
 
                 );
+         $routeProvider.when('/administrar-ubicacion-bodega', {
+                                             templateUrl: 'assets/app/entities/garantias/bodega/view/administrador-bodega.html',
+                                             controller: 'AdministradorBodegaController'
+                                             }
+
+         );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

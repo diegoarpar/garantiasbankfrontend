@@ -266,6 +266,7 @@ function getMenu(){
                 ,{href:"",label:"Bodega",image:"",controller:""}
                 ,{href:"",label:"Consultas funcionarios",image:"",controller:""}
                 ,{href:"",label:"Administracion",image:"",controller:""}
+                ,{href:"",label:"Bodega",image:"",controller:""}
                 ];
     data.nodes[1].nodes=[
                  {href:"",label:"Recepción",image:"",controller:""}
@@ -308,7 +309,12 @@ function getMenu(){
                  ,{href:"regionales",label:"Administrar Regionales",image:"",controller:""}
                  ,{href:"administrador-reportes",label:"Administrar Reportes",image:"",controller:""}
                  ];
-
+    data.nodes[4].nodes=[
+                 {href:"",label:"Bodega",controller:""}
+                 ];
+    data.nodes[4].nodes[0].nodes=[
+                         {href:"administrar-ubicacion-bodega",label:"Administrar Ubicación Bodega",image:"",controller:""}
+                         ];
                  return data;
 }
 

@@ -66,7 +66,21 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },
+                },/*-----------BODEGA---- */
+                  showbodega: {
+                      url:ApiGarantias.url+'bodega',
+                      headers: headers2,
+                      method: 'GET',
+                      params: {'@param': '@param'},
+                      isArray: true
+                  },createbodega: {
+                      url:ApiGarantias.url+'bodega',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: false,
+                      data: '@data'
+                  },
                 /*-----------METADATA---- */
 
                 showMetadataPost: {

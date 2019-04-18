@@ -668,6 +668,6 @@ tr.angular-ui-tree-empty {
 }
 
 .modal-body {
-	max-width: 500px !important;
+
 	overflow: scroll !important;
 }

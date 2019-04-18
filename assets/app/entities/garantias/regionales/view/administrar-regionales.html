@@ -27,14 +27,7 @@
     </ol>
 </script>
 
-<!--div class="row">
-    <div class="col-sm-12">
 
-
-        <button class="btn btn-success" ng-click="expandAll()">Expand all</button>
-        <button class="btn " ng-click="collapseAll()">Collapse all</button>
-    </div>
-</div-->
 
 <div class="row">
     <div class="col-sm-8">
@@ -44,12 +37,46 @@
             </ol>
         </div>
     </div>
-    <!--div class="col-sm-6">
-        <div class="info">
-            {{info}}
-        </div>
-        <pre class="code">{{ data | json }}</pre>
-    </div-->
 </div>
 
 
+<h3>Configuración de Bodegas</h3>
+
+
+
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_rendererb.html">
+    <div ui-tree-handle class="tree-node tree-node-content">
+        <a class="btn btn-success btn-xs" ng-if="nodeb.nodes && nodeb.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+                class="glyphicon"
+                ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+        {{nodeb.value}}
+        <a  ng-if="!nodeb.nombreparametrica"  class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+                class="glyphicon glyphicon-remove"></span></a>
+        <a  ng-if="nodeb.nombreparametrica"  class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="openModalBodega(this)" style="margin-right: 8px;"><span
+                class="glyphicon glyphicon-plus"></span></a>
+        <a   ng-if="nodeb.nombreparametrica" class="pull-right glyphicon glyphicon-floppy-disk btn-xs" data-nodrag ng-click="saveChangesBodega(this)" style="margin-right: 16px;"><span
+        ></span></a>
+        <a   ng-if="nodeb.nombreparametrica" class="pull-right glyphicon glyphicon-refresh btn-xs" data-nodrag ng-click="retriveBodega(this)" style="margin-right: 16px;"><span
+        ></span></a>
+    </div>
+    <ol ui-tree-nodes="" ng-model="nodeb.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="nodeb in nodeb.nodes" ui-tree-node ng-include="'nodes_rendererb.html'">
+        </li>
+    </ol>
+</script>
+
+
+
+<div class="row">
+    <div class="col-sm-8">
+        <div ui-tree id="tree-root2">
+            <ol ui-tree-nodes ng-model="datab">
+                <li ng-repeat="nodeb in datab" ui-tree-node ng-include="'nodes_rendererb.html'"></li>
+            </ol>
+        </div>
+    </div>
+</div>

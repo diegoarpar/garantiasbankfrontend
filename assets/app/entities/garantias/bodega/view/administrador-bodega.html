@@ -4,39 +4,42 @@
     </div>
 
     <!-- Dark Overlay element -->
-    <div id="page-wrapper">
+    <div class="modal-body">
         <h3> Administración de Bodega</h3>
-        <div class="form-group">
-            <div class="col-sm-4">
-                <button class="form-control" > Crear</button>
+        <div class="form-horizontal">
+            <div class="form-group">
+
+                <div class="col-sm-4">
+                    <button class="form-control" ng-click="openModalCrearContenedor()"> Crear</button>
+                </div>
+                <div class="col-sm-4">
+                    <button class="form-control" > Buscar</button>
+                </div>
+                <br/>
+                <br/>
             </div>
-            <div class="col-sm-4">
-                <button class="form-control" > Buscar</button>
+
+            <div class="form-group">
+                <label class="col-sm-2">Bodega:</label>
+                <div class="col-sm-4">
+                    <select class="form-control" ng-model="selectedStorage" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos"></select>
+                </div>
+
+                <label class="col-sm-2">Tipo de Contenedor:</label>
+                <div class="col-sm-4">
+                    <select class="form-control" ng-model="selectedContainer" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos"></select>
+                </div>
             </div>
-            <br/>
-            <br/>
         </div>
+            <table ng-table="tableParams" class="table" show-filter="true">
+                <tr ng-repeat="user in $data">
+                    <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                        {{user.name}}</td>
+                    <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
+                        {{user.age}}</td>
+                </tr>
+            </table>
 
-        <div class="form-group">
-            <label class="col-sm-2">Bodega:</label>
-            <div class="col-sm-4">
-                <select class="form-control" ng-model="selectedStorage" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos"></select>
-            </div>
-
-            <label class="col-sm-2">Tipo de Contenedor:</label>
-            <div class="col-sm-4">
-                <select class="form-control" ng-model="selectedContainer" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos"></select>
-            </div>
-        </div>
-
-        <table ng-table="tableParams" class="table" show-filter="true">
-            <tr ng-repeat="user in $data">
-                <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                    {{user.name}}</td>
-                <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
-                    {{user.age}}</td>
-            </tr>
-        </table>
 
     </div>
 

@@ -11,6 +11,7 @@
 
         function CrearContenedorBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams) {
             inSession($scope,AuthenticationFactory,$window,false);
+            $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
             $scope.menu_activo=true;
             $scope.change_manu_activo=function(){
                 $scope.menu_activo=$scope.menu_activo==true?false:true;

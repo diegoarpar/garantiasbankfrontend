@@ -8,40 +8,35 @@
             <div class="form-group">
                 <label  class="col-sm-2">Empresa:</label>
                 <div class="col-sm-4">
-                    <select class="form-control" ng-model="fondoSelected" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos">
+                    <select class="form-control" ng-model="fondoSeleccionado" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos">
                     </select>
                 </div>
 
-                <label class="col-sm-2">Regional:</label>
-                <div class="col-sm-4">
-                    <select class="form-control" ng-model="subserieseleccionada" ng-change="cargarMetadatos()" ng-options="r['subserie'] as r['subserie'].value for r in subseries">
-                    </select>
-                </div>
-                <br/>
+
                 <label class="col-sm-2">Bodega:</label>
                 <div class="col-sm-4">
-                    <select class="form-control" ng-model="subserieseleccionada" ng-change="cargarMetadatos()" ng-options="r['subserie'] as r['subserie'].value for r in subseries">
+                    <select class="form-control" ng-model="bodegaSeleccionada"  ng-options="r['subserie'] as r['subserie'].value for r in subseries">
                     </select>
                 </div>
 
                 <label  class="col-sm-2">Código:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="subserieseleccionada" >Código</text>
+                    <text class="form-control" ng-model="codigo" />
                     </text>
                 </div>
                 <label  class="col-sm-2">Nombre:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="subserieseleccionada" >Nombre</text>
+                    <text class="form-control" ng-model="nombre"/>
                     </text>
                 </div>
                 <label  class="col-sm-2">Descripción:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="subserieseleccionada" >Descripción</text>
+                    <text class="form-control" ng-model="descripcion"/>
                     </text>
                 </div>
                 <label  class="col-sm-2">Dimensión:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="subserieseleccionada" >Descripción</text>
+                    <text class="form-control" ng-model="dimension" />
                     </text>
                 </div>
             </div>

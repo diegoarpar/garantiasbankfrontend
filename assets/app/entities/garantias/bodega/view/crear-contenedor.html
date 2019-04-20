@@ -8,36 +8,32 @@
             <div class="form-group">
                 <label  class="col-sm-2">Empresa:</label>
                 <div class="col-sm-4">
-                    <select class="form-control" ng-model="fondoSeleccionado" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos">
+                    <select class="form-control" ng-model="fondoSeleccionado" ng-change="cargarBodegas(f)" ng-options="f as f.value for f in fondos">
                     </select>
                 </div>
 
 
                 <label class="col-sm-2">Bodega:</label>
                 <div class="col-sm-4">
-                    <select class="form-control" ng-model="bodegaSeleccionada"  ng-options="r['subserie'] as r['subserie'].value for r in subseries">
+                    <select class="form-control" ng-model="bodegaSeleccionada"  ng-options="b as b.key for b in bodegas">
                     </select>
                 </div>
 
                 <label  class="col-sm-2">Código:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="codigo" />
-                    </text>
+                    <input class="form-control" ng-model="codigo" />
                 </div>
                 <label  class="col-sm-2">Nombre:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="nombre"/>
-                    </text>
+                    <input class="form-control" ng-model="nombre"/>
                 </div>
                 <label  class="col-sm-2">Descripción:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="descripcion"/>
-                    </text>
+                    <input class="form-control" ng-model="descripcion"/>
                 </div>
                 <label  class="col-sm-2">Dimensión:</label>
                 <div class="col-sm-4">
-                    <text class="form-control" ng-model="dimension" />
-                    </text>
+                    <input class="form-control" ng-model="dimension" />
                 </div>
             </div>
         </div>

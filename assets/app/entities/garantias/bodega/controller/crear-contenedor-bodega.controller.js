@@ -18,6 +18,18 @@
 
             }
 
+            $scope.cargarBodegas=function(fondo){
+                $scope.bodegasrta=GarantiasServices.showbodega({nombreparametrica: $scope.fondoSeleccionado.nombreparametrica,key: $scope.fondoSeleccionado.key});
+                $scope.bodegasrta.$promise.then(function (data){
+                        $scope.bodegas=[];
+                        for (var i=0;!!data&&i< data.length;i++)
+                            for (var j=0;!!data[i]&&!!data[i].nodes&&j< data[i].nodes.length;i++)
+                                $scope.bodegas.push(data[i].nodes[j]);
+                    }
+                );
+
+            }
+
 
 
           $scope.ubicaciones=[];

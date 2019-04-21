@@ -210,6 +210,12 @@ app.config(['$routeProvider', function ($routeProvider) {
                                              }
 
          );
+         $routeProvider.when('/ubicar-contenido-bodega', {
+                                              templateUrl: 'assets/app/entities/garantias/bodega/view/ubicar-contenido.html',
+                                              controller: 'UbicarContenidoBodegaController'
+                                              }
+
+          );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

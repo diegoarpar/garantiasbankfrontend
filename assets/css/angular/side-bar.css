@@ -61,3 +61,16 @@ body {
 #page-wrapper{
     width:100% !important;
 }
+
+.sub {
+    background: var(--navBardefault);
+    color: white;
+    border-color: var(--navBardefault);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.container {
+    width: 100%;
+}

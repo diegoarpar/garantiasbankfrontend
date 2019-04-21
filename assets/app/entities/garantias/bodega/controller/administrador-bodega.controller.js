@@ -27,25 +27,37 @@
                 );
 
             };
-        var data = [{name: "Moroni", age: 50},
-                      {name: "Tiancum", age: 43},
-                      {name: "Jacob", age: 27},
-                      {name: "Nephi", age: 29},
-                      {name: "Enos", age: 34},
-                      {name: "Tiancum", age: 43},
-                      {name: "Jacob", age: 27},
-                      {name: "Nephi", age: 29},
-                      {name: "Enos", age: 34},
-                      {name: "Tiancum", age: 43},
-                      {name: "Jacob", age: 27},
-                      {name: "Nephi", age: 29},
-                      {name: "Enos", age: 34},
-                      {name: "Tiancum", age: 43},
-                      {name: "Jacob", age: 27},
-                      {name: "Nephi", age: 29},
-                      {name: "Enos", age: 34}];
+          $scope.rta = GarantiasServices.retrivebodegacontainer([{}]);
+          $scope.rta.$promise.then(function (data){
+            $scope.tableParams = new NgTableParams({}, { dataset: data});
+          });
 
 
-          $scope.tableParams = new NgTableParams({}, { dataset: data});
+          $scope.generateTable=function(){
+            $scope.rta = GarantiasServices.retrivebodegacontainer([{}]);
+            $scope.rta.$promise.then(function (data){
+                $scope.tableParams = new NgTableParams({}, { dataset: data});
+              });
+          }
+
+          $scope.setData2=function(data){
+            $scope.data2=data;
+          }
+         $scope.getData2=function(){
+            return $scope.data2[0];
+          }
+
+          $scope.openModalModificarContenedor=function (_this) {
+              var data = _this.b;
+              $scope.setData2([data]);
+              var modalInstance = $uibModal.open({
+                      templateUrl: 'assets/app/entities/garantias/bodega/view/actualizar-contenedor.html',
+                      controller: 'ModificarContenedorBodegaController',
+                      scope: $scope,
+                      size: 'lg'
+                  }
+              );
+
+          };
         }
     })();

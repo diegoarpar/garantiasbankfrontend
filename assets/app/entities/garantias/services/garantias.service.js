@@ -68,9 +68,9 @@
                     data: '@data'
                 },/*-----------BODEGA---- */
                   showbodega: {
-                      url:ApiGarantias.url+'bodega',
+                      url:ApiGarantias.url+'bodega/retrieve',
                       headers: headers2,
-                      method: 'GET',
+                      method: 'POST',
                       params: {'@param': '@param'},
                       isArray: true
                   },createbodega: {
@@ -79,6 +79,34 @@
                       headers: headers2,
                       params: {'@param': '@param'},
                       isArray: false,
+                      data: '@data'
+                  },createbodegacontainer: {
+                      url:ApiGarantias.url+'bodega/insertContainer',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: false,
+                      data: '@data'
+                  },retrivebodegacontainer: {
+                      url:ApiGarantias.url+'bodega/retrieveContainer',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: true,
+                      data: '@data'
+                  },createbodegacontainerubication: {
+                      url:ApiGarantias.url+'bodega/insertContainerUbication',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: false,
+                      data: '@data'
+                  },retrivebodegacontainerubication: {
+                      url:ApiGarantias.url+'bodega/retrieveContainerUbication',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: true,
                       data: '@data'
                   },
                 /*-----------METADATA---- */

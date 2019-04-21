@@ -10,33 +10,34 @@
             <div class="form-group">
 
                 <div class="col-sm-4">
-                    <button class="form-control" ng-click="openModalCrearContenedor()"> Crear</button>
-                </div>
-                <div class="col-sm-4">
-                    <button class="form-control" > Buscar</button>
+                    <button class="form-control btn btn-success" ng-click="openModalCrearContenedor()"> + </button>
                 </div>
                 <br/>
                 <br/>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-2">Bodega:</label>
-                <div class="col-sm-4">
-                    <select class="form-control" ng-model="selectedStorage" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos"></select>
-                </div>
 
-                <label class="col-sm-2">Tipo de Contenedor:</label>
-                <div class="col-sm-4">
-                    <select class="form-control" ng-model="selectedContainer" ng-change="cargarSubseries(f)" ng-options="f as f.value for f in fondos"></select>
-                </div>
-            </div>
         </div>
             <table ng-table="tableParams" class="table" show-filter="true">
-                <tr ng-repeat="user in $data">
-                    <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                        {{user.name}}</td>
-                    <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
-                        {{user.age}}</td>
+                <tr ng-repeat="b in $data">
+                    <td title="'Regional'" filter="{ 'key.key': 'text'}" sortable="'key.key'">
+                        {{b.key.key}}</td>
+                    <td title="'Bodega'" filter="{ 'storage.key': 'text'}" sortable="'storage.key'">
+                        {{b.storage.key}}</td>
+
+                    <td title="'Nombre'" filter="{ name: 'text'}" sortable="'name'">
+                        {{b.name}}</td>
+
+                    <td title="'Codigo'" filter="{ code: 'text'}" sortable="'code'">
+                        {{b.code}}</td>
+
+                    <td title="'Descripción'" filter="{ description: 'text'}" sortable="'description'">
+                        {{b.description}}</td>
+                    <td title="'Dimensión'" filter="{ dimension: 'text'}" sortable="'dimension'">
+                        {{b.dimension}}</td>
+                    <td title="'Opciones'" >
+                        <button class="btn btn-success" ng-click="openModalModificarContenedor(this)"> Modificar</button>
+                    </td>
                 </tr>
             </table>
 

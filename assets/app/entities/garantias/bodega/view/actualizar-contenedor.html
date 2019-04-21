@@ -1,0 +1,62 @@
+<div close="cancel()">
+    <div class="modal-header">
+        <h4>Crear Ubicaciones</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label  class="col-sm-2">Empresa:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="key" />
+
+                </div>
+
+
+                <label class="col-sm-2">Bodega:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="storage" />
+
+                </div>
+
+                <label  class="col-sm-2">Código:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="code" />
+                </div>
+                <label  class="col-sm-2">Nombre:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="name"/>
+                </div>
+                <label  class="col-sm-2">Descripción:</label>
+                <div class="col-sm-4">
+                    <input disabled="true"  class="form-control" ng-model="description"/>
+                </div>
+                <label  class="col-sm-2">Dimensión:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="dimension" />
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-success" ng-click="addUbicacion()">+</button>
+
+        <table ng-table="tableParamsContenedor" class="table" show-filter="true">
+            <tr ng-repeat="ubicaciones in $data">
+                <td title="'Código'" sortable="'code'">
+                    <input ng-model="ubicaciones.code" ></input>
+                </td>
+                <td title="'Nombre'"  sortable="'name'">
+                    <input ng-model="ubicaciones.name"> </input>
+                </td>
+                <td title="'Opciones'"  >
+                    <button class="btn btn-success" ng-click="remove (this)"> X </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Guardar</button>
+        <button class="btn" ng-click="cancel()">Cerrar</button>
+        <button class="btn" ng-click="cancel()">Generar Barras</button>
+    </div>
+</div>

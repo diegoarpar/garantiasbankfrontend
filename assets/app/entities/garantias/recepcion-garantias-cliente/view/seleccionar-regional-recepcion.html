@@ -4,20 +4,28 @@
     </div>
 
     <div class="modal-body">
+        <div class="form-group">
         <div>
-            <label>Empresa:</label>      <select  ng-model="fondoSeleccionado" ng-change="cargarRegionales(r)"
-                                                  ng-options="f as f.value for f in fondos" > </select>
-
+            <label  class="col-sm-4">Empresa:</label>
+            <div class="col-sm-6">
+            <select  class="form-control" ng-model="fondoSeleccionado" ng-change="cargarRegionales(r)"
+                      ng-options="f as f.value for f in fondos" > </select>
+            </div>
         </div>
         <div>
-            <label>Regional:</label>    <select  ng-model="regionalSeleccionada"
-                                               ng-options="r as r.location+'-'+ r.value for r in regionales" >  </select>
-
+            <label  class="col-sm-4">Regional:</label>
+            <div class="col-sm-6">
+            <select   class="form-control"  ng-model="regionalSeleccionada"
+                   ng-options="r as r.location+'-'+ r.value for r in regionales" >  </select>
+            </div>
         </div>
         <div>
-            <label>Documentos  a recibir:</label>    <select  ng-model="subserieseleccionada"
-                                                ng-options="r['subserie'] as  r['subserie'].value for r in subseries" >  </select>
-
+            <label  class="col-sm-4">Documentos  a recibir:</label>
+            <div class="col-sm-6">
+            <select   class="form-control" ng-model="subserieseleccionada"
+                ng-options="r['subserie'] as  r['subserie'].value for r in subseries" >  </select>
+            </div>
+        </div>
         </div>
     </div>
 

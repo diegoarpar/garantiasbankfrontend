@@ -7,9 +7,9 @@
         angular.module("wpc")
             .controller('UbicarContenidoBodegaController', UbicarContenidoBodegaController);
 
-        UbicarContenidoBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal'];
+        UbicarContenidoBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','ShareService'];
 
-        function UbicarContenidoBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal) {
+        function UbicarContenidoBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService) {
             inSession($scope,AuthenticationFactory,$window,false);
 
         $scope.menu_activo=true;
@@ -123,9 +123,52 @@
                     listToSearch.push(o);
                   var promise=GarantiasServices.showPost(listToSearch);
                   handleSubmitServicePromise(promise,null);
-                  $scope.setResultSearch(promise);
+
+                  promise.$promise.then(function(data){
+                     fillColumns(data,$scope);
+                     update_columns($scope);
+                     $scope.generateColumns=$scope.all_columns;
+                     $scope.tablaContenido = new NgTableParams({}, { dataset:  data});
+
+
+                  });
 
               }
+
+             $scope.openModal=function(entity) {
+
+                  ShareService.set(entity);
+                  var modalInstance = $uibModal.open({
+                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal-functionary.html',
+                          controller: 'DynamicSearchModalController',
+                          scope: $scope,
+                          size: 'lg'
+                      }
+                  );
+              }
+
+              $scope.switchBoolean=function(key) {
+
+                  for(var idx=0;!!$scope.all_columns&&idx<$scope.all_columns.length;idx++)
+                  if($scope.all_columns[idx].title==key.title){
+                    $scope.all_columns[idx].checked = !$scope.all_columns[idx].checked;
+                    break;
+                  }
+              }
+
+              $scope.asociar=function(row,_this) {
+                    row.ubicacionbodega=$scope.contenedorSeleccionado;
+                    console.log(row);
+                    var promise=GarantiasServices.update([row]);
+                    handleSubmitServicePromise(promise,null);
+               }
+              $scope.desasociar=function(row,_this) {
+                  row.ubicacionbodega=null;
+                  console.log(row);
+                  var promise=GarantiasServices.update([row]);
+                  handleSubmitServicePromise(promise,null);
+             }
+
         }
 
     })();

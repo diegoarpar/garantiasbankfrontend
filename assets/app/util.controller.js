@@ -59,6 +59,7 @@ var update_columns = function ($scope) {
         &&column.title != 'completitud'
         &&column.title != 'idoneidad'
         &&column.title != 'datos'
+        &&column.title != 'ubicacionbodega'
         &&column.title != 'json') {
             if (column.checked) {
                 $scope.columns.push($scope.all_columns[i]);
@@ -76,7 +77,8 @@ var rowDetailShow = function(row){
     if(row["key"].includes("toJSON")){
             return false;
         }
-    if(row["key"].includes("ingreso")||row["key"].includes("envio")||row["key"].includes("validaciones")||row["key"].includes("_id")||row["key"].includes("completitud")||row["key"].includes("idoneidad")||row["key"].includes("datos")){
+    if(row["key"].includes("ingreso")||row["key"].includes("envio")||row["key"].includes("validaciones")||row["key"].includes("_id")||row["key"].includes("completitud")||row["key"].includes("idoneidad")
+    ||row["key"].includes("datos")||row["key"].includes("ubicacionbodega")){
                 return false;
             }
     return true;

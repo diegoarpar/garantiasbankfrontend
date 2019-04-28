@@ -285,7 +285,7 @@ function getMenu(){
                  ,{href:"product-list-recepcion-garantia-contenido",label:"2. Validación de completitud",image:"",controller:""}
                  ,{href:"product-list-recepcion-garantia-idoneidad",label:"3. Validación de idoneidad",image:"",controller:""}
                  ,{href:"product-list-recepcion-garantia-datos",label:"4. Validación de datos",image:"",controller:""}
-                 ,{href:"administrar-ubicacion-bodega",label:"5. Ubicación en bodega",image:"",controller:""}
+                 ,{href:"administrar-ubicacion-bodega",label:"5. Ubicación en bodega y préstamos",image:"",controller:""}
 
                  ];
     data.nodes[1].nodes[2].nodes=[

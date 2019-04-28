@@ -1,29 +1,40 @@
 <h3>Configuración de Menús</h3>
 
 
-<script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="">
-        <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"></a>
-        {{node.label}}
-        <input type="checkbox" ng-model="node.active"> </input>
+
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_rendererb.html">
+    <div class="fix_checkbox">
+    <input type="checkbox" ng-model="nodeb.active"/>
+    <div ui-tree-handle class="tree-node tree-node-content">
+
+
+        <a class="btn btn-success btn-xs" ng-if="nodeb.nodes && nodeb.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+                class="glyphicon"
+                ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"/></a>
+        {{nodeb.label}}
 
     </div>
-    <ol ui-tree-handle ng-model="node.nodes" class="">
-        <li ng-repeat="node in node.nodes" ui-tree-handle ng-include="'nodes_renderer.html'">
+    </div>
+    <ol ui-tree-nodes="" ng-model="nodeb.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="nodeb in nodeb.nodes" ui-tree-node ng-include="'nodes_rendererb.html'">
         </li>
     </ol>
 </script>
 
 
+
 <div class="row">
     <div class="col-sm-8">
-        <div ui-tree id="tree-root">
+        <div ui-tree id="tree-root2">
             <ol ui-tree-nodes ng-model="data">
-                <li ng-repeat="node in data.nodes" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                <li ng-repeat="nodeb in data.nodes" ui-tree-node ng-include="'nodes_rendererb.html'"></li>
             </ol>
         </div>
     </div>
-
 </div>
 
 

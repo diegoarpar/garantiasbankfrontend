@@ -170,8 +170,8 @@
                         <tr ng-repeat="row in $data" >
                             <td>
                                 <button type="submit" ng-click="openModal(row)">Ver Detalle </button>
-                                <button type="submit" ng-click="Prestar(row,this)" ng-if="row.ubicacionbodega.prestado==null">Prestar </button>
-                                <button type="submit" ng-click="recibirPrestamo(row,this)" ng-if="!!row.ubicacionbodega.prestado">Recibir </button>
+                                <button type="submit" ng-click="Prestar(row,this)" ng-if="row.prestado==null">Prestar </button>
+                                <button type="submit" ng-click="recibirPrestamo(row,this)" ng-if="!!row.prestado">Recibir </button>
 
 
                             </td>

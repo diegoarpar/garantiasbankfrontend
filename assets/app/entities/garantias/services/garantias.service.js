@@ -108,6 +108,20 @@
                       params: {'@param': '@param'},
                       isArray: true,
                       data: '@data'
+                  },createbodegacontainerprestamo: {
+                      url:ApiGarantias.url+'bodega/insertContainerPrestamo',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: false,
+                      data: '@data'
+                  },retrivebodegacontainerprestamo: {
+                      url:ApiGarantias.url+'bodega/retrieveContainerPrestamo',
+                      method: 'POST',
+                      headers: headers2,
+                      params: {'@param': '@param'},
+                      isArray: true,
+                      data: '@data'
                   },
                 /*-----------METADATA---- */
 

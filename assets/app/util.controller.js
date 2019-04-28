@@ -297,6 +297,7 @@ function getMenu(){
     data.nodes[2].nodes[0].nodes=[
                                  {href:"dynamic-search-functionary",label:"Consultas funcionarios",image:"",controller:""}
                                  ,{href:"dynamic-search-report",label:"Reportes",image:"",controller:""}
+                                 ,{href:"funcionario-prestamos-bodega",label:"Administración de Préstamos",image:"",controller:""}
                                  ];
     data.nodes[3].nodes=[
                  {href:"",label:"Administración",controller:""}

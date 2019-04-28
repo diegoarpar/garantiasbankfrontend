@@ -147,6 +147,18 @@
                   );
               }
 
+
+            $scope.mostrarDocumentosAsociados=function(entity) {
+
+                  $scope.setData2(entity);
+                  var modalInstance = $uibModal.open({
+                          templateUrl: 'assets/app/entities/garantias/bodega/view/detalle-ubicacion.html',
+                          controller: 'DetalleUbicacionBodegaController',
+                          scope: $scope,
+                          size: 'lg'
+                      }
+                  );
+              }
               $scope.switchBoolean=function(key) {
 
                   for(var idx=0;!!$scope.all_columns&&idx<$scope.all_columns.length;idx++)
@@ -158,13 +170,11 @@
 
               $scope.asociar=function(row,_this) {
                     row.ubicacionbodega=$scope.contenedorSeleccionado;
-                    console.log(row);
                     var promise=GarantiasServices.update([row]);
                     handleSubmitServicePromise(promise,null);
                }
               $scope.desasociar=function(row,_this) {
                   row.ubicacionbodega=null;
-                  console.log(row);
                   var promise=GarantiasServices.update([row]);
                   handleSubmitServicePromise(promise,null);
              }

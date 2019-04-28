@@ -1,0 +1,82 @@
+<div close="cancel()">
+    <div class="modal-header">
+        <h4>Documentos Asociados</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label  class="col-sm-2">Empresa:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="key" />
+
+                </div>
+
+
+                <label class="col-sm-2">Bodega:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="storage" />
+
+                </div>
+
+                <label  class="col-sm-2">Código:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="code" />
+                </div>
+                <label  class="col-sm-2">Nombre:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="name"/>
+                </div>
+                <label  class="col-sm-2">Descripción:</label>
+                <div class="col-sm-4">
+                    <input disabled="true"  class="form-control" ng-model="description"/>
+                </div>
+                <label  class="col-sm-2">Dimensión:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="dimension" />
+                </div>
+                <label  class="col-sm-2">Nombre Contenedor:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="ubication.name" />
+                </div>
+                <label  class="col-sm-2">Código del contenedor:</label>
+                <div class="col-sm-4">
+                    <input disabled="true" class="form-control" ng-model="ubication.code" />
+                </div>
+            </div>
+        </div>
+
+
+
+        <button type="button" class="btn btn-info marginated ng-binding ng-scope"
+                ng-repeat="r in all_columns" ui-draggable="true" drag="m"
+                ng-click="switchBoolean2(r)"
+                draggable="true">
+            {{r.title}}
+        </button>
+
+
+        <table ng-table="tablaContenidoUbicacion" show-filter="true" export-csv="csv" separator=";" class="table table-striped table-hover table-condensed ">
+            <thead>
+            <tr>
+                <th> Detalle</th>
+                <th ng-repeat="r in all_columns" ng-if="r.checked">{{ r.title }}
+                </th>
+            </tr>
+            </thead>
+            <tr ng-repeat="row in $data" >
+                <td>
+                    <button type="submit" ng-click="openModal(row)">Ver Detalle </button>
+                    <button type="submit" ng-click="desasociar2(row,this)" ng-if="!!row.ubicacionbodega">Desasociar de {{row.ubicacionbodega.name}} </button>
+
+                </td>
+                <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Guardar</button>
+        <button class="btn" ng-click="cancel()">Cerrar</button>
+        <button class="btn" ng-click="cancel()">Generar Barras</button>
+    </div>
+</div>

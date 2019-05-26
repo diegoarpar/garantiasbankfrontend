@@ -24,16 +24,16 @@
             });
 
             $scope.showModal = false;
-                $scope.openModal = function (context) {
-                $scope.actualVariable=context.$modelValue;
-                    var modalInstance = $uibModal.open({
-                            templateUrl: 'assets/app/entities/garantias/regionales/view/crear-regional.html',
-                            controller: 'CrearRegionalController',
-                            scope: $scope,
-                            size: 'lg'
-                        }
-                    );
-                }
+            $scope.openModal = function (context) {
+            $scope.actualVariable=context.$modelValue;
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/regionales/view/crear-regional.html',
+                        controller: 'CrearRegionalController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
 
             $scope.openModalBodega = function (context) {
                 $scope.actualVariableb=context.$modelValue;
@@ -56,7 +56,7 @@
                 if($scope.actualVariable.nodes==undefined){
                                                     $scope.actualVariable.nodes=[];
                                                 }
-                var promise = GarantiasServices.showregional({nombreparametrica: $scope.actualVariable.nombreparametrica,key: $scope.actualVariable.key});
+                var promise = GarantiasServices.showregional([{nombreparametrica: $scope.actualVariable.nombreparametrica,key: $scope.actualVariable.key}]);
                 promise.$promise.then(function (data){
                     if(data.length>0){
                         if(data[0].nodes!=undefined){
@@ -80,7 +80,7 @@
                  if($scope.actualVariable.nodes==undefined){
                                                      $scope.actualVariable.nodes=[];
                                                  }
-                 var promise = GarantiasServices.showbodega({nombreparametrica: $scope.actualVariable.nombreparametrica,key: $scope.actualVariable.key});
+                 var promise = GarantiasServices.showbodega([{nombreparametrica: $scope.actualVariable.nombreparametrica,key: $scope.actualVariable.key}]);
                  promise.$promise.then(function (data){
                      if(data.length>0){
                          if(data[0].nodes!=undefined){

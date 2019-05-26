@@ -161,6 +161,12 @@ app.config(['$routeProvider', function ($routeProvider) {
                                                 }
 
             );
+            $routeProvider.when('/funcionario-prestamos-bodega', {
+                                                templateUrl: 'assets/app/entities/garantias/bodega/view/administrador-funcionario-prestamos-bodega.html',
+                                                controller: 'AdministrarPrestamosFuncionarioBodegaController'
+                                                }
+
+            );
         $routeProvider.otherwise({});
         //$routeProvider.otherwise({redirectTo: '/'});
     }

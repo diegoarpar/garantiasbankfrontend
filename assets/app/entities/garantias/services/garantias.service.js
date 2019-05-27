@@ -10,6 +10,7 @@
 
         function GarantiasServices($resource, ApiGarantias, $rootScope, $window, $scope) {
         var headers2= getGenericHeader($window);
+
         var url = ApiGarantias.url + 'insertGarantias';
             return $resource(url, {}, {
                 create: {
@@ -299,3 +300,55 @@
         }
 
     })();
+
+
+(function () {
+        'use strict';
+        angular.module("wpc")
+            .factory('PrestamosServices',PrestamosServices);
+
+            PrestamosServices.$inject=['UserLoginService','NumberService'];
+            function PrestamosServices(UserLoginService,NumberService){
+            var _prestamoPendiente=[];
+            var _numeroPrestamo;
+            NumberService.getNumber().$promise.then(function (data){
+                                    _numeroPrestamo= data[0].number;
+                                });
+                function getPrestamoPendiente(){
+
+                    return _prestamoPendiente;
+                }
+
+                function setPrestamoPendiente(data){
+                    _prestamoPendiente=data;
+                }
+                return {
+                    getPrestamoPendiente:getPrestamoPendiente,
+                    setPrestamoPendiente:setPrestamoPendiente
+                }
+            }
+
+    })();
+
+
+(function () {
+        'use strict';
+        angular.module("wpc")
+            .factory('UserLoginService',UserLoginService);
+        UserLoginService.$inject=[];
+        function UserLoginService(){
+            var _user;
+            function setUser(user){
+                _user=user;
+            }
+            function getUser(){
+                return _user;
+            }
+            return {
+                setUser:setUser,
+                getUser:getUser
+            }
+            }
+
+    })();
+

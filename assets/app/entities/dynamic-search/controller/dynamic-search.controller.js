@@ -7,10 +7,10 @@
             .controller('DynamicSearchController', DynamicSearchController);
 
         DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', '$uibModal', '$location',
-        'ShareService','$window','GarantiasServices'];
+        'ShareService','$window','GarantiasServices','PrestamosServices','NumberService','UserLoginService'];
 
         function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, $uibModal,
-         $location, ShareService,$window,GarantiasServices)
+         $location, ShareService,$window,GarantiasServices,PrestamosServices,NumberService,UserLoginService)
          {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
@@ -30,6 +30,18 @@
                 formatYear: 'yy',
                 startingDay: 1
             };
+
+            $scope.prestar=function(row){
+                var rta=NumberService.getNumber();
+                rta.$promise.then(function(data){
+                    console.log(data[0]);
+
+                });
+                var prestamo=PrestamosServices.getPrestamoPendiente();
+                console.log(prestamo)
+
+
+            }
             $scope.openModalFiltro = function () {
 
                 var modalInstance = $uibModal.open({

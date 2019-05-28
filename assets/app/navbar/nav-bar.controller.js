@@ -26,8 +26,8 @@
                         function (data){
                         if(data){
                             $scope.userLogIn=data[0];
-                            UserLoginService.setUser($scope.userLogIn);
                             ShareService.setUser($scope.userLogIn.user);
+                            UserLoginService.setUser($scope.userLogIn.user);
                             var promise=GarantiasServices.showMenu({user:$scope.userLogIn.user});
                                 promise.$promise.then(function(data){
                                         if(data)if(data.length>0)

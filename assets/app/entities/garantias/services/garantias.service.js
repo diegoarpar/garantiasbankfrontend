@@ -125,12 +125,26 @@
                       data: '@data'
                   },/*-----------PRESTAMOS---- */
                   showprestamo: {
-                      url:ApiGarantias.url+'bodega/prestamo/retrieve',
+                      url:ApiGarantias.url+'prestamo/retrieve',
                       headers: headers2,
                       method: 'POST',
                       params: {'@param': '@param'},
                       isArray: true
-                  },
+                  },createprestamo: {
+                     url:ApiGarantias.url+'prestamo',
+                     method: 'POST',
+                     headers: headers2,
+                     params: {'@param': '@param'},
+                     isArray: false,
+                     data: '@data'
+                 },removeprestamo: {
+                   url:ApiGarantias.url+'prestamo/remove',
+                   method: 'POST',
+                   headers: headers2,
+                   params: {'@param': '@param'},
+                   isArray: false,
+                   data: '@data'
+               },
                 /*-----------METADATA---- */
 
                 showMetadataPost: {
@@ -309,48 +323,50 @@
     })();
 
 
-(function () {
-        'use strict';
-        angular.module("wpc")
-            .factory('PrestamosServices',PrestamosServices);
 
-            PrestamosServices.$inject=['UserLoginService','NumberService'];
-            function PrestamosServices(UserLoginService,NumberService){
-            var _prestamoPendiente=[];
-            var _numeroPrestamo;
-                function getPrestamoPendiente(){
-
-                    return _prestamoPendiente;
-                }
-
-                function setPrestamoPendiente(data){
-                    _prestamoPendiente=data;
-                }
-                return {
-                    getPrestamoPendiente:getPrestamoPendiente,
-                    setPrestamoPendiente:setPrestamoPendiente
-                }
-            }
-
-    })();
 
 
 (function () {
         'use strict';
         angular.module("wpc")
             .factory('UserLoginService',UserLoginService);
-        UserLoginService.$inject=[];
-        function UserLoginService(){
-            var _user;
+        UserLoginService.$inject=['AuthenticationFactory','$window'];
+        function UserLoginService(AuthenticationFactory,$window){
+            var _user="";
+
+            if($window.localStorage.getItem('token')){
+               var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
+                logIn.$promise.then(
+                    function (data){
+                    if(!!data&&!!data[0]){
+                        setUser(_user);
+                    }
+                   }
+                );
+            }
+
             function setUser(user){
                 _user=user;
             }
             function getUser(){
+                if($window.localStorage.getItem('token')&&(_user==null||_user==undefined)){
+                   var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
+                    logIn.$promise.then(
+                        function (data){
+                        if(!!data&&!!data[0]){
+                            _user=data[0].user;
+
+                            return _user;
+                        }
+                       }
+                    );
+                }
+
                 return _user;
             }
             return {
-                setUser:setUser,
-                getUser:getUser
+                getUser:getUser,
+                setUser:setUser
             }
             }
 

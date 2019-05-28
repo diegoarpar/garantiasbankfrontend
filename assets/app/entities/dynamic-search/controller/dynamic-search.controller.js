@@ -7,10 +7,10 @@
             .controller('DynamicSearchController', DynamicSearchController);
 
         DynamicSearchController.$inject = ['AuthenticationFactory','$scope', 'DynamicSearch', '$uibModal', '$location',
-        'ShareService','$window','GarantiasServices','PrestamosServices','NumberService','UserLoginService'];
+        'ShareService','$window','GarantiasServices','NumberService','UserLoginService'];
 
         function DynamicSearchController(AuthenticationFactory,$scope, DynamicSearch, $uibModal,
-         $location, ShareService,$window,GarantiasServices,PrestamosServices,NumberService,UserLoginService)
+         $location, ShareService,$window,GarantiasServices,NumberService,UserLoginService)
          {
             inSession($scope,AuthenticationFactory,$window);
             $scope.data = {};
@@ -33,9 +33,33 @@
 
             $scope.prestar=function(row){
 
-                var prestamo=PrestamosServices.getPrestamoPendiente(row);
-                console.log(prestamo)
+                row.prestamo={estado:"PENDIENTE_CONFIRMAR"};
+                GarantiasServices.update([row])
+                var prestamoPendiente=GarantiasServices.showprestamo([{estado:"PENDIENTE_CONFIRMAR",usuario:UserLoginService.getUser()}]);
+                prestamoPendiente.$promise.then(function(data){
 
+
+                    $scope.prestamoP={};
+                    if(!!data&&data.length>0){
+                        $scope.prestamoP=data[0];
+                        $scope.prestamoP.entity.push(row);
+                    }else{
+
+                     $scope.prestamoP.usuario=UserLoginService.getUser();
+                     $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
+                     $scope.prestamoP.entity=[];
+                     $scope.prestamoP.entity.push(row);
+                    }
+
+                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",usuario:UserLoginService.getUser()}]);
+                    removePrestamo.$promise.then(function(data){
+                         $scope.prestamoP._id=null;
+                         GarantiasServices.createprestamo([$scope.prestamoP]);
+
+                    });
+
+                    }
+                );
 
             }
             $scope.openModalFiltro = function () {

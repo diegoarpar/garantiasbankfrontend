@@ -32,12 +32,8 @@
             };
 
             $scope.prestar=function(row){
-                var rta=NumberService.getNumber();
-                rta.$promise.then(function(data){
-                    console.log(data[0]);
 
-                });
-                var prestamo=PrestamosServices.getPrestamoPendiente();
+                var prestamo=PrestamosServices.getPrestamoPendiente(row);
                 console.log(prestamo)
 
 

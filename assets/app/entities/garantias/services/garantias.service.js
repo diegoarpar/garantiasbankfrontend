@@ -123,6 +123,13 @@
                       params: {'@param': '@param'},
                       isArray: true,
                       data: '@data'
+                  },/*-----------PRESTAMOS---- */
+                  showprestamo: {
+                      url:ApiGarantias.url+'bodega/prestamo/retrieve',
+                      headers: headers2,
+                      method: 'POST',
+                      params: {'@param': '@param'},
+                      isArray: true
                   },
                 /*-----------METADATA---- */
 
@@ -311,9 +318,6 @@
             function PrestamosServices(UserLoginService,NumberService){
             var _prestamoPendiente=[];
             var _numeroPrestamo;
-            NumberService.getNumber().$promise.then(function (data){
-                                    _numeroPrestamo= data[0].number;
-                                });
                 function getPrestamoPendiente(){
 
                     return _prestamoPendiente;

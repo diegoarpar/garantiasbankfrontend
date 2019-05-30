@@ -45,13 +45,14 @@
                         $scope.prestamoP.entity.push(row);
                     }else{
 
-                     $scope.prestamoP.usuario=UserLoginService.getUser();
+                     $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
+                     $scope.prestamoP.fechaPresta=new Date();//**@TODO actializar
                      $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
                      $scope.prestamoP.entity=[];
                      $scope.prestamoP.entity.push(row);
                     }
 
-                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",usuario:UserLoginService.getUser()}]);
+                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]);
                     removePrestamo.$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);

@@ -7,9 +7,9 @@
         angular.module("wpc")
             .controller('AdministrarPrestamosFuncionarioBodegaController', AdministrarPrestamosFuncionarioBodegaController);
 
-        AdministrarPrestamosFuncionarioBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','ShareService','UserLoginService'];
+        AdministrarPrestamosFuncionarioBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','ShareService','UserLoginService','NumberService'];
 
-        function AdministrarPrestamosFuncionarioBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService,UserLoginService) {
+        function AdministrarPrestamosFuncionarioBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService,UserLoginService,NumberService) {
             inSession($scope,AuthenticationFactory,$window,false);
 
 
@@ -36,6 +36,12 @@
 
         $scope.colapsoContenedorPrestado=true;
         $scope.cambiarColapsoContenedorPrestado=function(){
+
+            GarantiasServices.showprestamo([{"estado":"PENDIENTE_ENTREGA_BODEGA","usuario":UserLoginService.getUser()}]).$promise.then(function(data){
+
+                $scope.tableParamsPrestamoPendienteAprobacion = new NgTableParams({}, { dataset: data});
+                }
+            );
             $scope.colapsoContenedorPrestado=$scope.colapsoContenedorPrestado==true?false:true;
 
         }
@@ -45,6 +51,26 @@
         }
         $scope.getPrestamoSeleccionado=function(){
             return $scope.prestampSeleccionado;
+        }
+
+        $scope.aprobar=function(row){
+            $scope.prestamoP=row;
+            var number =NumberService.getNumber();
+                number.$promise.then(function(data){
+                    if(data&&data[0]){
+                        $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
+                        $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
+                        $scope.prestamoP.estado="PENDIENTE_ENTREGA_BODEGA";
+                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]);
+                        removePrestamo.$promise.then(function(data){
+                             $scope.prestamoP._id=null;
+                             GarantiasServices.createprestamo([$scope.prestamoP]);
+
+                        });
+                    }
+
+                });
+
         }
         $scope.detallePrestamoPendiente=function(row){
             $scope.setPrestamoSeleccionado(row);

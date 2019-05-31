@@ -19,7 +19,7 @@
         }
         $scope.colapsoContenedor=true;
         $scope.cambiarColapsoContenedor=function(){
-            GarantiasServices.showprestamo([{"estado":"PENDIENTE_CONFIRMAR","usuario":UserLoginService.getUser()}]).$promise.then(function(data){
+            GarantiasServices.showprestamo([{"estado":"PENDIENTE_CONFIRMAR","solicitudUsuario":UserLoginService.getUser()}]).$promise.then(function(data){
 
                 $scope.tableParamsPrestamoPendienteConfirmar = new NgTableParams({}, { dataset: data});
                 }
@@ -34,15 +34,27 @@
 
         }
 
-        $scope.colapsoContenedorPrestado=true;
-        $scope.cambiarColapsoContenedorPrestado=function(){
+        $scope.colapsoContenedorPendienteAprobacion=true;
+        $scope.cambiarColapsoContenedorPendienteAprobacion=function(){
 
-            GarantiasServices.showprestamo([{"estado":"PENDIENTE_ENTREGA_BODEGA","usuario":UserLoginService.getUser()}]).$promise.then(function(data){
+            GarantiasServices.showprestamo([{"estado":"PENDIENTE_CONFIRMACION_BODEGA",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
 
                 $scope.tableParamsPrestamoPendienteAprobacion = new NgTableParams({}, { dataset: data});
                 }
             );
-            $scope.colapsoContenedorPrestado=$scope.colapsoContenedorPrestado==true?false:true;
+            $scope.colapsoContenedorPendienteAprobacion=$scope.colapsoContenedorPendienteAprobacion==true?false:true;
+
+        }
+
+        $scope.colapsoContenedorPendienteRecoger=true;
+        $scope.cambiarColapsoContenedorPendienteRecoger=function(){
+
+            GarantiasServices.showprestamo([{"estado":"USUARIO_PUEDE_PASAR_BODEGA",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
+
+                $scope.tableParamsPrestamoPendienteRecoger = new NgTableParams({}, { dataset: data});
+                }
+            );
+            $scope.colapsoContenedorPendienteRecoger=$scope.colapsoContenedorPendienteRecoger==true?false:true;
 
         }
 
@@ -60,7 +72,7 @@
                     if(data&&data[0]){
                         $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
                         $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
-                        $scope.prestamoP.estado="PENDIENTE_ENTREGA_BODEGA";
+                        $scope.prestamoP.estado="PENDIENTE_CONFIRMACION_BODEGA";
                         var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]);
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;

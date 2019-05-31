@@ -7,9 +7,9 @@
         angular.module("wpc")
             .controller('AdministrarPrestamosBodegaController', AdministrarPrestamosBodegaController);
 
-        AdministrarPrestamosBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','ShareService'];
+        AdministrarPrestamosBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','ShareService','NumberService','UserLoginService'];
 
-        function AdministrarPrestamosBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService) {
+        function AdministrarPrestamosBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService,NumberService,UserLoginService) {
             inSession($scope,AuthenticationFactory,$window,false);
 
         $scope.menu_activo=true;
@@ -19,9 +19,70 @@
         }
         $scope.colapsoContenedor=true;
         $scope.cambiarColapsoContenedor=function(){
+
+            GarantiasServices.showprestamo([{"estado":"PENDIENTE_CONFIRMACION_BODEGA"}]).$promise.then(function(data){
+                $scope.tableParamsPrestamoPendienteConfirmar = new NgTableParams({}, { dataset: data});
+                }
+            );
             $scope.colapsoContenedor=$scope.colapsoContenedor==true?false:true;
 
         }
+
+        $scope.aprobar=function(row){
+            $scope.prestamoP=row;
+            var number =NumberService.getNumber();
+                number.$promise.then(function(data){
+                    if(data&&data[0]){
+                        $scope.prestamoP.usuarioBodegaAprueba=UserLoginService.getUser();
+                        $scope.prestamoP.usuarioBodegaApruebaFecha=data[0].number;
+                        $scope.prestamoP.estado="USUARIO_PUEDE_PASAR_BODEGA";
+                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMACION_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
+                        removePrestamo.$promise.then(function(data){
+                             $scope.prestamoP._id=null;
+                             GarantiasServices.createprestamo([$scope.prestamoP]);
+
+                        });
+                    }
+
+                });
+
+        }
+
+        $scope.rechazar=function(row){
+            $scope.prestamoP=row;
+            var number =NumberService.getNumber();
+                number.$promise.then(function(data){
+                    if(data&&data[0]){
+                        $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
+                        $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
+                        $scope.prestamoP.estado="RECHAZADO";
+                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMACION_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
+                        removePrestamo.$promise.then(function(data){
+                             $scope.prestamoP._id=null;
+                             GarantiasServices.createprestamo([$scope.prestamoP]);
+
+                        });
+                    }
+
+                });
+
+        }
+        $scope.setPrestamoSeleccionado=function(data){
+            $scope.prestampSeleccionado=data;
+        }
+        $scope.getPrestamoSeleccionado=function(){
+            return $scope.prestampSeleccionado;
+        }
+       $scope.detallePrestamoPendiente=function(row){
+                   $scope.setPrestamoSeleccionado(row);
+                   var modalInstance = $uibModal.open({
+                           templateUrl: 'assets/app/entities/garantias/bodega/view/detalle-prestamo.html',
+                           controller: 'DetallePrestamoBodegaController',
+                           scope: $scope,
+                           size: 'lg'
+                       }
+                   );
+               }
         $scope.colapsoContenido=true;
         $scope.cambiarColapsoContenido=function(){
             $scope.colapsoContenido=$scope.colapsoContenido==true?false:true;

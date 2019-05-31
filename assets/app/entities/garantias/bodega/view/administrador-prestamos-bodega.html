@@ -16,27 +16,18 @@
                 </div>
 
 
-                <table ng-table="tableParamsContainer" class="table" show-filter="true">
+                <table ng-table="tableParamsPrestamoPendienteConfirmar" class="table" show-filter="true">
                     <tr ng-repeat="b in $data">
-                        <td title="'Regional'" filter="{ 'key.key': 'text'}" sortable="'key.key'">
-                            {{b.key.key}}</td>
-                        <td title="'Bodega'" filter="{ 'storage.key': 'text'}" sortable="'storage.key'">
-                            {{b.storage.key}}</td>
+                        <td title="'Estado'" filter="{ 'estado': 'text'}" sortable="'estado'">
+                            {{b.estado}}</td>
+                        <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
+                            {{b.solicitudUsuario}}</td>
+                        <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
+                            {{b.numero}}</td>
 
-                        <td title="'Nombre'" filter="{ name: 'text'}" sortable="'name'">
-                            {{b.name}}</td>
-
-                        <td title="'Codigo'" filter="{ code: 'text'}" sortable="'code'">
-                            {{b.code}}</td>
-
-                        <td title="'Descripción'" filter="{ description: 'text'}" sortable="'description'">
-                            {{b.description}}</td>
-                        <td title="'Dimensión'" filter="{ dimension: 'text'}" sortable="'dimension'">
-                            {{b.dimension}}</td>
                         <td title="'Opciones'" >
-                            <button class="btn btn-success" ng-click="aprobar(this)"> Aprobar</button>
-                            <button class="btn btn-success" ng-click="rechazar(this)"> Rechazar</button>
-                            <button type="submit" ng-click="openModal(row)">Ver Detalle </button>
+                            <button class="btn btn-success" ng-click="aprobar(b)"> Confirmar</button>
+                            <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
                         </td>
                     </tr>
                 </table>

@@ -57,6 +57,28 @@
             $scope.colapsoContenedorPendienteRecoger=$scope.colapsoContenedorPendienteRecoger==true?false:true;
 
         }
+        $scope.colapsoContenedorPendienteDevolver=true;
+        $scope.cambiarColapsoContenedorPendienteDevolver=function(){
+
+            GarantiasServices.showprestamo([{"estado":"PRESTADO",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
+
+                $scope.tableParamsPrestamoPendienteDevolver = new NgTableParams({}, { dataset: data});
+                }
+            );
+            $scope.colapsoContenedorPendienteDevolver=$scope.colapsoContenedorPendienteDevolver==true?false:true;
+
+        }
+        $scope.colapsoContenedorHistorico=true;
+        $scope.cambiarColapsoContenedorHistorico=function(){
+
+            GarantiasServices.showprestamo([{solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
+
+                $scope.tableParamsPrestamoHistorico = new NgTableParams({}, { dataset: data});
+                }
+            );
+            $scope.colapsoContenedorHistorico=$scope.colapsoContenedorHistorico==true?false:true;
+
+        }
 
         $scope.setPrestamoSeleccionado=function(data){
             $scope.prestampSeleccionado=data;

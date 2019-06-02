@@ -18,7 +18,7 @@
             $scope.seccionBodegaRegional=true;
             $scope.validarSeleccion=function(data){
                 $scope.seccionBodegaRegional=true;
-                if($scope.campo.nombreparametricas.name=="bodega1"){
+                if($scope.campo.nombreparametricas.name=="bodegaContenedor"||$scope.campo.nombreparametricas.name=="bodegaUbicacion"){
                     $scope.seccionBodegaRegional=false;
                 }
 
@@ -39,16 +39,13 @@
                                     ,{name:"serie",value:"Serie"}
                                     ,{name:"subserie",value:"Subserie"}
                                     ,{name:"tipodocumento",value:"Tipo de Documento"}
-                                    ,{name:"bodega1",value:"Datos de Bodega"}
+                                    ,{name:"bodegaContenedor",value:"Datos de Bodega-Contenedor"}
+                                    ,{name:"bodegaUbicacion",value:"Datos de Bodega-Ubicación"}
                                     ];
             $scope.ok = function () {
-                 $scope.parametricst=[];
                 $scope.campo.nombreparametrica=$scope.campo.nombreparametricas.name;
                 $scope.campo.nombreparametricas=null;
-
-                $scope.parametricst.push($scope.campo);
-
-                var rta = GarantiasServices.createParametric($scope.parametricst);
+                var rta = GarantiasServices.createParametric([$scope.campo]);
                 rta.$promise.then(function(data){
                     $scope.recargarCamposParametricosPrincipal();
                 }

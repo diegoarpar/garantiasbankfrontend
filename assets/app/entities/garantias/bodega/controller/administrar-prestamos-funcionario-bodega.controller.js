@@ -89,21 +89,38 @@
 
         $scope.aprobar=function(row){
             $scope.prestamoP=row;
-            var number =NumberService.getNumber();
-                number.$promise.then(function(data){
-                    if(data&&data[0]){
-                        $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
-                        $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
-                        $scope.prestamoP.estado="PENDIENTE_CONFIRMACION_BODEGA";
-                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser(),numero:$scope.prestamoP.numero}]);
-                        removePrestamo.$promise.then(function(data){
-                             $scope.prestamoP._id=null;
-                             GarantiasServices.createprestamo([$scope.prestamoP]);
+            NumberService.getNumber().$promise.then(function(data){
+                if(data&&data[0]){
+                    $scope.prestamoP.aprobadorSolicitanteUsuario=UserLoginService.getUser();
+                    $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
+                    $scope.prestamoP.estado="PENDIENTE_CONFIRMACION_BODEGA";
+                    GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"PENDIENTE_CONFIRMAR"}},{solicitudUsuario:{$eq:UserLoginService.getUser()}},{numero:{$eq:$scope.prestamoP.numero}}]}]).$promise.then(function(data){
+                         $scope.prestamoP._id=null;
+                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                    });
+                }
 
-                        });
-                    }
+            });
 
-                });
+        }
+
+        $scope.cancelar=function(row){
+            $scope.prestamoP=row;
+            for(var i=0;i<$scope.prestamoP.entity.length;i++){
+                $scope.prestamoP.entity[i].prestamo=null;
+            }
+            NumberService.getNumber().$promise.then(function(data){
+                if(data&&data[0]){
+                    $scope.prestamoP.rechazoSolicitanteUsuario=UserLoginService.getUser();
+                    $scope.prestamoP.rechazoSolicitanteFecha=data[0].number;
+                    $scope.prestamoP.estado="CANCELADO_POR_USUARIO";
+                    GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"PENDIENTE_CONFIRMAR"}},{solicitudUsuario:{$eq:UserLoginService.getUser()}},{numero:{$eq:$scope.prestamoP.numero}}]}]).$promise.then(function(data){
+                         $scope.prestamoP._id=null;
+                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                         GarantiasServices.update($scope.prestamoP.entity);
+                    });
+                }
+            });
 
         }
         $scope.detallePrestamoPendiente=function(row){

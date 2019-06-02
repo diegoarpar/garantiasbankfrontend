@@ -30,14 +30,14 @@
             $scope.remove = function (idx) {
                 $scope.parametricst = [];
                 $scope.parametricst.push($scope.parametrics[idx]);
-                var rta = GarantiasServices.removeParametric({
+                var rta = GarantiasServices.removeParametricPost([{
                             nombreparametrica: $scope.parametrics[idx].nombreparametrica,
                             key: $scope.parametrics[idx].key
-                        });
+                        }]);
                         rta.$promise.then(function (data){
                             var rta2 = GarantiasServices.showParametric();
                                 rta2.$promise.then(function (data){
-                                     $scope.parametrics = data;
+                                     $scope.tableParamsContainer = new NgTableParams({}, { dataset: data});
                                 });
                         });
 

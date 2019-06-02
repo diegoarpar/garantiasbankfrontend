@@ -57,7 +57,7 @@
                         $scope.prestamoP.usuarioBodegaAprueba=UserLoginService.getUser();
                         $scope.prestamoP.usuarioBodegaApruebaFecha=data[0].number;
                         $scope.prestamoP.estado="USUARIO_PUEDE_PASAR_BODEGA";
-                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMACION_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario, numero:$scope.prestamoP.numero}]);
+                        var removePrestamo=GarantiasServices.removeprestamo([{$and:[{estado:"PENDIENTE_CONFIRMACION_BODEGA"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario},{numero:$scope.prestamoP.numero}]}]);
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
@@ -76,7 +76,7 @@
                     $scope.prestamoP.usuarioBodegaEntrega=UserLoginService.getUser();
                     $scope.prestamoP.usuarioBodegaEntregaFecha=data[0].number;
                     $scope.prestamoP.estado="PRESTADO";
-                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"USUARIO_PUEDE_PASAR_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario, numero:$scope.prestamoP.numero}]);
+                    var removePrestamo=GarantiasServices.removeprestamo([{$and:[{estado:"USUARIO_PUEDE_PASAR_BODEGA"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario},{numero:$scope.prestamoP.numero}]}]);
                     removePrestamo.$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
@@ -99,7 +99,7 @@
                     $scope.prestamoP.usuarioBodegaRecibe=UserLoginService.getUser();
                     $scope.prestamoP.usuarioBodegaRecibe=data[0].number;
                     $scope.prestamoP.estado="RECIBIDO";
-                    GarantiasServices.removeprestamo([{estado:"PRESTADO",solicitudUsuario:$scope.prestamoP.solicitudUsuario, numero:$scope.prestamoP.numero}]).$promise.then(function(data){
+                    GarantiasServices.removeprestamo([{$and:[{estado:"PRESTADO"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario}, {numero:$scope.prestamoP.numero}]}]).$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
                          GarantiasServices.update($scope.prestamoP.entity);
@@ -121,7 +121,7 @@
                         $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
                         $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
                         $scope.prestamoP.estado="RECHAZADO";
-                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMACION_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario, numero:$scope.prestamoP.numero}]);
+                        var removePrestamo=GarantiasServices.removeprestamo([{$and:[{estado:"PENDIENTE_CONFIRMACION_BODEGA"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario}, {numero:$scope.prestamoP.numero}]}]);
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);

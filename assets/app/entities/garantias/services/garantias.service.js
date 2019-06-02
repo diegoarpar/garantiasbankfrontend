@@ -137,6 +137,13 @@
                      params: {'@param': '@param'},
                      isArray: false,
                      data: '@data'
+                 },updatePrestamo: {
+                    url:ApiGarantias.url+'prestamo/updatePrestamo',
+                    method: 'POST',
+                    headers: headers2,
+                    params: {'@param': '@param'},
+                    isArray: false,
+                    data: '@data'
                  },removeprestamo: {
                    url:ApiGarantias.url+'prestamo/remove',
                    method: 'POST',
@@ -265,13 +272,13 @@
                     params: {'@param': '@param'},
                     isArray: false,
                     data: '@data'
-                },removeParametric: {
-                     url:getUrlServices(ApiGarantias,'parametric')+"/delete",
-                     params: {id: '@id'},
-                     method: 'DELETE',
-                     isArray: false,
-                     headers: headers2
-                 },
+                },removeParametricPost: {
+                   url:getUrlServices(ApiGarantias,'parametric')+"/eliminarpost",
+                   data: '@data',
+                   method: 'POST',
+                   isArray: false,
+                   headers: headers2
+               },
                 update: {
                     headers: headers2,
                     method: 'PUT',

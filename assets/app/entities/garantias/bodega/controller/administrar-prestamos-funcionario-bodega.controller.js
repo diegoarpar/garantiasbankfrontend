@@ -95,7 +95,7 @@
                         $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
                         $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
                         $scope.prestamoP.estado="PENDIENTE_CONFIRMACION_BODEGA";
-                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]);
+                        var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser(),numero:$scope.prestamoP.numero}]);
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);

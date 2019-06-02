@@ -21,7 +21,7 @@
 
                 <label  class="col-sm-2">Número:</label>
                 <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="prestampSeleccionado.numbero" />
+                    <input disabled="true" class="form-control" ng-model="prestampSeleccionado.numero" />
                 </div>
 
             </div>
@@ -41,7 +41,7 @@
             <tr ng-repeat="row in prestamoSeleccionado.entity" >
                 <td>
                     <button type="submit" ng-click="openModalFunctionary(row)">Ver Detalle</button>
-                    <button type="submit"  ng-click="desasociar(row,$index)">Desasociar</button>
+                    <button ng-if="prestampSeleccionado.estado=='PENDIENTE_CONFIRMAR'" type="submit"  ng-click="desasociar(row,$index)">Desasociar</button>
                 </td>
                 <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>
             </tr>

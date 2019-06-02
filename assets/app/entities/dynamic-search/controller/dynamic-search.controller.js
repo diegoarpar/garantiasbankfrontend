@@ -32,36 +32,33 @@
             };
 
             $scope.prestar=function(row){
+                $scope.row=row;
+                NumberService.getNumber().$promise.then(function(dataN){
+                    if(!!dataN&&!!dataN[0]){
+                        $scope.row.prestamo={estado:"PENDIENTE_CONFIRMAR",numero:dataN[0].number};
+                        GarantiasServices.update([$scope.row]);
+                        GarantiasServices.showprestamo([{estado:"PENDIENTE_CONFIRMAR",usuario:UserLoginService.getUser()}]).$promise.then(function(data){
+                            $scope.prestamoP={};
+                            if(!!data&&data.length>0){
+                                $scope.prestamoP=data[0];
+                                $scope.prestamoP.entity.push(row);
+                            }else{
+                                 $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
+                                 $scope.prestamoP.fechaPresta=new Date();//**@TODO actializar
+                                 $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
+                                 $scope.prestamoP.numero= $scope.row.prestamo.numero;
+                                 $scope.prestamoP.entity=[];
+                                 $scope.prestamoP.entity.push(row);
+                            }
 
-                row.prestamo={estado:"PENDIENTE_CONFIRMAR"};
-                GarantiasServices.update([row])
-                var prestamoPendiente=GarantiasServices.showprestamo([{estado:"PENDIENTE_CONFIRMAR",usuario:UserLoginService.getUser()}]);
-                prestamoPendiente.$promise.then(function(data){
+                            GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
+                                 $scope.prestamoP._id=null;
+                                 GarantiasServices.createprestamo([$scope.prestamoP]);
 
+                                });
 
-                    $scope.prestamoP={};
-                    if(!!data&&data.length>0){
-                        $scope.prestamoP=data[0];
-                        $scope.prestamoP.entity.push(row);
-                    }else{
-
-                     $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
-                     $scope.prestamoP.fechaPresta=new Date();//**@TODO actializar
-                     $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
-                     $scope.prestamoP.entity=[];
-                     $scope.prestamoP.entity.push(row);
-                    }
-
-                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]);
-                    removePrestamo.$promise.then(function(data){
-                         $scope.prestamoP._id=null;
-                         GarantiasServices.createprestamo([$scope.prestamoP]);
-
-                    });
-
-                    }
-                );
-
+                            });
+                }});
             }
             $scope.openModalFiltro = function () {
 

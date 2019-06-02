@@ -26,7 +26,8 @@
                             {{b.numero}}</td>
 
                         <td title="'Opciones'" >
-                            <button class="btn btn-success" ng-click="aprobar(b)"> Confirmar</button>
+                            <button ng-if="b.estado=='PENDIENTE_CONFIRMACION_BODEGA'" class="btn btn-success" ng-click="aprobar(b)"> Confirmar</button>
+                            <button ng-if="b.estado=='PENDIENTE_CONFIRMACION_BODEGA'" class="btn btn-success" ng-click="rechazar(b)"> Rechazar</button>
                             <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
                         </td>
                     </tr>

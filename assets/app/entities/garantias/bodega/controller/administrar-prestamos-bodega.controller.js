@@ -76,7 +76,7 @@
                     $scope.prestamoP.usuarioBodegaEntrega=UserLoginService.getUser();
                     $scope.prestamoP.usuarioBodegaEntregaFecha=data[0].number;
                     $scope.prestamoP.estado="PRESTADO";
-                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"USUARIO_PUEDE_PASAR_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario, numero:$scope.prestamoP.numero]);
+                    var removePrestamo=GarantiasServices.removeprestamo([{estado:"USUARIO_PUEDE_PASAR_BODEGA",solicitudUsuario:$scope.prestamoP.solicitudUsuario, numero:$scope.prestamoP.numero}]);
                     removePrestamo.$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
@@ -112,7 +112,9 @@
 
         $scope.rechazar=function(row){
             $scope.prestamoP=row;
-
+            for(var i=0;i<$scope.prestamoP.entity.length;i++){
+                $scope.prestamoP.entity[i].prestamo=null;
+            }
             var number =NumberService.getNumber();
                 number.$promise.then(function(data){
                     if(data&&data[0]){
@@ -123,7 +125,7 @@
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
-
+                             GarantiasServices.update($scope.prestamoP.entity);
                         });
                     }
 

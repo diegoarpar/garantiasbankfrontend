@@ -265,7 +265,13 @@
                     headers: headers2,
                     method: 'GET',
                     isArray: true
-                },createParametric: {
+                },showParametricpost: {
+                      url:getUrlServices(ApiGarantias,'parametric')+"/retrievepost",
+                      headers: headers2,
+                      method: 'POST',
+                      data:'@data',
+                      isArray: true
+                  },createParametric: {
                     url:getUrlServices(ApiGarantias,'parametric'),
                     method: 'POST',
                     headers: headers2,

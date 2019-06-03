@@ -12,29 +12,31 @@
         function ModificarContenedorBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,$uibModalInstance) {
             inSession($scope,AuthenticationFactory,$window,false);
 
-
-
-
             $scope.container=$scope.getData2();
-            $scope.key=$scope.container.key.key;
-            $scope.storage=$scope.container.storage.key;
-            $scope.code=$scope.container.code;
-            $scope.name=$scope.container.name;
-            $scope.description=$scope.container.description;
-            $scope.dimension=$scope.container.dimension;
-            $scope.rta = GarantiasServices.retrivebodegacontainerubication([{"container.code":$scope.code,"container.storage.key":$scope.storage,"container.key.key":$scope.key}]);
-            $scope.rta.$promise.then(function(data){
+            $scope.containerCopia=JSON.parse(JSON.stringify($scope.container));
+            $scope.containerCopia._id=null;
+            $scope.containerCopia.key=null;
+            $scope.containerCopia.storage=null;
+            GarantiasServices.retrivebodegacontainerubication([{"container":$scope.container}]).$promise.then(function(data){
                 $scope.tableParamsContenedor = new NgTableParams({}, { dataset: data});
             });
 
+            $scope.metadataContenedoresDetalle=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.container.key.key,"add2.key":$scope.container.storage.key}]).$promise.then(function(data){
+                $scope.metadataContenedoresDetalle=data;
 
+            });
+
+            $scope.metadataUbicaciones=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.container.key.key,"add2.key":$scope.container.storage.key}]).$promise.then(function(data){
+                $scope.metadataUbicaciones=data;
+
+            });
             $scope.ok=function(){
                 var ubication=$scope.tableParamsContenedor.data;
-
                 for(var i=0;!!ubication&&i<ubication.length;i++){
                     ubication[i].container=$scope.container;
                 }
-
                 GarantiasServices.createbodegacontainerubication(ubication);
 
             }
@@ -44,8 +46,8 @@
 
           $scope.addUbicacion=function(){
             var ubication=!!$scope.tableParamsContenedor&&!!$scope.tableParamsContenedor.data?$scope.tableParamsContenedor.data:[];
-
-            ubication.push({code:"",name:""});
+            if(ubication==null)ubication=[];
+            ubication.push({});
             $scope.tableParamsContenedor = new NgTableParams({}, { dataset: ubication});
 
           }

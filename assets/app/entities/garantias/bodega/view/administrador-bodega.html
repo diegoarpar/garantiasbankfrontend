@@ -19,22 +19,22 @@
 
         </div>
             <table ng-table="tableParams" class="table" show-filter="true">
+                <thead>
+                <tr>
+                    <th> Regional</th>
+                    <th> Bodega</th>
+                    <th ng-repeat="f in metadataContenedores" >{{ f.value}}
+                    </th>
+                    <th> Opciones</th>
+                </tr>
+                </thead>
                 <tr ng-repeat="b in $data">
                     <td title="'Regional'" filter="{ 'key.key': 'text'}" sortable="'key.key'">
                         {{b.key.key}}</td>
                     <td title="'Bodega'" filter="{ 'storage.key': 'text'}" sortable="'storage.key'">
                         {{b.storage.key}}</td>
-
-                    <td title="'Nombre'" filter="{ name: 'text'}" sortable="'name'">
-                        {{b.name}}</td>
-
-                    <td title="'Codigo'" filter="{ code: 'text'}" sortable="'code'">
-                        {{b.code}}</td>
-
-                    <td title="'Descripción'" filter="{ description: 'text'}" sortable="'description'">
-                        {{b.description}}</td>
-                    <td title="'Dimensión'" filter="{ dimension: 'text'}" sortable="'dimension'">
-                        {{b.dimension}}</td>
+                    <td ng-repeat="f in metadataContenedores" filter="{ 'f.key': 'text'}">
+                        {{b[f.key]}}</td>
                     <td title="'Opciones'" >
                         <button class="btn btn-success" ng-click="openModalModificarContenedor(this)"> Modificar</button>
                     </td>

@@ -13,36 +13,35 @@
             inSession($scope,AuthenticationFactory,$window,false);
             $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
             $scope.cargarBodegas=function(fondo){
-                $scope.bodegasrta=GarantiasServices.showbodega([{nombreparametrica: $scope.fondoSeleccionado.nombreparametrica,key: $scope.fondoSeleccionado.key}]);
-                $scope.bodegasrta.$promise.then(function (data){
-                        $scope.bodegas=[];
-                        for (var i=0;!!data&&i< data.length;i++)
-                            for (var j=0;!!data[i]&&!!data[i].nodes&&j< data[i].nodes.length;i++)
-                                $scope.bodegas.push(data[i].nodes[j]);
-                    }
-                );
+                GarantiasServices.showbodega([{nombreparametrica: $scope.fondoSeleccionado.nombreparametrica,key: $scope.fondoSeleccionado.key}]).$promise.then(function (data){
+                    $scope.bodegas=[];
+                    for (var i=0;!!data&&i< data.length;i++)
+                        for (var j=0;!!data[i]&&!!data[i].nodes&&j< data[i].nodes.length;i++)
+                            $scope.bodegas.push(data[i].nodes[j]);
+                });
 
             }
 
-            $scope.ok=function(){
-                var container={};
-                container.key=$scope.fondoSeleccionado;
-                container.storage=$scope.bodegaSeleccionada;
-                container.code=$scope.codigo;
-                container.name=$scope.nombre;
-                container.description=$scope.descripcion;
-                container.dimension=$scope.dimension;
-                $scope.rta =GarantiasServices.createbodegacontainer([container]);
-                $scope.rta.$promise.then(function(data){
-                    $scope.rta2 =GarantiasServices.retrivebodegacontainer([{code:$scope.codigo,name:$scope.nombre,"key.key":$scope.fondoSeleccionado.key,"storage.key":$scope.bodegaSeleccionada.key}]);
-                    $scope.rta2.$promise.then(function (data2){
+            $scope.metadataContenedores=[];
+            $scope.cargarMetadatosBodega=function(fondo){
+                $scope.metadataContenedores=[];
+                GarantiasServices.showParametricpost([{"add1.key":$scope.fondoSeleccionado.key,"add2.key":$scope.bodegaSeleccionada.key}]).$promise.then(function(data){
+                    $scope.metadataContenedores=data;
 
+                });
+
+            }
+            $scope.container={};
+            $scope.ok=function(){
+                $scope.containerCopia=JSON.parse(JSON.stringify($scope.container));
+                $scope.container.key=$scope.fondoSeleccionado;
+                $scope.container.storage=$scope.bodegaSeleccionada;
+                GarantiasServices.createbodegacontainer([$scope.container]).$promise.then(function(data){
+                    GarantiasServices.retrivebodegacontainer([$scope.containerCopia]).$promise.then(function (data2){
                        $scope.generateTable();
                        $scope.setData2(data2);
-
                        $uibModalInstance.dismiss($scope);
                        $scope.openModalModificarContenedor($scope);
-
                     });
 
                 });

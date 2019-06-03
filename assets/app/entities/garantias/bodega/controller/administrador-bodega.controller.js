@@ -12,6 +12,14 @@
         function AdministradorBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal) {
             inSession($scope,AuthenticationFactory,$window,false);
             $scope.menu_activo=true;
+
+            $scope.metadata={};
+
+            $scope.metadataContenedores=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor"}]).$promise.then(function(data){
+                $scope.metadataContenedores=data;
+
+            });
             $scope.change_manu_activo=function(){
                 $scope.menu_activo=$scope.menu_activo==true?false:true;
 

@@ -6,35 +6,31 @@
     <div class="modal-body">
         <div class="form-horizontal">
             <div class="form-group">
-                <label  class="col-sm-2">Empresa:</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6" >
+                <label  >Empresa:</label>
+                <div>
                     <select class="form-control" ng-model="fondoSeleccionado" ng-change="cargarBodegas(f)" ng-options="f as f.value for f in fondos">
                     </select>
                 </div>
+                </div>
 
-
-                <label class="col-sm-2">Bodega:</label>
-                <div class="col-sm-4">
-                    <select class="form-control" ng-model="bodegaSeleccionada"  ng-options="b as b.key for b in bodegas">
+                <div class="col-sm-6" >
+                <label >Bodega:</label>
+                <div >
+                    <select class="form-control" ng-model="bodegaSeleccionada" ng-change="cargarMetadatosBodega(b)" ng-options="b as b.key for b in bodegas">
                     </select>
                 </div>
+                </div>
 
-                <label  class="col-sm-2">Código:</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="codigo" />
+                <div ng-repeat ="f in metadataContenedores"  class="col-sm-6"  >
+
+                        <label  >{{f.value}}</label>
+                        <div  >
+                            <input class="form-control" ng-model="container[f.key]" />
+                        </div>
+
                 </div>
-                <label  class="col-sm-2">Nombre:</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="nombre"/>
-                </div>
-                <label  class="col-sm-2">Descripción:</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="descripcion"/>
-                </div>
-                <label  class="col-sm-2">Dimensión:</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="dimension" />
-                </div>
+
             </div>
         </div>
 

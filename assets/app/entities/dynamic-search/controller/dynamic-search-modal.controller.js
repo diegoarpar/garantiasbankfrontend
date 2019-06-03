@@ -6,9 +6,9 @@
         angular.module("wpc")
             .controller('DynamicSearchModalController', DynamicSearchModalController);
 
-        DynamicSearchModalController.$inject = ['AuthenticationFactory','ApiFiles','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController','$http','$uibModal'];
+        DynamicSearchModalController.$inject = ['AuthenticationFactory','ApiFiles','$scope', 'ShareService', 'UploadFilesService', 'Upload', '$timeout', 'ApiGarantias', 'ShowFiles', '$sce','$window','CMSController','$http','$uibModal','GarantiasServices'];
 
-        function DynamicSearchModalController(AuthenticationFactory,ApiFiles,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController,$http,$uibModal) {
+        function DynamicSearchModalController(AuthenticationFactory,ApiFiles,$scope, ShareService, UploadFilesService, Upload, $timeout, ApiGarantias, ShowFiles, $sce,$window,CMSController,$http,$uibModal,GarantiasServices) {
 
             inSession($scope,AuthenticationFactory,$window);
             $scope.entity = ShareService.get();
@@ -19,6 +19,12 @@
             $scope.log = [];
             $scope.retrieve = retrieve;
 
+
+             $scope.metadataUbicacion=[];
+             if($scope.entity.ubicacionbodega!=null)
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.entity.ubicacionbodega.container.key.key,"add2.key":$scope.entity.ubicacionbodega.container.storage.key}]).$promise.then(function(data){
+                $scope.metadataUbicacion=data;
+            });
             $scope.rowDetailShow=function(rowSelected){
                  var row={};
                 row["key"]=rowSelected;

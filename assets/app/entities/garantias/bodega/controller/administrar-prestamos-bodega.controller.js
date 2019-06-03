@@ -271,7 +271,7 @@
 
                   ShareService.set(entity);
                   var modalInstance = $uibModal.open({
-                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal-functionary.html',
+                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search.html',
                           controller: 'DynamicSearchModalController',
                           scope: $scope,
                           size: 'lg'

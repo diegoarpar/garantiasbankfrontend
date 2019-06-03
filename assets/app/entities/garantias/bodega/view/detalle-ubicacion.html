@@ -6,46 +6,47 @@
     <div class="modal-body">
         <div class="form-horizontal">
             <div class="form-group">
-                <label  class="col-sm-2">Empresa:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="key" />
+                <div class="col-sm-6" >
+                    <label  >Empresa:</label>
+                    <div >
+                        <input disabled="true" class="form-control" ng-model="ubication.container.key.key" />
+
+                    </div>
+                </div>
+
+                <div class="col-sm-6" >
+                    <label>Bodega:</label>
+                    <div >
+                        <input disabled="true" class="form-control" ng-model="ubication.container.storage.key" />
+
+                    </div>
+                </div>
+
+                <div ng-repeat ="f in metadataContenedores"  class="col-sm-6"  >
+
+                    <label  >{{f.value}}</label>
+                    <div  >
+                        <input disabled="true" class="form-control" ng-model="ubication.container[f.key]" />
+                    </div>
 
                 </div>
 
+            </div>
+        </div>
+        <h3>Datos Ubicación</h3>
+        <div class="form-horizontal">
+            <div class="form-group">
 
-                <label class="col-sm-2">Bodega:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="storage" />
+                <div ng-repeat ="f in metadataUbicacion"  class="col-sm-6"  >
 
-                </div>
+                    <label  >{{f.value}}</label>
+                    <div  >
+                        <input disabled="true" class="form-control" ng-model="ubication[f.key]" />
+                    </div>
 
-                <label  class="col-sm-2">Código:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="code" />
-                </div>
-                <label  class="col-sm-2">Nombre:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="name"/>
-                </div>
-                <label  class="col-sm-2">Descripción:</label>
-                <div class="col-sm-4">
-                    <input disabled="true"  class="form-control" ng-model="description"/>
-                </div>
-                <label  class="col-sm-2">Dimensión:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="dimension" />
-                </div>
-                <label  class="col-sm-2">Nombre Contenedor:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="ubication.name" />
-                </div>
-                <label  class="col-sm-2">Código del contenedor:</label>
-                <div class="col-sm-4">
-                    <input disabled="true" class="form-control" ng-model="ubication.code" />
                 </div>
             </div>
         </div>
-
 
 
         <button type="button" class="btn btn-info marginated ng-binding ng-scope"
@@ -67,7 +68,7 @@
             <tr ng-repeat="row in $data" >
                 <td>
                     <button type="submit" ng-click="openModal(row)">Ver Detalle </button>
-                    <button type="submit" ng-click="desasociar2(row,this)" ng-if="!!row.ubicacionbodega">Desasociar de {{row.ubicacionbodega.name}} </button>
+                    <button type="submit" ng-click="desasociar2(row,this)" ng-if="!!row.ubicacionbodega">Desasociar  </button>
 
                 </td>
                 <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>

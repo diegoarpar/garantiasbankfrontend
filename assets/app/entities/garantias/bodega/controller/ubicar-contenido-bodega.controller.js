@@ -27,7 +27,25 @@
             $scope.colapsoContenido=$scope.colapsoContenido==true?false:true;
 
         }
+        $scope.metadataContenedores=[];
+        $scope.metadataContenedoresAll=[];
+        GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor"}]).$promise.then(function(data){
+            $scope.metadataContenedoresAll=data;
+        });
 
+        $scope.metadataUbicacionAll=[];
+        GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion"}]).$promise.then(function(data){
+            $scope.metadataUbicacionAll=data;
+        });
+
+        $scope.cargarMetadatosBodega=function(fondo){
+            $scope.metadataContenedores=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.fondoSeleccionado.key,"add2.key":$scope.bodegaSeleccionada.key}]).$promise.then(function(data){
+                $scope.metadataContenedores=data;
+
+            });
+
+        }
         $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
         $scope.cargarBodegas=function(fondo){
             $scope.bodegasrta=GarantiasServices.showbodega([{nombreparametrica: $scope.fondoSeleccionado.nombreparametrica,key: $scope.fondoSeleccionado.key}]);
@@ -41,8 +59,8 @@
 
         }
 
-        $scope.mostrarUbicaciones= function(_this){
-            $scope.rta = GarantiasServices.retrivebodegacontainerubication([{"container.code":_this.b.code,"container.storage":_this.b.storage,"container.key":_this.b.key}]);
+        $scope.mostrarUbicaciones= function(row){
+            $scope.rta = GarantiasServices.retrivebodegacontainerubication([{"container":row}]);
             $scope.rta.$promise.then(function(data){
                 $scope.tableParamsUbication = new NgTableParams({}, { dataset: data});
             });
@@ -53,30 +71,28 @@
         $scope.setData2=function(data){
             $scope.data2=data;
         }
-        $scope.mostrarDocumentosAsociados=function(contenedorSeleccionado){
-            $scope.setData2=contenedorSeleccionado;
-            var modalInstance = $uibModal.open({
-                    templateUrl: 'assets/app/entities/garantias/bodega/view/documentos-contenedor.html',
-                    controller: 'DocumentosContenedorBodegaController',
-                    scope: $scope,
-                    size: 'lg'
-                }
-            );
-        }
 
-        $scope.userParaAsociar=function(_this){
-             $scope.contenedorSeleccionado=_this.ubicaciones;
-
+        $scope.asociarADescripcion="";
+        $scope.userParaAsociar=function(row){
+             $scope.contenedorSeleccionado=row;
+              $scope.asociarADescripcion="";
+              for(var i=0;i<$scope.metadataContenedoresAll.length;i++){
+                    $scope.asociarADescripcion+=$scope.metadataContenedoresAll[i].value+":";
+                    $scope.asociarADescripcion+=row[$scope.metadataContenedoresAll[i].key];
+                    break;
+              }
         }
+        $scope.busqueda={};
         $scope.ok=function(){
+            $scope.busquedar= {"key.key":!!$scope.fondoSeleccionado?$scope.fondoSeleccionado.key:{$regex:"^.*", $options: "i"}
+            ,"storage.key":!!$scope.bodegaSeleccionada?$scope.bodegaSeleccionada.key:{$regex:"^.*", $options: "i"}};
+            for(var i=0;i<$scope.metadataContenedores.length;i++){
 
+                $scope.busquedar[$scope.metadataContenedores[i].key]=!!$scope.busqueda[$scope.metadataContenedores[i].key]?{$regex:"^"+$scope.busqueda[$scope.metadataContenedores[i].key]+".*", $options: "i"}:{$regex:"^.*", $options: "i"}
+            }
             $scope.rta = GarantiasServices.retrivebodegacontainer([
-                                            {"key.key":!!$scope.fondoSeleccionado?$scope.fondoSeleccionado.key:{$regex:"^.*", $options: "i"}
-                                           ,"storage.key":!!$scope.bodegaSeleccionada?$scope.bodegaSeleccionada.key:{$regex:"^.*", $options: "i"}
-                                           ,"code":$scope.code
-                                           ,"description":!!$scope.description?{$regex:"^"+$scope.description+".*", $options: "i"}:{$regex:"^.*", $options: "i"}
-                                           ,"dimension":!!$scope.dimension?{$regex:"^"+$scope.dimension+".*", $options: "i"}:{$regex:"^.*", $options: "i"}
-                                           }]
+
+                                           $scope.busquedar]
                                            );
 
             $scope.rta.$promise.then(function(data){
@@ -139,7 +155,7 @@
 
                   ShareService.set(entity);
                   var modalInstance = $uibModal.open({
-                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal-functionary.html',
+                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',
                           controller: 'DynamicSearchModalController',
                           scope: $scope,
                           size: 'lg'

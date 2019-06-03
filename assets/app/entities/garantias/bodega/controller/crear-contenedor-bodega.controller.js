@@ -25,7 +25,7 @@
             $scope.metadataContenedores=[];
             $scope.cargarMetadatosBodega=function(fondo){
                 $scope.metadataContenedores=[];
-                GarantiasServices.showParametricpost([{"add1.key":$scope.fondoSeleccionado.key,"add2.key":$scope.bodegaSeleccionada.key}]).$promise.then(function(data){
+                GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.fondoSeleccionado.key,"add2.key":$scope.bodegaSeleccionada.key}]).$promise.then(function(data){
                     $scope.metadataContenedores=data;
 
                 });

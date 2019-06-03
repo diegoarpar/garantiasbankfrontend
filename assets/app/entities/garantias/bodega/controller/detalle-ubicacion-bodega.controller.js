@@ -15,15 +15,18 @@
 
 
             $scope.ubication=$scope.getData2();
-            $scope.container=$scope.getData2().container;
-            $scope.key=$scope.container.key.key;
-            $scope.storage=$scope.container.storage.key;
-            $scope.code=$scope.container.code;
-            $scope.name=$scope.container.name;
-            $scope.description=$scope.container.description;
-            $scope.dimension=$scope.container.dimension;
-            $scope.rta = GarantiasServices.showPost([{"ubicacionbodega": $scope.ubication}]);
-            $scope.rta.$promise.then(function(data){
+            $scope.metadataContenedores=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.ubication.container.key.key,"add2.key":$scope.ubication.container.storage.key}]).$promise.then(function(data){
+                $scope.metadataContenedores=data;
+
+            });
+
+            $scope.metadataUbicacion=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.ubication.container.key.key,"add2.key":$scope.ubication.container.storage.key}]).$promise.then(function(data){
+                $scope.metadataUbicacion=data;
+
+            });
+            GarantiasServices.showPost([{"ubicacionbodega": $scope.ubication}]).$promise.then(function(data){
                 fillColumns(data,$scope);
                  update_columns($scope);
                  $scope.generateColumns=$scope.all_columns;

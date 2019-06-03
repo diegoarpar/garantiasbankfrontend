@@ -13,35 +13,32 @@
 
                         <div class="expand-collapse-content">
                             <div class="form-group">
-                            <label  class="col-sm-2">Empresa:</label>
-                            <div class="col-sm-4">
-                                <select class="form-control" ng-model="fondoSeleccionado" ng-change="cargarBodegas(f)" ng-options="f as f.value for f in fondos">
-                                </select>
-                            </div>
+                                <div class="col-sm-6" >
+                                    <label  >Empresa:</label>
+                                    <div >
+                                        <select class="form-control" ng-model="fondoSeleccionado" ng-change="cargarBodegas(f)" ng-options="f as f.value for f in fondos">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6" >
+                                    <label >Bodega:</label>
+                                    <div >
+                                        <select class="form-control" ng-model="bodegaSeleccionada" ng-change="cargarMetadatosBodega(b)" ng-options="b as b.key for b in bodegas">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div ng-repeat ="f in metadataContenedores"  class="col-sm-6"  >
+
+                                    <label  >{{f.value}}</label>
+                                    <div  >
+                                        <input class="form-control" ng-model="busqueda[f.key]" />
+                                    </div>
+
+                                </div>
 
 
-                            <label class="col-sm-2">Bodega:</label>
-                            <div class="col-sm-4">
-                                <select class="form-control" ng-model="bodegaSeleccionada"  ng-options="b as b.key for b in bodegas">
-                                </select>
-                            </div>
-
-                            <label  class="col-sm-2">Código:</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="code" />
-                            </div>
-                            <label  class="col-sm-2">Nombre:</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="name"/>
-                            </div>
-                            <label  class="col-sm-2">Descripción:</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="description"/>
-                            </div>
-                            <label  class="col-sm-2">Dimensión:</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="dimension" />
-                            </div>
                         </div>
 
                             <div class="form-group">
@@ -49,39 +46,48 @@
                             </div>
 
                             <table ng-table="tableParamsContainer" class="table" show-filter="true">
+                                <thead>
+                                <tr>
+                                    <th> Regional</th>
+                                    <th> Bodega</th>
+                                    <th ng-repeat="f in metadataContenedoresAll" >{{ f.value}}
+                                    </th>
+                                    <th> Opciones</th>
+                                </tr>
+                                </thead>
+
                                 <tr ng-repeat="b in $data">
                                     <td title="'Regional'" filter="{ 'key.key': 'text'}" sortable="'key.key'">
                                         {{b.key.key}}</td>
                                     <td title="'Bodega'" filter="{ 'storage.key': 'text'}" sortable="'storage.key'">
                                         {{b.storage.key}}</td>
 
-                                    <td title="'Nombre'" filter="{ name: 'text'}" sortable="'name'">
-                                        {{b.name}}</td>
+                                    <td ng-repeat="f in metadataContenedoresAll">
+                                        {{b[f.key]}}
 
-                                    <td title="'Codigo'" filter="{ code: 'text'}" sortable="'code'">
-                                        {{b.code}}</td>
-
-                                    <td title="'Descripción'" filter="{ description: 'text'}" sortable="'description'">
-                                        {{b.description}}</td>
-                                    <td title="'Dimensión'" filter="{ dimension: 'text'}" sortable="'dimension'">
-                                        {{b.dimension}}</td>
+                                    </td>
                                     <td title="'Opciones'" >
-                                        <button class="btn btn-success" ng-click="mostrarUbicaciones(this)"> Mostrar Ubicaciones</button>
+                                        <button class="btn btn-success" ng-click="mostrarUbicaciones(b)"> Mostrar Ubicaciones</button>
                                     </td>
                                 </tr>
                             </table>
-
+                            <h3>Ubicaciones</h3>
                             <table ng-table="tableParamsUbication" class="table" show-filter="true">
+                                <thead>
+                                <tr>
+                                    <th ng-repeat="f in metadataUbicacionAll" >{{ f.value}}
+                                    </th>
+                                    <th> Opciones</th>
+                                </tr>
+                                </thead>
                                 <tr ng-repeat="ubicaciones in $data">
-                                    <td title="'Código'" sortable="'code'">
-                                        {{ubicaciones.code}}
-                                    </td>
-                                    <td title="'Nombre'"  sortable="'name'">
-                                        {{ubicaciones.name}}
+                                    <td ng-repeat="f in metadataUbicacionAll">
+                                        {{ubicaciones[f.key]}}
+
                                     </td>
                                     <td title="'Opciones'"  >
-                                        <button class="btn btn-success" ng-click="mostrarDocumentosAsociados (ubicaciones)"> Documentos Asociados </button>
-                                        <button class="btn btn-success" ng-click="userParaAsociar (this)"> Usar para asociar </button>
+                                        <button class="btn btn-success" ng-click="mostrarDocumentosAsociados(ubicaciones)"> Documentos Asociados </button>
+                                        <button class="btn btn-success" ng-click="userParaAsociar (ubicaciones)"> Usar para asociar </button>
                                     </td>
                                 </tr>
                             </table>
@@ -92,7 +98,7 @@
 
 
 
-                <h2 class="sub" ng-click="cambiarColapsoContenido()"> ->>Buscar {{contenedorSeleccionado?" y Asociar contenidos a "+contenedorSeleccionado.name: "documentos"}}</h2>
+                <h2 class="sub" ng-click="cambiarColapsoContenido()"> ->>Buscar {{contenedorSeleccionado?" y Asociar contenidos a "+asociarADescripcion: "documentos"}}</h2>
                 <div class="expandcollapse-item">
 
                     <div class="slideDown" ng-hide="colapsoContenido">
@@ -178,8 +184,8 @@
                                 <tr ng-repeat="row in $data" >
                                     <td>
                                         <button type="submit" ng-click="openModal(row)">Ver Detalle </button>
-                                        <button type="submit" ng-click="asociar(row,this)" ng-if="contenedorSeleccionado!=null && row.ubicacionbodega==null">Asociar a {{contenedorSeleccionado.name}} </button>
-                                        <button type="submit" ng-click="desasociar(row,this)" ng-if="!!row.ubicacionbodega">Desasociar de {{row.ubicacionbodega.name}} </button>
+                                        <button type="submit" ng-click="asociar(row,this)" ng-if="contenedorSeleccionado!=null && row.ubicacionbodega==null">Asociar a {{asociarADescripcion}} </button>
+                                        <button type="submit" ng-click="desasociar(row,this)" ng-if="!!row.ubicacionbodega">Desasociar </button>
 
                                     </td>
                                     <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>

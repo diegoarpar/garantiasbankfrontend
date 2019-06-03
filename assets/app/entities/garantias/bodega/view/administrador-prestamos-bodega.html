@@ -37,6 +37,37 @@
             </div>
         </div>
 
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPendientePrepararEntregar()">-Documentos Pendientes por Preparar Entrega</h2>
+        <div class="expandcollapse-item">
+
+            <div class="slideDown" ng-hide="colapsoContenedorPendientePrepararEntregar">
+
+                <div class="expand-collapse-content">
+
+                </div>
+
+
+
+                <table ng-table="tableParamsContainerPendientePrepararEntregar" class="table" show-filter="true">
+                    <tr ng-repeat="b in $data">
+                        <td title="'Estado'" filter="{ 'estado': 'text'}" sortable="'estado'">
+                            {{b.estado}}</td>
+                        <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
+                            {{b.solicitudUsuario}}</td>
+                        <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
+                            {{b.numero}}</td>
+
+                        <td title="'Opciones'" >
+                            <button class="btn btn-success" ng-click="listoEntregar(b)"> Listo para Entregar</button>
+                            <button class="btn btn-success" ng-click="usarAsociarDocumentos(b)"> Usar para Asociar Documentos</button>
+                            <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
         <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteEntregar()">-Documentos Pendientes por Entregar</h2>
         <div class="expandcollapse-item">
 
@@ -100,7 +131,7 @@
         </div>
 
 
-        <h2 class="sub" ng-click="cambiarColapsoContenido()">Buscar Documentos para prestar</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenido()">Buscar Documentos para prestar {{prestamoAsociarDocumentos!=null?prestamoAsociarDocumentos.solicitudUsuario + " número "+prestamoAsociarDocumentos.numero:""}}</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenido">
@@ -186,7 +217,7 @@
                         <tr ng-repeat="row in $data" >
                             <td>
                                 <button type="submit" ng-click="openModal(row)">Ver Detalle </button>
-                                <button type="submit" ng-click="Prestar(row,this)" ng-if="row.prestado==null">Prestar </button>
+                                <button type="submit" ng-if="row.prestamo==null && prestamoAsociarDocumentos!=null" ng-click="asociarPrestamo(row)" >Prestar {{prestamoAsociarDocumentos!=null?" a "+prestamoAsociarDocumentos.solicitudUsuario + " número "+ prestamoAsociarDocumentos.numero:""}} </button>
                                 <button type="submit" ng-click="recibirPrestamo(row,this)" ng-if="!!row.prestado">Recibir </button>
 
 

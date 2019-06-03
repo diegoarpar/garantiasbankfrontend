@@ -28,6 +28,16 @@
 
         }
 
+        $scope.colapsoContenedorPendientePrepararEntregar=true;
+        $scope.cambiarColapsoContenedorPendientePrepararEntregar=function(){
+
+            GarantiasServices.showprestamo([{"estado":"ALISTANDO_ENTREGA"}]).$promise.then(function(data){
+                $scope.tableParamsContainerPendientePrepararEntregar = new NgTableParams({}, { dataset: data});
+                }
+            );
+            $scope.colapsoContenedorPendientePrepararEntregar=$scope.colapsoContenedorPendientePrepararEntregar==true?false:true;
+
+        }
         $scope.colapsoContenedorPPendienteEntregar=true;
         $scope.cambiarColapsoContenedorPendienteEntregar=function(){
 
@@ -56,8 +66,8 @@
                     if(data&&data[0]){
                         $scope.prestamoP.usuarioBodegaAprueba=UserLoginService.getUser();
                         $scope.prestamoP.usuarioBodegaApruebaFecha=data[0].number;
-                        $scope.prestamoP.estado="USUARIO_PUEDE_PASAR_BODEGA";
-                        var removePrestamo=GarantiasServices.removeprestamo([{$and:[{estado:"PENDIENTE_CONFIRMACION_BODEGA"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario},{numero:$scope.prestamoP.numero}]}]);
+                        $scope.prestamoP.estado="ALISTANDO_ENTREGA";
+                        var removePrestamo=GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
@@ -68,7 +78,53 @@
                 });
 
         }
+        $scope.prestamoAsociarDocumentos=null;
+        $scope.usarAsociarDocumentos=function(row){
+            $scope.prestamoAsociarDocumentos=row;
+        }
 
+        $scope.asociarPrestamo=function(row){
+           $scope.row=row;
+           $scope.row.prestamo=$scope.prestamoAsociarDocumentos;
+           NumberService.getNumber().$promise.then(function(dataN){
+                dataN[0].number;
+
+               GarantiasServices.showprestamo([{numero:$scope.prestamoAsociarDocumentos.numero,solicitudUsuario:$scope.prestamoAsociarDocumentos.solicitudUsuario}]).$promise.then(function(data){
+                   $scope.prestamoP={};
+                   $scope.prestamoP=data[0];
+                   $scope.prestamoP.entity.push(row);
+                   $scope.prestamoP.usuarioBodegaModifica=UserLoginService.getUser();
+                   $scope.prestamoP.fechaUsuarioBodegaModifica=dataN[0].number;
+                   GarantiasServices.removeprestamo([{numero:$scope.prestamoAsociarDocumentos.numero,solicitudUsuario:$scope.prestamoAsociarDocumentos.solicitudUsuario}]).$promise.then(function(data){
+                        $scope.prestamoP._id=null;
+                        GarantiasServices.createprestamo([$scope.prestamoP]);
+                        GarantiasServices.update([$scope.row]);
+                       });
+
+                   });
+
+           });
+
+        }
+        $scope.listoEntregar=function(row){
+            $scope.prestamoP=row;
+            var number =NumberService.getNumber();
+                number.$promise.then(function(data){
+                    if(data&&data[0]){
+                        $scope.prestamoP.usuarioBodegaAprueba=UserLoginService.getUser();
+                        $scope.prestamoP.usuarioBodegaApruebaFecha=data[0].number;
+                        $scope.prestamoP.estado="USUARIO_PUEDE_PASAR_BODEGA";
+                        var removePrestamo=GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
+                        removePrestamo.$promise.then(function(data){
+                             $scope.prestamoP._id=null;
+                             GarantiasServices.createprestamo([$scope.prestamoP]);
+
+                        });
+                    }
+
+                });
+
+        }
         $scope.entregar=function(row){
             $scope.prestamoP=row;
             NumberService.getNumber().$promise.then(function(data){
@@ -76,7 +132,7 @@
                     $scope.prestamoP.usuarioBodegaEntrega=UserLoginService.getUser();
                     $scope.prestamoP.usuarioBodegaEntregaFecha=data[0].number;
                     $scope.prestamoP.estado="PRESTADO";
-                    var removePrestamo=GarantiasServices.removeprestamo([{$and:[{estado:"USUARIO_PUEDE_PASAR_BODEGA"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario},{numero:$scope.prestamoP.numero}]}]);
+                    var removePrestamo=GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
                     removePrestamo.$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
@@ -99,7 +155,7 @@
                     $scope.prestamoP.usuarioBodegaRecibe=UserLoginService.getUser();
                     $scope.prestamoP.usuarioBodegaRecibe=data[0].number;
                     $scope.prestamoP.estado="RECIBIDO";
-                    GarantiasServices.removeprestamo([{$and:[{estado:"PRESTADO"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario}, {numero:$scope.prestamoP.numero}]}]).$promise.then(function(data){
+                    GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]).$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
                          GarantiasServices.update($scope.prestamoP.entity);
@@ -121,7 +177,7 @@
                         $scope.prestamoP.aprobardoSolicitanteUsuario=UserLoginService.getUser();
                         $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
                         $scope.prestamoP.estado="RECHAZADO";
-                        var removePrestamo=GarantiasServices.removeprestamo([{$and:[{estado:"PENDIENTE_CONFIRMACION_BODEGA"},{solicitudUsuario:$scope.prestamoP.solicitudUsuario}, {numero:$scope.prestamoP.numero}]}]);
+                        var removePrestamo=GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
@@ -271,7 +327,7 @@
 
                   ShareService.set(entity);
                   var modalInstance = $uibModal.open({
-                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search.html',
+                          templateUrl: 'assets/app/entities/dynamic-search/view/dynamic-search-modal.html',
                           controller: 'DynamicSearchModalController',
                           scope: $scope,
                           size: 'lg'

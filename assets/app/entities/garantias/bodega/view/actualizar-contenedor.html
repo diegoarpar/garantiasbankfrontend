@@ -1,6 +1,6 @@
 <div close="cancel()">
     <div class="modal-header">
-        <h4>Crear Ubicaciones</h4>
+        <h4>Detalle Contenedores</h4>
     </div>
 
     <div class="modal-body">
@@ -33,26 +33,20 @@
             </div>
         </div>
 
-        <button class="btn btn-success" ng-click="addUbicacion()">+</button>
-
         <table ng-table="tableParamsContenedor" class="table" show-filter="true">
             <thead>
             <tr>
                 <th ng-repeat="f in metadataUbicaciones" >{{ f.value}}
                 </th>
-                <th> Opciones</th>
             </tr>
             </thead>
 
             <tr ng-repeat="ubicaciones in $data">
                 <td ng-repeat="f in metadataUbicaciones">
-                    <input ng-model="ubicaciones[f.key]" ></input>
+                    <input readonly ng-model="ubicaciones[f.key]" ></input>
 
                 </td>
 
-                <td title="'Opciones'"  >
-                    <button class="btn btn-success" ng-click="remove (this)"> X </button>
-                </td>
             </tr>
         </table>
     </div>

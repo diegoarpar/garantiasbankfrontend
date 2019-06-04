@@ -16,12 +16,14 @@
 
             $scope.ubication=$scope.getData2();
             $scope.metadataContenedores=[];
+            if($scope.ubication.container!=null)
             GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.ubication.container.key.key,"add2.key":$scope.ubication.container.storage.key}]).$promise.then(function(data){
                 $scope.metadataContenedores=data;
 
             });
 
             $scope.metadataUbicacion=[];
+            if($scope.ubication.container!=null)
             GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.ubication.container.key.key,"add2.key":$scope.ubication.container.storage.key}]).$promise.then(function(data){
                 $scope.metadataUbicacion=data;
 

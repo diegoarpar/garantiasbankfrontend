@@ -102,7 +102,14 @@
                       params: {'@param': '@param'},
                       isArray: false,
                       data: '@data'
-                  },retrivebodegacontainerubication: {
+                  },updatebodegacontainerubication: {
+                     url:ApiGarantias.url+'bodega/updateContainerUbication',
+                     method: 'POST',
+                     headers: headers2,
+                     params: {'@param': '@param'},
+                     isArray: false,
+                     data: '@data'
+                 },retrivebodegacontainerubication: {
                       url:ApiGarantias.url+'bodega/retrieveContainerUbication',
                       method: 'POST',
                       headers: headers2,

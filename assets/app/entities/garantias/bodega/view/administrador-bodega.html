@@ -5,7 +5,15 @@
 
     <!-- Dark Overlay element -->
     <div id="page-wrapper">
-        <h3> Administración de Bodega - Contenedores y Ubicaciones</h3>
+        <h3 ng-click="cambiarColapsoContenedor()"> Administración de Bodega - Contenedores </h3>
+        <div class="expandcollapse-item">
+
+            <div class="slideDown" ng-hide="colapsoContenedor">
+
+                <div class="expand-collapse-content">
+
+                </div>
+
         <div class="form-horizontal">
             <div class="form-group">
 
@@ -36,14 +44,55 @@
                     <td ng-repeat="f in metadataContenedores" filter="{ 'f.key': 'text'}">
                         {{b[f.key]}}</td>
                     <td title="'Opciones'" >
-                        <button class="btn btn-success" ng-click="openModalModificarContenedor(this)"> Modificar</button>
+                        <button class="btn btn-success" ng-click="openModalModificarContenedor(this)"> Ver Detalle</button>
+                        <button class="btn btn-success" ng-click="usarParaAsociar(b)"> Usar Para Asociar</button>
                     </td>
                 </tr>
             </table>
+            </div>
+        </div>
 
 
+
+    <h3 ng-click="cambiarColapsoContenedorUbicaciones()"> Administración de Bodega - Ubicaciones finales {{paraAsociar!=null?" Asociar a "+descripcionAsociar:""}} </h3>
+    <div class="expandcollapse-item">
+
+        <div class="slideDown" ng-hide="colapsoContenedorUbicaciones">
+
+
+            <div class="expand-collapse-content">
+                <div class="col-sm-4">
+                    <button class="form-control btn btn-success" ng-click="openModalCrearUbicacion()"> + </button>
+                    <p/>
+                </div>
+                <table ng-table="tableParamsUbicaciones" class="table" show-filter="true">
+                    <thead>
+                    <tr>
+                        <th> Regional</th>
+                        <th> Bodega</th>
+                        <th ng-repeat="f in metadataUbicaciones" >{{ f.value}}
+                        </th>
+                        <th> Opciones</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="b in $data">
+                        <td title="'Regional'" filter="{ 'key.key': 'text'}" sortable="'key.key'">
+                            {{b.container.key.key}}</td>
+                        <td title="'Bodega'" filter="{ 'storage.key': 'text'}" sortable="'storage.key'">
+                            {{b.container.storage.key}}</td>
+                        <td ng-repeat="f in metadataUbicaciones" filter="{ 'f.key': 'text'}">
+                            {{b[f.key]}}</td>
+                        <td title="'Opciones'" >
+                            <button class="btn btn-success" ng-click="detalleUbicacion(b)"> Ver Detalle</button>
+                            <button class="btn btn-success" ng-if="b.container.estado=='N' && paraAsociar!=null" ng-click="asociar(b)"> Asociar a {{descripcionAsociar}}</button>
+                            <button class="btn btn-success" ng-if="b.container.estado==null && paraAsociar!=null" ng-click="asociar(b)"> Cambiar a {{descripcionAsociar}}</button>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
     </div>
-
-
+    </div>
 
 </div>

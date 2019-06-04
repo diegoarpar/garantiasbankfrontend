@@ -6,7 +6,7 @@
 
             <p class="container">
 
-                <h2 class="sub" ng-click="cambiarColapsoContenedor()">->>Buscar en Contenedores/estantes</h2>
+                <h2 class="sub" ng-click="cambiarColapsoContenedor()">-Buscar en Contenedores/estantes</h2>
                 <div class="expandcollapse-item">
 
                         <div class="slideDown" ng-hide="colapsoContenedor">
@@ -71,34 +71,85 @@
                                     </td>
                                 </tr>
                             </table>
-                            <h3>Ubicaciones</h3>
-                            <table ng-table="tableParamsUbication" class="table" show-filter="true">
-                                <thead>
-                                <tr>
-                                    <th ng-repeat="f in metadataUbicacionAll" >{{ f.value}}
-                                    </th>
-                                    <th> Opciones</th>
-                                </tr>
-                                </thead>
-                                <tr ng-repeat="ubicaciones in $data">
-                                    <td ng-repeat="f in metadataUbicacionAll">
-                                        {{ubicaciones[f.key]}}
 
-                                    </td>
-                                    <td title="'Opciones'"  >
-                                        <button class="btn btn-success" ng-click="mostrarDocumentosAsociados(ubicaciones)"> Documentos Asociados </button>
-                                        <button class="btn btn-success" ng-click="userParaAsociar (ubicaciones)"> Usar para asociar </button>
-                                    </td>
-                                </tr>
-                            </table>
-
-                    </div>
-                    </div>
+                        </div>
+                        </div>
                 </div>
+                            <h2 ng-click="cambiarColapsoContenedorUbicacion()">-Ubicaciones {{contenedorMostrarUbicacion!=null?" de " + descripcioncontenedorMostrarUbicacion:""}}</h2>
+                            <div class="expandcollapse-item">
+
+                                <div class="slideDown" ng-hide="colapsoContenedorUbicacion">
+
+                                    <div class="expand-collapse-content">
+
+                                        <div class="col-sm-6" >
+                                            <label  >Empresa:</label>
+                                            <div >
+                                                <select class="form-control" ng-model="fondoSeleccionadoU" ng-change="cargarBodegasU(f)" ng-options="f as f.value for f in fondos">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6" >
+                                            <label >Bodega:</label>
+                                            <div >
+                                                <select class="form-control" ng-model="bodegaSeleccionadaU" ng-change="cargarMetadatosUbicacion(b)" ng-options="b as b.key for b in bodegasU">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div ng-repeat ="f in metadataUbicacion"  class="col-sm-6"  >
+
+                                            <label  >{{f.value}}</label>
+                                            <div  >
+                                                <input class="form-control" ng-model="busqueda[f.key]" />
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <button class="btn btn-success" ng-click="okUbicacion()">Buscar Ubicaciones</button>
+                                        </div>
+
+
+                                        <table ng-table="tableParamsUbication" class="table" show-filter="true">
+                                            <thead>
+                                            <tr>
+                                                <th> Regional</th>
+                                                <th> Bodega</th>
+                                                <th ng-repeat="f in metadataUbicacionAll" >{{ f.value}}
+                                                </th>
+                                                <th> Opciones</th>
+                                            </tr>
+                                            </thead>
+                                            <tr ng-repeat="ubicaciones in $data">
+                                                <td title="'Regional'" filter="{ 'key.key': 'text'}" sortable="'key.key'">
+                                                    {{ubicaciones.container.key.key}}</td>
+                                                <td title="'Bodega'" filter="{ 'storage.key': 'text'}" sortable="'storage.key'">
+                                                    {{ubicaciones.container.storage.key}}</td>
+                                                <td ng-repeat="f in metadataUbicacionAll">
+                                                    {{ubicaciones[f.key]}}
+
+                                                </td>
+                                                <td title="'Opciones'"  >
+                                                    <button class="btn btn-success" ng-click="mostrarDocumentosAsociados(ubicaciones)"> Ver Detalle </button>
+                                                    <button class="btn btn-success" ng-click="userParaAsociar (ubicaciones)"> Usar para asociar </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </div>
+                                </div>
+                            </div>
 
 
 
-                <h2 class="sub" ng-click="cambiarColapsoContenido()"> ->>Buscar {{contenedorSeleccionado?" y Asociar contenidos a "+asociarADescripcion: "documentos"}}</h2>
+
+
+
+                <h2 class="sub" ng-click="cambiarColapsoContenido()"> -Buscar {{contenedorSeleccionado?" y Asociar contenidos a "+asociarADescripcion: "documentos"}}</h2>
                 <div class="expandcollapse-item">
 
                     <div class="slideDown" ng-hide="colapsoContenido">

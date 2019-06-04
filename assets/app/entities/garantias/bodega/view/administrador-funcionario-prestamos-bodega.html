@@ -10,7 +10,7 @@
             <div class="slideDown" ng-hide="colapsoContenedor">
 
                 <div class="expand-collapse-content">
-
+                    <button ng-if="tableParamsPrestamoPendienteConfirmar.data.length==0" class="btn btn-success" type="submit" ng-click="prestar(b)">+ </button>
 
 
 
@@ -27,6 +27,7 @@
                             <button class="btn btn-success" ng-if="b.estado=='PENDIENTE_CONFIRMAR'" ng-click="aprobar(b)"> Confirmar</button>
                             <button class="btn btn-success" ng-if="b.estado=='PENDIENTE_CONFIRMAR'" ng-click="cancelar(b)"> Cancelar</button>
                             <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
+                            <button class="btn btn-success" ng-if="b.estado=='PENDIENTE_CONFIRMAR'" type="submit" ng-click="agregarDocumento(b)">Agregar Documento Soporte</button>
                         </td>
                     </tr>
                 </table>

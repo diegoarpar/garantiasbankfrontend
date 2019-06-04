@@ -104,6 +104,21 @@
 
         }
 
+        $scope.prestar=function(){
+            $scope.prestamoP={};
+            NumberService.getNumber().$promise.then(function(dataN){
+                if(!!dataN&&!!dataN[0]){
+                     $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
+                     $scope.prestamoP.fechaPresta=dataN[0].number;
+                     $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
+                     $scope.prestamoP.numero= dataN[0].number;
+                     $scope.prestamoP.entity=[];
+                     GarantiasServices.createprestamo([$scope.prestamoP]);
+                     $scope.cambiarColapsoContenedor();
+                     $scope.cambiarColapsoContenedor();
+                 }
+            });
+        }
         $scope.cancelar=function(row){
             $scope.prestamoP=row;
             for(var i=0;i<$scope.prestamoP.entity.length;i++){

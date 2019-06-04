@@ -11,7 +11,8 @@
 
         function UbicarContenidoBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService) {
             inSession($scope,AuthenticationFactory,$window,false);
-
+        $scope.contenedorMostrarUbicacion=null;
+        $scope.descripcioncontenedorMostrarUbicacion="";
         $scope.menu_activo=true;
         $scope.change_manu_activo=function(){
             $scope.menu_activo=$scope.menu_activo==true?false:true;
@@ -22,7 +23,13 @@
             $scope.colapsoContenedor=$scope.colapsoContenedor==true?false:true;
 
         }
-        $scope.colapsoContenido=false;
+
+        $scope.colapsoContenedorUbicacion=true;
+        $scope.cambiarColapsoContenedorUbicacion=function(){
+            $scope.colapsoContenedorUbicacion=$scope.colapsoContenedorUbicacion==true?false:true;
+
+        }
+        $scope.colapsoContenido=true;
         $scope.cambiarColapsoContenido=function(){
             $scope.colapsoContenido=$scope.colapsoContenido==true?false:true;
 
@@ -39,9 +46,19 @@
         });
 
         $scope.cargarMetadatosBodega=function(fondo){
+
             $scope.metadataContenedores=[];
             GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.fondoSeleccionado.key,"add2.key":$scope.bodegaSeleccionada.key}]).$promise.then(function(data){
                 $scope.metadataContenedores=data;
+
+            });
+
+        }
+        $scope.metadataUbicacion=[];
+        $scope.cargarMetadatosUbicacion=function(fondo){
+            $scope.metadataUbicacion=[];
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.fondoSeleccionadoU.key,"add2.key":$scope.bodegaSeleccionadaU.key}]).$promise.then(function(data){
+                $scope.metadataUbicacion=data;
 
             });
 
@@ -59,7 +76,24 @@
 
         }
 
+        $scope.cargarBodegasU=function(fondo){
+            $scope.bodegasrta=GarantiasServices.showbodega([{nombreparametrica: $scope.fondoSeleccionadoU.nombreparametrica,key: $scope.fondoSeleccionadoU.key}]);
+            $scope.bodegasrta.$promise.then(function (data){
+                    $scope.bodegasU=[];
+                    for (var i=0;!!data&&i< data.length;i++)
+                        for (var j=0;!!data[i]&&!!data[i].nodes&&j< data[i].nodes.length;i++)
+                            $scope.bodegasU.push(data[i].nodes[j]);
+                }
+            );
+
+        }
+
         $scope.mostrarUbicaciones= function(row){
+            $scope.contenedorMostrarUbicacion=row;
+            for(var i=0;i<$scope.metadataContenedores.length;i++){
+                $scope.descripcioncontenedorMostrarUbicacion=$scope.metadataContenedores[i].value+":"+row[$scope.metadataContenedores[i].key];
+                break;
+            }
             $scope.rta = GarantiasServices.retrivebodegacontainerubication([{"container":row}]);
             $scope.rta.$promise.then(function(data){
                 $scope.tableParamsUbication = new NgTableParams({}, { dataset: data});
@@ -97,6 +131,26 @@
 
             $scope.rta.$promise.then(function(data){
                 $scope.tableParamsContainer = new NgTableParams({}, { dataset: data});
+            });
+
+        }
+
+        $scope.okUbicacion=function(){
+            $scope.contenedorMostrarUbicacion=null;
+            $scope.descripcioncontenedorMostrarUbicacion="";
+            $scope.busquedar= {"container.key.key":!!$scope.fondoSeleccionadoU?$scope.fondoSeleccionadoU.key:{$regex:"^.*", $options: "i"}
+            ,"container.storage.key":!!$scope.bodegaSeleccionadaU?$scope.bodegaSeleccionadaU.key:{$regex:"^.*", $options: "i"}};
+            for(var i=0;i<$scope.metadataUbicacion.length;i++){
+
+                $scope.busquedar[$scope.metadataUbicacion[i].key]=!!$scope.busqueda[$scope.metadataUbicacion[i].key]?{$regex:"^"+$scope.busqueda[$scope.metadataUbicacion[i].key]+".*", $options: "i"}:{$regex:"^.*", $options: "i"}
+            }
+            $scope.rta = GarantiasServices.retrivebodegacontainerubication([
+
+                                           $scope.busquedar]
+                                           );
+
+            $scope.rta.$promise.then(function(data){
+                $scope.tableParamsUbication = new NgTableParams({}, { dataset: data});
             });
 
         }

@@ -45,8 +45,14 @@
                     $scope.tableParamsUbicaciones = new NgTableParams({}, { dataset: data});
                 });
             }
-
             $scope.cargarUbicacionBodega();
+
+            $scope.cargarContenedorBodega=function(){
+                GarantiasServices.retrivebodegacontainer([{}]).$promise.then(function (data){
+                    $scope.tableParams = new NgTableParams({}, { dataset: data});
+                  });
+            }
+            $scope.cargarContenedorBodega();
 
             $scope.colapsoContenedor=true;
             $scope.cambiarColapsoContenedor=function(){
@@ -92,10 +98,7 @@
                   }
               );
           }
-          $scope.rta = GarantiasServices.retrivebodegacontainer([{}]);
-          $scope.rta.$promise.then(function (data){
-            $scope.tableParams = new NgTableParams({}, { dataset: data});
-          });
+
 
 
           $scope.generateTable=function(){

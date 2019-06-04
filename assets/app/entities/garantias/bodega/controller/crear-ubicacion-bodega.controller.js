@@ -40,6 +40,7 @@
                 $scope.container.container.storage=$scope.bodegaSeleccionada;
                 GarantiasServices.createbodegacontainerubication([$scope.container]).$promise.then(function(data){
                     $scope.cargarUbicacionBodega();
+                   $scope.cargarContenedorBodega();
                     $uibModalInstance.dismiss();
                 });
 

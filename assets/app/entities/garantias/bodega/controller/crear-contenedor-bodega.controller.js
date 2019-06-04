@@ -41,7 +41,8 @@
                        $scope.generateTable();
                        $scope.setData2(data2);
                        $uibModalInstance.dismiss($scope);
-                       $scope.openModalModificarContenedor($scope);
+                       $scope.cargarUbicacionBodega();
+                       $scope.cargarContenedorBodega();
                     });
 
                 });

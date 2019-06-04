@@ -13,10 +13,7 @@
             inSession($scope,AuthenticationFactory,$window,false);
 
             $scope.container=$scope.getData2();
-            $scope.containerCopia=JSON.parse(JSON.stringify($scope.container));
-            $scope.containerCopia._id=null;
-            $scope.containerCopia.key=null;
-            $scope.containerCopia.storage=null;
+
             GarantiasServices.retrivebodegacontainerubication([{"container":$scope.container}]).$promise.then(function(data){
                 $scope.tableParamsContenedor = new NgTableParams({}, { dataset: data});
             });
@@ -33,11 +30,7 @@
 
             });
             $scope.ok=function(){
-                var ubication=$scope.tableParamsContenedor.data;
-                for(var i=0;!!ubication&&i<ubication.length;i++){
-                    ubication[i].container=$scope.container;
-                }
-                GarantiasServices.createbodegacontainerubication(ubication);
+                $uibModalInstance.dismiss();
 
             }
 

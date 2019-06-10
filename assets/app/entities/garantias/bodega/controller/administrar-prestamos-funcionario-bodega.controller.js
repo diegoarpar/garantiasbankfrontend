@@ -92,11 +92,15 @@
             NumberService.getNumber().$promise.then(function(data){
                 if(data&&data[0]){
                     $scope.prestamoP.aprobadorSolicitanteUsuario=UserLoginService.getUser();
+                    $scope.prestamoP.aprobadorEmail=UserLoginService.getEmail();
                     $scope.prestamoP.aprobadorSolicitanteFecha=data[0].number;
                     $scope.prestamoP.estado="PENDIENTE_CONFIRMACION_BODEGA";
                     GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"PENDIENTE_CONFIRMAR"}},{solicitudUsuario:{$eq:UserLoginService.getUser()}},{numero:{$eq:$scope.prestamoP.numero}}]}]).$promise.then(function(data){
                          $scope.prestamoP._id=null;
-                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                         GarantiasServices.createprestamo([$scope.prestamoP]).$promise.then(function(data){
+                            GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail,"Prestamo Solicitado "+ $scope.prestamoP.numero, "Señor "+$scope.prestamoP.aprobadorSolicitanteUsuario+" ha solicitado el préstamo "+  $scope.prestamoP.numero)]);
+
+                         });
                     });
                 }
 
@@ -109,13 +113,19 @@
             NumberService.getNumber().$promise.then(function(dataN){
                 if(!!dataN&&!!dataN[0]){
                      $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
+                     $scope.prestamoP.solicitudEmail=UserLoginService.getEmail();
                      $scope.prestamoP.fechaPresta=dataN[0].number;
                      $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
                      $scope.prestamoP.numero= dataN[0].number;
                      $scope.prestamoP.entity=[];
-                     GarantiasServices.createprestamo([$scope.prestamoP]);
-                     $scope.cambiarColapsoContenedor();
-                     $scope.cambiarColapsoContenedor();
+                     GarantiasServices.createprestamo([$scope.prestamoP]).$promise.then(function (data){
+                         $scope.cambiarColapsoContenedor();
+                         $scope.cambiarColapsoContenedor();
+                         //GarantiasServices.putRunner([prepareEmail( $scope.prestamoP.solicitudEmail,"Prestamo Solicitado "+ $scope.prestamoP.numero, "Señor "+$scope.prestamoP.solicitudUsuario+" ha solicitado el préstamo "+  $scope.prestamoP.numero)]);
+                         //GarantiasServices.putRunner([prepareEmail( $scope.prestamoP.solicitudEmail,"Prestamo Solicitado "+ $scope.prestamoP.numero, "Señor "+$scope.prestamoP.solicitudUsuario+" ha solicitado el préstamo "+  $scope.prestamoP.numero)]);
+
+                     });
+
                  }
             });
         }

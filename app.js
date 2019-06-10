@@ -31,6 +31,10 @@ app.constant('ApiFiles', {
     url: 'http://archivo.diego.com.co:8081/CMS/'
     //2024
 });
+app.constant('ApiBatch', {
+    url: 'http://archivo.diego.com.co:8081/batcher/'
+    //2018
+});
 app.constant('cApp', {
     tenant: ''
 });

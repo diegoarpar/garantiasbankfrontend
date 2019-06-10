@@ -399,3 +399,13 @@ function loadSearchParameter($scope){
 
         return o;
 }
+
+function prepareEmail(to,subject,message ){
+    var email={};
+    email.batcher="email";
+    email.to=to;
+    email.subject=subject;
+    email.message=message;
+    return email;
+
+}

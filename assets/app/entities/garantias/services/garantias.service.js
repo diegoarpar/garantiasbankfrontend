@@ -6,9 +6,9 @@
         angular.module("wpc")
             .factory('GarantiasServices', GarantiasServices);
 
-        GarantiasServices.$inject = ['$resource', 'ApiGarantias', '$rootScope', '$window'];
+        GarantiasServices.$inject = ['$resource', 'ApiGarantias','ApiBatch', '$rootScope', '$window'];
 
-        function GarantiasServices($resource, ApiGarantias, $rootScope, $window, $scope) {
+        function GarantiasServices($resource, ApiGarantias,ApiBatch, $rootScope, $window, $scope) {
         var headers2= getGenericHeader($window);
 
         var url = ApiGarantias.url + 'insertGarantias';
@@ -253,6 +253,15 @@
                     isArray: false,
                     data: '@data'
                 },
+                 /*-----------BATCHRUNNER---- */
+                 putRunner: {
+                     url:ApiBatch.url+'batcherservices/setjob',
+                     method: 'POST',
+                     headers: headers2,
+                     params: {'@param': '@param'},
+                     isArray: false,
+                     data: '@data'
+                 },
                 /*-----------MENU---- */
                 showMenu: {
                     url:getUrlServices(ApiGarantias,'menu'),
@@ -353,13 +362,16 @@
         UserLoginService.$inject=['AuthenticationFactory','$window'];
         function UserLoginService(AuthenticationFactory,$window){
             var _user="";
+            var _email="";
 
             if($window.localStorage.getItem('token')){
                var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
                 logIn.$promise.then(
                     function (data){
                     if(!!data&&!!data[0]){
-                        setUser(_user);
+                        setUser(data[0].user);
+                        setEmail(data[0].email);
+
                     }
                    }
                 );
@@ -368,6 +380,9 @@
             function setUser(user){
                 _user=user;
             }
+            function setEmail(email){
+                _email=email;
+            }
             function getUser(){
                 if($window.localStorage.getItem('token')&&(_user==null||_user==undefined)){
                    var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
@@ -375,7 +390,7 @@
                         function (data){
                         if(!!data&&!!data[0]){
                             _user=data[0].user;
-
+                            _email=data[0].email;
                             return _user;
                         }
                        }
@@ -384,9 +399,26 @@
 
                 return _user;
             }
+            function getEmail(){
+                if($window.localStorage.getItem('token')&&(_user==null||_user==undefined)){
+                   var logIn=AuthenticationFactory.userByToken({token:$window.localStorage.getItem('token')});
+                    logIn.$promise.then(
+                        function (data){
+                        if(!!data&&!!data[0]){
+                            _email=data[0].email;
+
+                            return _email;
+                        }
+                       }
+                    );
+                }
+
+                return _email;
+            }
             return {
                 getUser:getUser,
-                setUser:setUser
+                setUser:setUser,
+                getEmail:getEmail
             }
             }
 

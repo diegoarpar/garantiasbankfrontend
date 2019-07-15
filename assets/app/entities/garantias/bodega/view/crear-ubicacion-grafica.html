@@ -1,0 +1,21 @@
+<div close="cancel()">
+    <div class="modal-header">
+        <h4>Crear Ubicación Gráfica</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <img id="img" src="http://cavasa.co/wp-content/uploads/2017/02/PLANO_CAVASA_BORRADOR_02.jpg" width="300px" height="300px" ng-click="selection(this)">
+                <canvas id='canvas' width='300px' height='300px' style="position: absolute; left: 0px; top: 0px;"></canvas>
+            </div>
+        </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="relocalizar()">Localizar</button>
+        <button class="btn btn-success" ng-click="ok()">Guardar</button>
+        <button class="btn" ng-click="cancel()">Cerrar</button>
+    </div>
+</div>
+</div>

@@ -5,11 +5,11 @@
 (function () {
         'use strict';
         angular.module("wpc")
-            .controller('CrearUbicacionBodegaController', CrearUbicacionBodegaController);
+            .controller('CrearUbicacionGraficaBodegaController', CrearUbicacionGraficaBodegaController);
 
-        CrearUbicacionBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','$uibModalInstance'];
+        CrearUbicacionGraficaBodegaController.$inject = ['AuthenticationFactory','$scope', 'GarantiasServices',  '$location', '$rootScope', '$window', '$route','NgTableParams','$uibModal','$uibModalInstance'];
 
-        function CrearUbicacionBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,$uibModalInstance) {
+        function CrearUbicacionGraficaBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,$uibModalInstance) {
             inSession($scope,AuthenticationFactory,$window,false);
             $scope.fondos=GarantiasServices.showParametric({nombreparametrica:'fondo',tenant:window.sessionStorage.getItem("tenant")});
             $scope.cargarBodegas=function(fondo){
@@ -23,14 +23,40 @@
             }
 
             $scope.metadataContenedores=[];
-            $scope.cargarMetadatosBodega=function(fondo){
-                $scope.metadataContenedores=[];
-                GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.fondoSeleccionado.key,"add2.key":$scope.bodegaSeleccionada.key}]).$promise.then(function(data){
-                    $scope.metadataContenedores=data;
+            $scope.selection=function(context){
+                var positionX=(event.pageX - $("#img").offset().left);
+                var positionY=(event.pageY - $("#img").offset().top);
+                var img=("#img");
+                var canvas=$("#canvas");
+                alert(" \n or X="+(event.pageX - $("#img").offset().left)+" Y="+(event.pageY - $("#img").offset().top));
 
-                });
+                debugger;
+
+                var cnvs = $("#canvas")[0];
+
+                cnvs.style.position = "absolute";
+                cnvs.style.left = "0px";
+                cnvs.style.top = "0px";
+                cnvs.style.display = "inherit";
+                var ctx = cnvs.getContext("2d");
+                ctx.beginPath();
+                ctx.arc(positionX, positionY, 10, 0, 360, false);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#00ff00';
+                ctx.stroke();
 
             }
+
+            $scope.relocalizar=function(context){
+
+                var cnvs=$("#canvas")[0];
+                cnvs.style.display = "none";
+                cnvs.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+
+
+            }
+
+
             $scope.container={};
 
             $scope.ok=function(){
@@ -64,27 +90,7 @@
 
             }
 
-        $scope.crearUbicacion=function ($scope) {
 
-            var modalInstance = $uibModal.open({
-                    templateUrl: 'assets/app/entities/garantias/bodega/view/crear-ubicacion-grafica.html',
-                    controller: 'CrearUbicacionGraficaBodegaController',
-                    scope: $scope,
-                    size: 'lg'
-                }
-            );
 
-        };
-        $scope.openModalModificarContenedor=function ($scope) {
-
-            var modalInstance = $uibModal.open({
-                    templateUrl: 'assets/app/entities/garantias/bodega/view/actualizar-contenedor.html',
-                    controller: 'ModificarContenedorBodegaController',
-                    scope: $scope,
-                    size: 'lg'
-                }
-            );
-
-        };
         }
     })();

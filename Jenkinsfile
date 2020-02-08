@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("getintodevops/hellonode:B${BUILD_NUMBER}")
+        app = docker.build("nginx:B${BUILD_NUMBER}")
 	/*app.run("-p 80:80")*/
     }
 

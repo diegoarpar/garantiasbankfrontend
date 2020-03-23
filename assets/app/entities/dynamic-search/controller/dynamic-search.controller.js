@@ -31,40 +31,22 @@
                 startingDay: 1
             };
 
-            $scope.prestar=function(row){
-                $scope.row=row;
-                NumberService.getNumber().$promise.then(function(dataN){
-                    if(!!dataN&&!!dataN[0]){
-                        $scope.row.prestamo={estado:"PENDIENTE_CONFIRMAR",numero:dataN[0].number};
-                        GarantiasServices.update([$scope.row]);
-                        GarantiasServices.showprestamo([{estado:"PENDIENTE_CONFIRMAR",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
-                            $scope.prestamoP={};
-                            if(!!data&&data.length>0){
-                                $scope.prestamoP=data[0];
-                                $scope.prestamoP.entity.push(row);
-                            }else{
-                                 $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
-                                 $scope.prestamoP.fechaPresta=$scope.row.prestamo.numero;
-                                 $scope.prestamoP.estado="PENDIENTE_CONFIRMAR";
-                                 $scope.prestamoP.numero= $scope.row.prestamo.numero;
-                                 $scope.prestamoP.entity=[];
-                                 $scope.prestamoP.entity.push(row);
-                            }
 
-                            GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"PENDIENTE_CONFIRMAR"},solicitudUsuario:{$eq:UserLoginService.getUser()}}]}]).$promise.then(function(data){
-                                 $scope.prestamoP._id=null;
-                                 GarantiasServices.createprestamo([$scope.prestamoP]);
-
-                                });
-
-                            });
-                }});
-            }
             $scope.openModalFiltro = function () {
 
                 var modalInstance = $uibModal.open({
                         templateUrl: 'assets/app/entities/modal/filtro/view/filtro-busqueda.html',
                         controller: 'FiltrarBusquedaController',
+                        scope: $scope,
+                        size: 'lg'
+                    }
+                );
+            }
+            $scope.openModalRealizarPrestamo = function (entity) {
+                ShareService.set(entity);
+                var modalInstance = $uibModal.open({
+                        templateUrl: 'assets/app/entities/garantias/bodega/view/crear-prestamo.html',
+                        controller: 'CrearPrestamoBodegaController',
                         scope: $scope,
                         size: 'lg'
                     }

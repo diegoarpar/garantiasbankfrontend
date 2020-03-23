@@ -42,7 +42,7 @@
             <tr ng-repeat="row in searchResults" >
                 <td>
                     <button type="submit" ng-click="openModalFunctionary(row)">Ver Detalle</button>
-                    <button type="submit" ng-if="row.prestamo==null" ng-click="prestar(row)">Prestar</button>
+                    <button type="submit" ng-if="row.prestamo==null" ng-click="openModalRealizarPrestamo(row)">Prestar</button>
                 </td>
                 <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>
             </tr>

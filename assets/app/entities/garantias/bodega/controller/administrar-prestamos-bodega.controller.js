@@ -38,6 +38,16 @@
             $scope.colapsoContenedorPendientePrepararEntregar=$scope.colapsoContenedorPendientePrepararEntregar==true?false:true;
 
         }
+        $scope.colapsoContenedorDevoluciones=true;
+        $scope.cambiarColapsoContenedorDevoluciones=function(){
+
+            GarantiasServices.showprestamo([{"estado":"EN_DEVOLUCION"}]).$promise.then(function(data){
+                $scope.tableParamsContainerDevolucion = new NgTableParams({}, { dataset: data});
+                }
+            );
+            $scope.colapsoContenedorDevoluciones=$scope.colapsoContenedorDevoluciones==true?false:true;
+
+        }
         $scope.colapsoContenedorPPendienteEntregar=true;
         $scope.cambiarColapsoContenedorPendienteEntregar=function(){
 
@@ -48,14 +58,22 @@
             $scope.colapsoContenedorPPendienteEntregar=$scope.colapsoContenedorPPendienteEntregar==true?false:true;
 
         }
+        $scope.documentosPrestados=[];
         $scope.colapsoContenedorPrestado=true;
         $scope.cambiarColapsoContenedorPrestados=function(){
 
-            GarantiasServices.showprestamo([{"estado":"PRESTADO"}]).$promise.then(function(data){
+            GarantiasServices.showprestamo([{"estado":"DEVOLUCION"}]).$promise.then(function(data){
                 $scope.tableParamsContainerPrestado = new NgTableParams({}, { dataset: data});
                 }
             );
+            $scope.documentosPrestados=[];
             $scope.colapsoContenedorPrestado=$scope.colapsoContenedorPrestado==true?false:true;
+            $scope.colapsoContenedorPendienteDevolver=$scope.colapsoContenedorPendienteDevolver==true?false:true;
+            $scope.documentosPrestadosUsuario=GarantiasServices.showPost([{"prestamo.estado":"PRESTADO"}]).$promise.then(function(data){
+                $scope.documentosPrestados=data;
+                fillColumns(data,$scope);
+                update_columns($scope);
+            });
 
         }
 
@@ -132,10 +150,15 @@
                     $scope.prestamoP.usuarioBodegaEntrega=UserLoginService.getUser();
                     $scope.prestamoP.usuarioBodegaEntregaFecha=data[0].number;
                     $scope.prestamoP.estado="PRESTADO";
+                    for(var i=0;i<$scope.prestamoP.entity.length;i++){
+                        $scope.prestamoP.entity[i].prestamo.estado="PRESTADO";
+                    }
+
                     var removePrestamo=GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]);
                     removePrestamo.$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
+                         GarantiasServices.update($scope.prestamoP.entity);
 
                     });
                 }
@@ -165,7 +188,23 @@
             });
 
         }
-
+         $scope.recibirDevolucion=function(row){
+            $scope.prestamoP=row;
+            NumberService.getNumber().$promise.then(function(dataN){
+                if(!!dataN&&!!dataN[0]){
+                    $scope.prestamoP.fechaRecepcionDevolucion=dataN[0].number;
+                    for(var i=0; i<$scope.prestamoP.entity.length;i++){
+                        $scope.prestamoP.entity[i].prestamo=null;
+                    }
+                    GarantiasServices.update(row.entity);
+                    GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]).$promise.then(function(data){
+                         $scope.prestamoP._id=null;
+                         $scope.prestamoP.estado="RECIBIDO";
+                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                             //$scope.$dismiss();
+                        });
+                }});
+        }
         $scope.rechazar=function(row){
             $scope.prestamoP=row;
             for(var i=0;i<$scope.prestamoP.entity.length;i++){
@@ -195,15 +234,31 @@
             return $scope.prestampSeleccionado;
         }
        $scope.detallePrestamoPendiente=function(row){
-                   $scope.setPrestamoSeleccionado(row);
-                   var modalInstance = $uibModal.open({
-                           templateUrl: 'assets/app/entities/garantias/bodega/view/detalle-prestamo.html',
-                           controller: 'DetallePrestamoBodegaController',
-                           scope: $scope,
-                           size: 'lg'
-                       }
-                   );
+           $scope.setPrestamoSeleccionado(row);
+           var modalInstance = $uibModal.open({
+                   templateUrl: 'assets/app/entities/garantias/bodega/view/detalle-prestamo.html',
+                   controller: 'DetallePrestamoBodegaController',
+                   scope: $scope,
+                   size: 'lg'
                }
+           );
+        }
+
+       $scope.detallePrestamoAsociadoDocumento=function(row){
+
+           GarantiasServices.showprestamo([{"numero":row.prestamo.numero}]).$promise.then(function(data){
+                     $scope.setPrestamoSeleccionado(data[0]);
+                     var modalInstance = $uibModal.open({
+                             templateUrl: 'assets/app/entities/garantias/bodega/view/detalle-prestamo.html',
+                             controller: 'DetallePrestamoBodegaController',
+                             scope: $scope,
+                             size: 'lg'
+                         }
+                     );
+                   }
+               );
+
+      }
         $scope.colapsoContenido=true;
         $scope.cambiarColapsoContenido=function(){
             $scope.colapsoContenido=$scope.colapsoContenido==true?false:true;

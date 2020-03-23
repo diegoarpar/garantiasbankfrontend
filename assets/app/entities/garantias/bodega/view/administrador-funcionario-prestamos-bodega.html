@@ -4,15 +4,12 @@
 
         <p class="container">
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedor()">-Préstamos Pendientes por Confirmar</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedor()">Préstamos Pendientes por Confirmar</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedor">
 
                 <div class="expand-collapse-content">
-                    <button ng-if="tableParamsPrestamoPendienteConfirmar.data.length==0" class="btn btn-success" type="submit" ng-click="prestar(b)">+ </button>
-
-
 
                 <table ng-table="tableParamsPrestamoPendienteConfirmar" class="table" show-filter="true">
                     <tr ng-repeat="b in $data">
@@ -20,6 +17,8 @@
                             {{b.estado}}</td>
                         <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                             {{b.solicitudUsuario}}</td>
+                        <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                            {{b.tipoPrioridadPrestamo}}</td>
                         <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                             {{b.numero}}</td>
 
@@ -37,7 +36,7 @@
         </div>
 
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteAprobacion()">-Pendientes de Aprobación</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteAprobacion()">Pendientes de Aprobación</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedorPendienteAprobacion">
@@ -53,6 +52,8 @@
                                 {{b.estado}}</td>
                             <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                                 {{b.solicitudUsuario}}</td>
+                            <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                                {{b.tipoPrioridadPrestamo}}</td>
                             <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                                 {{b.numero}}</td>
 
@@ -70,7 +71,7 @@
         </div>
 
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteRecoger()">-Préstamos Pendientes Por Recoger</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteRecoger()">Préstamos Pendientes Por Recoger</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedorPendienteRecoger">
@@ -86,6 +87,8 @@
                                 {{b.estado}}</td>
                             <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                                 {{b.solicitudUsuario}}</td>
+                            <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                                {{b.tipoPrioridadPrestamo}}</td>
                             <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                                 {{b.numero}}</td>
 
@@ -99,40 +102,67 @@
             </div>
         </div>
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteDevolver()">-Préstamos Pendientes de Devolución</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteDevolver()">Documentos Pendientes de Devolución</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedorPendienteDevolver">
 
                 <div class="expand-collapse-content">
 
-
-
-
-                    <table ng-table="tableParamsPrestamoPendienteDevolver" class="table" show-filter="true">
-                        <tr ng-repeat="b in $data">
-                            <td title="'Estado'" filter="{ 'estado': 'text'}" sortable="'estado'">
-                                {{b.estado}}</td>
-                            <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
-                                {{b.solicitudUsuario}}</td>
-                            <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
-                                {{b.numero}}</td>
-
-                            <td title="'Opciones'" >
-                                <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
+                    <table ng-table="tablaDevolucionesPendientesConfirmar" show-filter="true" export-csv="csv" separator=";"
+                           class="table table-condensed table-bordered table-striped ng-scope ng-table">
+                        <thead>
+                        <tr>
+                            <th> Opciones</th>
+                            <th ng-repeat="r in all_columns" ng-if="r.checked">{{ r.title }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="row in documentosDevolucion" >
+                            <td>
+                                <button class="btn btn-success" type="submit" ng-click="openModalFunctionary(row)">Ver Detalle</button>
+                                <button class="btn btn-success" ng-if="row.prestamo.estado!='EN_PREPARACION_DEVOLUCION'" ng-click="agregarNuevaDevolucion(row)">Regresar</button>
                             </td>
+                            <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>
                         </tr>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="sub" ng-click="cambiarColapsoContenedorDevoluciones()">Documentos Proceso de Devolución</h2>
+        <div class="expandcollapse-item">
+
+            <div class="slideDown" ng-hide="colapsoContenedorDevoluciones">
+
+                <div class="expand-collapse-content">
 
                 </div>
+                <table ng-table="tableParamsContainerDevolucion" class="table" show-filter="true">
+                    <tr ng-repeat="b in $data">
+                        <td title="'Estado'" filter="{ 'estado': 'text'}" sortable="'estado'">
+                            {{b.estado}}</td>
+                        <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
+                            {{b.solicitudUsuario}}</td>
+
+                        <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
+                            {{b.numero}}</td>
+
+                        <td title="'Opciones'" >
+                            <button class="btn btn-success" ng-click="iniciarDevolucion(b)" ng-if="b.estado=='EN_PREPARACION_DEVOLUCION'"> Iniciar Devolucion</button>
+                            <button class="btn btn-success" ng-click="cancelarDevolucion(b)" ng-if="b.estado=='EN_PREPARACION_DEVOLUCION'"> Cancelar Devolucion</button>
+                            <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
+                        </td>
+                    </tr>
+                </table>
+
+
             </div>
         </div>
 
 
 
-
-
-    <h2 class="sub" ng-click="cambiarColapsoContenedorHistorico()">-Histórico</h2>
+    <h2 class="sub" ng-click="cambiarColapsoContenedorHistorico()">Histórico</h2>
     <div class="expandcollapse-item">
 
         <div class="slideDown" ng-hide="colapsoContenedorHistorico">
@@ -148,6 +178,8 @@
                             {{b.estado}}</td>
                         <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                             {{b.solicitudUsuario}}</td>
+                        <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                            {{b.tipoPrioridadPrestamo}}</td>
                         <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                             {{b.numero}}</td>
 

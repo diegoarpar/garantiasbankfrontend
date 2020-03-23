@@ -41,6 +41,7 @@
                                     ,{name:"tipodocumento",value:"Tipo de Documento"}
                                     ,{name:"bodegaContenedor",value:"Datos de Bodega-Contenedor"}
                                     ,{name:"bodegaUbicacion",value:"Datos de Bodega-Ubicación"}
+                                    ,{name:"tipoPrioridadPrestamo",value:"Tipo de Préstamo Bodega"}
                                     ];
             $scope.ok = function () {
                 $scope.campo.nombreparametrica=$scope.campo.nombreparametricas.name;

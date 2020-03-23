@@ -58,14 +58,31 @@
 
         }
         $scope.colapsoContenedorPendienteDevolver=true;
+        $scope.documentosPrestados=[];
         $scope.cambiarColapsoContenedorPendienteDevolver=function(){
-
-            GarantiasServices.showprestamo([{"estado":"PRESTADO",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
+            $scope.documentosPrestados=[];
+            GarantiasServices.showprestamo([{"estado":"DEVOLUCION",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
 
                 $scope.tableParamsPrestamoPendienteDevolver = new NgTableParams({}, { dataset: data});
                 }
             );
             $scope.colapsoContenedorPendienteDevolver=$scope.colapsoContenedorPendienteDevolver==true?false:true;
+            $scope.documentosPrestadosUsuario=GarantiasServices.showPost([{"prestamo.estado":"PRESTADO","prestamo.solicitudUsuario":UserLoginService.getUser()}]).$promise.then(function(data){
+                $scope.documentosDevolucion=data;
+                fillColumns(data,$scope);
+                update_columns($scope);
+            });
+
+        }
+        $scope.colapsoContenedorDevoluciones=true;
+        $scope.cambiarColapsoContenedorDevoluciones=function(){
+
+            GarantiasServices.showprestamo([{$and:[{estado:{$eq:"EN_PREPARACION_DEVOLUCION"},solicitudUsuario:{$eq:UserLoginService.getUser()}}]}]).$promise.then(function(data){
+                $scope.tableParamsContainerDevolucion = new NgTableParams({}, { dataset: data});
+
+                }
+            );
+            $scope.colapsoContenedorDevoluciones=$scope.colapsoContenedorDevoluciones==true?false:true;
 
         }
         $scope.colapsoContenedorHistorico=true;
@@ -87,6 +104,70 @@
             return $scope.prestampSeleccionado;
         }
 
+        $scope.iniciarDevolucion=function(row){
+            NumberService.getNumber().$promise.then(function(dataN){
+                if(!!dataN&&!!dataN[0]){
+                    $scope.prestamoP=row;
+                    $scope.prestamoP.fechaDevolucion=dataN[0].number;
+                    for(var i=0; i<row.entity.length;i++){
+                        row.entity[i].prestamo.estado="EN_DEVOLUCION";
+                    }
+                    GarantiasServices.update(row.entity);
+                    GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"EN_PREPARACION_DEVOLUCION"},solicitudUsuario:{$eq:UserLoginService.getUser()}}]}]).$promise.then(function(data){
+                         $scope.prestamoP._id=null;
+                         $scope.prestamoP.estado="EN_DEVOLUCION";
+                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                             //$scope.$dismiss();
+                        });
+                }});
+        }
+        $scope.cancelarDevolucion=function(row){
+            $scope.prestamoP=row;
+            NumberService.getNumber().$promise.then(function(dataN){
+                if(!!dataN&&!!dataN[0]){
+                    $scope.prestamoP.fechaCancelacionDevolucion=dataN[0].number;
+                    for(var i=0; i<$scope.prestamoP.entity.length;i++){
+                        $scope.prestamoP.entity[i].prestamo.estado="PRESTADO";
+                    }
+                    GarantiasServices.update(row.entity);
+                    GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"EN_PREPARACION_DEVOLUCION"},solicitudUsuario:{$eq:UserLoginService.getUser()}}]}]).$promise.then(function(data){
+                         $scope.prestamoP._id=null;
+                         $scope.prestamoP.estado="DEVOLUCION_CANCELADO_POR_USUARIO";
+                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                             //$scope.$dismiss();
+                        });
+                }});
+        }
+        $scope.agregarNuevaDevolucion=function(row){
+            $scope.row=row;
+            NumberService.getNumber().$promise.then(function(dataN){
+                if(!!dataN&&!!dataN[0]){
+                    $scope.row.prestamo.estado="EN_PREPARACION_DEVOLUCION";;
+
+                    GarantiasServices.update([$scope.row]);
+                    GarantiasServices.showprestamo([{estado:"EN_PREPARACION_DEVOLUCION",solicitudUsuario:UserLoginService.getUser()}]).$promise.then(function(data){
+                        $scope.prestamoP={};
+                        if(!!data&&data.length>0){
+                            $scope.prestamoP=data[0];
+                            $scope.prestamoP.entity.push($scope.row);
+                        }else{
+                             $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
+                             $scope.prestamoP.fechaPresta=$scope.row.prestamo.numero;
+                             $scope.prestamoP.estado="EN_PREPARACION_DEVOLUCION";
+                             $scope.prestamoP.numero= $scope.row.prestamo.numero;
+                             $scope.prestamoP.entity=[];
+                             $scope.prestamoP.entity.push($scope.row);
+                        }
+
+                        GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"EN_PREPARACION_DEVOLUCION"},solicitudUsuario:{$eq:UserLoginService.getUser()}}]}]).$promise.then(function(data){
+                             $scope.prestamoP._id=null;
+                             GarantiasServices.createprestamo([$scope.prestamoP]);
+                                 //$scope.$dismiss();
+                            });
+
+                        });
+            }});
+        }
         $scope.aprobar=function(row){
             $scope.prestamoP=row;
             NumberService.getNumber().$promise.then(function(data){

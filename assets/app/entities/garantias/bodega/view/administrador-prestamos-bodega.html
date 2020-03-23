@@ -6,7 +6,7 @@
 
         <p class="container">
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedor()">-Préstamos Solicitados</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedor()">Préstamos Solicitados</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedor">
@@ -22,6 +22,8 @@
                             {{b.estado}}</td>
                         <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                             {{b.solicitudUsuario}}</td>
+                        <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                            {{b.tipoPrioridadPrestamo}}</td>
                         <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                             {{b.numero}}</td>
 
@@ -37,7 +39,7 @@
             </div>
         </div>
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedorPendientePrepararEntregar()">-Documentos Pendientes por Preparar Entrega</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPendientePrepararEntregar()">Documentos Pendientes por Preparar Entrega</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedorPendientePrepararEntregar">
@@ -54,6 +56,8 @@
                             {{b.estado}}</td>
                         <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                             {{b.solicitudUsuario}}</td>
+                        <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                            {{b.tipoPrioridadPrestamo}}</td>
                         <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                             {{b.numero}}</td>
 
@@ -68,7 +72,7 @@
 
             </div>
         </div>
-        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteEntregar()">-Documentos Pendientes por Entregar</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPendienteEntregar()">Documentos Pendientes por Entregar</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedorPPendienteEntregar">
@@ -85,6 +89,8 @@
                             {{b.estado}}</td>
                         <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                             {{b.solicitudUsuario}}</td>
+                        <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                            {{b.tipoPrioridadPrestamo}}</td>
                         <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                             {{b.numero}}</td>
 
@@ -99,7 +105,7 @@
             </div>
         </div>
 
-        <h2 class="sub" ng-click="cambiarColapsoContenedorPrestados()">-Documentos Prestados</h2>
+        <h2 class="sub" ng-click="cambiarColapsoContenedorPrestados()">Documentos Prestados</h2>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedorPrestado">
@@ -116,6 +122,8 @@
                             {{b.estado}}</td>
                         <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
                             {{b.solicitudUsuario}}</td>
+                        <td title="'Prioridad'" filter="{ 'tipoPrioridadPrestamo': 'text'}" sortable="'tipoPrioridadPrestamo'">
+                            {{b.tipoPrioridadPrestamo}}</td>
                         <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
                             {{b.numero}}</td>
 
@@ -125,11 +133,54 @@
                         </td>
                     </tr>
                 </table>
-
+                <table ng-table="tablaGarantias" show-filter="true" export-csv="csv" separator=";"
+                       class="table table-condensed table-bordered table-striped ng-scope ng-table">
+                    <thead>
+                    <tr>
+                        <th> Opciones</th>
+                        <th ng-repeat="r in all_columns" ng-if="r.checked">{{ r.title }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="row in documentosPrestados" >
+                        <td>
+                            <button class="btn btn-success" type="submit" ng-click="openModal(row)">Ver Detalle Documento</button>
+                            <button class="btn btn-success" type="submit" ng-click="detallePrestamoAsociadoDocumento(row)">Información del Préstamo</button>
+                        </td>
+                        <td ng-repeat="r in all_columns" ng-if="r.checked">{{row[r.title]}}</td>
+                    </tr>
+                </table>
 
             </div>
         </div>
 
+        <h2 class="sub" ng-click="cambiarColapsoContenedorDevoluciones()">Documentos en Devolución</h2>
+        <div class="expandcollapse-item">
+
+            <div class="slideDown" ng-hide="colapsoContenedorDevoluciones">
+
+                <div class="expand-collapse-content">
+
+                </div>
+                <table ng-table="tableParamsContainerDevolucion" class="table" show-filter="true">
+                    <tr ng-repeat="b in $data">
+                        <td title="'Estado'" filter="{ 'estado': 'text'}" sortable="'estado'">
+                            {{b.estado}}</td>
+                        <td title="'Usuario'" filter="{ 'solicitudUsuario': 'text'}" sortable="'solicitudUsuario'">
+                            {{b.solicitudUsuario}}</td>
+                        <td title="'Numero'" filter="{ 'numero': 'text'}" sortable="'numero'">
+                            {{b.numero}}</td>
+
+                        <td title="'Opciones'" >
+                            <button class="btn btn-success" ng-if="b.estado='EN_DEVOLUCION'" ng-click="recibirDevolucion(b)"> Recibir</button>
+                            <button class="btn btn-success" type="submit" ng-click="detallePrestamoPendiente(b)">Ver Detalle </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
 
         <h2 class="sub" ng-click="cambiarColapsoContenido()">Buscar Documentos para prestar {{prestamoAsociarDocumentos!=null?prestamoAsociarDocumentos.solicitudUsuario + " número "+prestamoAsociarDocumentos.numero:""}}</h2>
         <div class="expandcollapse-item">

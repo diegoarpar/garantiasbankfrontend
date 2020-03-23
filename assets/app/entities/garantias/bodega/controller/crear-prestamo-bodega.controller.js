@@ -17,7 +17,17 @@
 
             $scope.log = [];
             $scope.usuarios = AuthenticationFactory.showAll();
-
+            $scope.buzonPrestamos="";
+            GarantiasServices.showParametric({nombreparametrica:'emailPrestamosBodega',tenant:window.sessionStorage.getItem("tenant")}).$promise.then(function(data){
+                if(!!data&&data.length>0){
+                    $scope.buzonPrestamos=",";
+                    for(var i=0;i<data.length;i++)
+                        $scope.buzonPrestamos+=data[i].key;
+                        if(i+1<data.length){
+                        $scope.buzonPrestamos+=",";
+                        }
+                }
+            });
              $scope.metadataUbicacion=[];
              if($scope.entity.ubicacionbodega!=null)
             GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.entity.ubicacionbodega.container.key.key,"add2.key":$scope.entity.ubicacionbodega.container.storage.key}]).$promise.then(function(data){
@@ -80,9 +90,13 @@
                         $scope.prestamoP.tipoPrioridadPrestamo=$scope.prioridadPrestamo.key;
                         $scope.prestamoP.usuarioBodegaAprueba=UserLoginService.getUser();
                         $scope.prestamoP.usuarioBodegaApruebaFecha=dataN[0].number;
+                        $scope.prestamoP.aprobadorSolicitanteUsuario=$scope.usuario.user;
                         $scope.prestamoP.fechaPresta=$scope.prestamoP.numero;
                         $scope.prestamoP.entity=[];
+                        $scope.prestamoP.aprobadorEmail=$scope.usuario.email;
                         GarantiasServices.createprestamo([$scope.prestamoP]);
+                        GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo iniciado desde la bodega "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" se ha iniciado una solicitud de préstamo desde la bodega "+  $scope.prestamoP.numero)]);
+
                 }});
             }
             if(!!$scope.garantiaid)

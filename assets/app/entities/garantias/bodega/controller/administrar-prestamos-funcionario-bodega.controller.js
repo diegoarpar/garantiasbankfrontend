@@ -12,6 +12,17 @@
         function AdministrarPrestamosFuncionarioBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService,UserLoginService,NumberService) {
             inSession($scope,AuthenticationFactory,$window,false);
 
+        $scope.buzonPrestamos="";
+        GarantiasServices.showParametric({nombreparametrica:'emailPrestamosBodega',tenant:window.sessionStorage.getItem("tenant")}).$promise.then(function(data){
+            if(!!data&&data.length>0){
+                $scope.buzonPrestamos=",";
+                for(var i=0;i<data.length;i++)
+                    $scope.buzonPrestamos+=data[i].key;
+                    if(i+1<data.length){
+                    $scope.buzonPrestamos+=",";
+                    }
+            }
+        });
 
         $scope.change_manu_activo=function(){
             $scope.menu_activo=$scope.menu_activo==true?false:true;
@@ -116,8 +127,8 @@
                     GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"EN_PREPARACION_DEVOLUCION"},solicitudUsuario:{$eq:UserLoginService.getUser()}}]}]).$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          $scope.prestamoP.estado="EN_DEVOLUCION";
+                         GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Inicio de la devolución "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" ha solicitado la devolución "+  $scope.prestamoP.numero)]);
                          GarantiasServices.createprestamo([$scope.prestamoP]);
-                             //$scope.$dismiss();
                         });
                 }});
         }
@@ -151,6 +162,9 @@
                             $scope.prestamoP=data[0];
                             $scope.prestamoP.entity.push($scope.row);
                         }else{
+
+                             $scope.prestamoP.aprobadorEmail=UserLoginService.getEmail();
+                             $scope.prestamoP.aprobadorSolicitanteUsuario=UserLoginService.getUser();
                              $scope.prestamoP.solicitudUsuario=UserLoginService.getUser();
                              $scope.prestamoP.fechaPresta=$scope.row.prestamo.numero;
                              $scope.prestamoP.estado="EN_PREPARACION_DEVOLUCION";
@@ -179,7 +193,7 @@
                     GarantiasServices.removeprestamo([{$and:[{estado:{$eq:"PENDIENTE_CONFIRMAR"}},{solicitudUsuario:{$eq:UserLoginService.getUser()}},{numero:{$eq:$scope.prestamoP.numero}}]}]).$promise.then(function(data){
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]).$promise.then(function(data){
-                            GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail,"Prestamo Solicitado "+ $scope.prestamoP.numero, "Señor "+$scope.prestamoP.aprobadorSolicitanteUsuario+" ha solicitado el préstamo "+  $scope.prestamoP.numero)]);
+                            GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Prestamo Solicitado "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" ha solicitado el préstamo "+  $scope.prestamoP.numero)]);
 
                          });
                     });

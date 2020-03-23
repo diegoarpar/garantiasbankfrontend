@@ -12,6 +12,17 @@
         function AdministrarPrestamosBodegaController(AuthenticationFactory,$scope, GarantiasServices, $location, $rootScope, $window, $route,NgTableParams,$uibModal,ShareService,NumberService,UserLoginService) {
             inSession($scope,AuthenticationFactory,$window,false);
 
+        $scope.buzonPrestamos="";
+        GarantiasServices.showParametric({nombreparametrica:'emailPrestamosBodega',tenant:window.sessionStorage.getItem("tenant")}).$promise.then(function(data){
+            if(!!data&&data.length>0){
+                $scope.buzonPrestamos=",";
+                for(var i=0;i<data.length;i++)
+                    $scope.buzonPrestamos+=data[i].key;
+                    if(i+1<data.length){
+                    $scope.buzonPrestamos+=",";
+                    }
+            }
+        });
         $scope.menu_activo=true;
         $scope.change_manu_activo=function(){
             $scope.menu_activo=$scope.menu_activo==true?false:true;
@@ -89,7 +100,7 @@
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
-
+                             GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo aprobado "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" se ha aprobado la solicitud de préstamo "+  $scope.prestamoP.numero)]);
                         });
                     }
 
@@ -127,6 +138,7 @@
                         $scope.prestamoP._id=null;
                         GarantiasServices.createprestamo([$scope.prestamoP]);
                         GarantiasServices.update([$scope.row]);
+                        GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo modificado "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" se ha agregado un documento al préstamo "+  $scope.prestamoP.numero)]);
                        });
 
                    });
@@ -146,7 +158,7 @@
                         removePrestamo.$promise.then(function(data){
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
-
+                             GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo listo para entregar "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" su solicitud de préstamo está listo para entregar "+  $scope.prestamoP.numero)]);
                         });
                     }
 
@@ -169,6 +181,7 @@
                          $scope.prestamoP._id=null;
                          GarantiasServices.createprestamo([$scope.prestamoP]);
                          GarantiasServices.update($scope.prestamoP.entity);
+                         GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo entregado "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" se ha entregado la solicitud de préstamo "+  $scope.prestamoP.numero)]);
 
                     });
                 }
@@ -193,7 +206,7 @@
                          $scope.prestamoP._id=null;
                          $scope.prestamoP.estado="PRESTAMO_RECIBIDO";
                          GarantiasServices.createprestamo([$scope.prestamoP]);
-                             //$scope.$dismiss();
+                          GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo recibido "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" se ha recibido la devolución del préstamo "+  $scope.prestamoP.numero)]);
                         });
                 }});
         }
@@ -213,6 +226,7 @@
                              $scope.prestamoP._id=null;
                              GarantiasServices.createprestamo([$scope.prestamoP]);
                              GarantiasServices.update($scope.prestamoP.entity);
+                             GarantiasServices.putRunner([prepareEmail($scope.prestamoP.aprobadorEmail+$scope.buzonPrestamos,"Préstamo rechazado "+ $scope.prestamoP.numero, "Señor(a) "+$scope.prestamoP.aprobadorSolicitanteUsuario+" se ha rechazado la solicitud de préstamo "+  $scope.prestamoP.numero)]);
                         });
                     }
 

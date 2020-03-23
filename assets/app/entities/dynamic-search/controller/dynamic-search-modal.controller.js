@@ -25,6 +25,11 @@
             GarantiasServices.showParametricpost([{nombreparametrica:"bodegaUbicacion","add1.key":$scope.entity.ubicacionbodega.container.key.key,"add2.key":$scope.entity.ubicacionbodega.container.storage.key}]).$promise.then(function(data){
                 $scope.metadataUbicacion=data;
             });
+            $scope.metadataContainer=[];
+            if($scope.entity.ubicacionbodega!=null)
+            GarantiasServices.showParametricpost([{nombreparametrica:"bodegaContenedor","add1.key":$scope.entity.ubicacionbodega.container.key.key,"add2.key":$scope.entity.ubicacionbodega.container.storage.key}]).$promise.then(function(data){
+                    $scope.metadataContainer=data;
+            });
             $scope.rowDetailShow=function(rowSelected){
                  var row={};
                 row["key"]=rowSelected;

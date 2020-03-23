@@ -18,6 +18,8 @@
             $scope.menu_activo=$scope.menu_activo==true?false:true;
 
         }
+
+
         $scope.colapsoContenedor=true;
         $scope.cambiarColapsoContenedor=function(){
             $scope.colapsoContenedor=$scope.colapsoContenedor==true?false:true;
@@ -105,16 +107,32 @@
         $scope.setData2=function(data){
             $scope.data2=data;
         }
+        $scope.asociarTodoElResultado=function(){
+           if(!!$scope.tablaContenido&&!!$scope.tablaContenido.data&&$scope.tablaContenido.data.length>0){
+            for(var i=0; i<$scope.tablaContenido.data.length;i++){
+                $scope.tablaContenido.data[i].ubicacionbodega=$scope.contenedorSeleccionado;
+            }
+            var promise=GarantiasServices.update($scope.tablaContenido.data);
+            handleSubmitServicePromise(promise,null);
+            }
 
+        }
         $scope.asociarADescripcion="";
         $scope.userParaAsociar=function(row){
              $scope.contenedorSeleccionado=row;
               $scope.asociarADescripcion="";
-              for(var i=0;i<$scope.metadataContenedoresAll.length;i++){
-                    $scope.asociarADescripcion+=$scope.metadataContenedoresAll[i].value+":";
-                    $scope.asociarADescripcion+=row[$scope.metadataContenedoresAll[i].key];
-                    break;
+              for(var i=0;i<$scope.metadataUbicacionAll.length;i++){
+                    if(!!row[$scope.metadataUbicacionAll[i].key]){
+                        $scope.asociarADescripcion+=$scope.metadataUbicacionAll[i].value+": ";
+                        $scope.asociarADescripcion+= !!row[$scope.metadataUbicacionAll[i].key]?row[$scope.metadataUbicacionAll[i].key]+" ":" ";
+                    }
               }
+              for(var i=0;i<$scope.metadataContenedorAll.length;i++){
+                        if(!!row.container[$scope.metadataContenedorAll[i].key]){
+                        $scope.asociarADescripcion+=!!$scope.metadataContenedorAll[i].value?$scope.metadataContenedorAll[i].value+": ":" ";
+                        $scope.asociarADescripcion+=row.container[$scope.metadataContenedorAll[i].key]+ " " ;
+                      }
+                }
         }
         $scope.busqueda={};
         $scope.ok=function(){
@@ -135,7 +153,11 @@
 
         }
 
+
         $scope.okUbicacion=function(){
+
+
+            $scope.metadataContenedorAll=[];
             $scope.contenedorMostrarUbicacion=null;
             $scope.descripcioncontenedorMostrarUbicacion="";
             $scope.busquedar= {"container.key.key":!!$scope.fondoSeleccionadoU?$scope.fondoSeleccionadoU.key:{$regex:"^.*", $options: "i"}
@@ -144,6 +166,16 @@
 
                 $scope.busquedar[$scope.metadataUbicacion[i].key]=!!$scope.busqueda[$scope.metadataUbicacion[i].key]?{$regex:"^"+$scope.busqueda[$scope.metadataUbicacion[i].key]+".*", $options: "i"}:{$regex:"^.*", $options: "i"}
             }
+
+            var consulta={};
+            consulta.nombreparametrica="bodegaContenedor";
+            !!$scope.fondoSeleccionadoU&&!!$scope.fondoSeleccionadoU.value?consulta.add1={key:$scope.fondoSeleccionadoU.value}:"";
+            !!$scope.bodegaSeleccionadaU&&!!$scope.bodegaSeleccionadaU.value?consulta.add2={key:$scope.bodegaSeleccionadaU.value}:"";
+
+            GarantiasServices.showParametricpost([consulta]).$promise.then(function(data){
+                $scope.metadataContenedorAll=data;
+
+            });
             $scope.rta = GarantiasServices.retrivebodegacontainerubication([
 
                                            $scope.busquedar]
@@ -151,6 +183,7 @@
 
             $scope.rta.$promise.then(function(data){
                 $scope.tableParamsUbication = new NgTableParams({}, { dataset: data});
+
             });
 
         }

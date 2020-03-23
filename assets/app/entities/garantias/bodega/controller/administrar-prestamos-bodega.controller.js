@@ -101,6 +101,16 @@
             $scope.prestamoAsociarDocumentos=row;
         }
 
+        $scope.openModalRealizarPrestamoBodega = function () {
+            ShareService.set({});
+            var modalInstance = $uibModal.open({
+                    templateUrl: 'assets/app/entities/garantias/bodega/view/crear-prestamo-bodega.html',
+                    controller: 'CrearPrestamoBodegaController',
+                    scope: $scope,
+                    size: 'lg'
+                }
+            );
+        }
         $scope.asociarPrestamo=function(row){
            $scope.row=row;
            $scope.row.prestamo=$scope.prestamoAsociarDocumentos;
@@ -167,39 +177,21 @@
 
         }
 
-        $scope.recibir=function(row){
-            $scope.prestamoP=row;
-            for(var i=0;i<$scope.prestamoP.entity.length;i++){
-                $scope.prestamoP.entity[i].prestamo=null;
-            }
 
-            NumberService.getNumber().$promise.then(function(data){
-                if(data&&data[0]){
-                    $scope.prestamoP.usuarioBodegaRecibe=UserLoginService.getUser();
-                    $scope.prestamoP.usuarioBodegaRecibe=data[0].number;
-                    $scope.prestamoP.estado="RECIBIDO";
-                    GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]).$promise.then(function(data){
-                         $scope.prestamoP._id=null;
-                         GarantiasServices.createprestamo([$scope.prestamoP]);
-                         GarantiasServices.update($scope.prestamoP.entity);
-                    });
-                }
-
-            });
-
-        }
          $scope.recibirDevolucion=function(row){
+            row.estado="PRESTAMO_RECIBIDO";
             $scope.prestamoP=row;
+            $scope.prestamoP.estado="PRESTAMO_RECIBIDO";
             NumberService.getNumber().$promise.then(function(dataN){
                 if(!!dataN&&!!dataN[0]){
                     $scope.prestamoP.fechaRecepcionDevolucion=dataN[0].number;
                     for(var i=0; i<$scope.prestamoP.entity.length;i++){
                         $scope.prestamoP.entity[i].prestamo=null;
                     }
-                    GarantiasServices.update(row.entity);
+                    GarantiasServices.update($scope.prestamoP.entity);
                     GarantiasServices.removeprestamo([{numero:$scope.prestamoP.numero,solicitudUsuario:$scope.prestamoP.solicitudUsuario}]).$promise.then(function(data){
                          $scope.prestamoP._id=null;
-                         $scope.prestamoP.estado="RECIBIDO";
+                         $scope.prestamoP.estado="PRESTAMO_RECIBIDO";
                          GarantiasServices.createprestamo([$scope.prestamoP]);
                              //$scope.$dismiss();
                         });

@@ -16,6 +16,7 @@
             $scope.garantiaid = $scope.entity._id;
 
             $scope.log = [];
+            $scope.usuarios = AuthenticationFactory.showAll();
 
              $scope.metadataUbicacion=[];
              if($scope.entity.ubicacionbodega!=null)
@@ -72,8 +73,22 @@
                             });
                 }});
             }
+            $scope.okBodega=function(){
+                NumberService.getNumber().$promise.then(function(dataN){
+                    if(!!dataN&&!!dataN[0]){
+                        $scope.prestamoP={estado:"PENDIENTE_CONFIRMACION_BODEGA",numero:dataN[0].number,solicitudUsuario:$scope.usuario.user,solicitudUsuarioBodega:UserLoginService.getUser()};
+                        $scope.prestamoP.tipoPrioridadPrestamo=$scope.prioridadPrestamo.key;
+                        $scope.prestamoP.usuarioBodegaAprueba=UserLoginService.getUser();
+                        $scope.prestamoP.usuarioBodegaApruebaFecha=dataN[0].number;
+                        $scope.prestamoP.fechaPresta=$scope.prestamoP.numero;
+                        $scope.prestamoP.entity=[];
+                        GarantiasServices.createprestamo([$scope.prestamoP]);
+                }});
+            }
+            if(!!$scope.garantiaid)
             ShowFiles.listOfFiles.get({garid: $scope.garantiaid}).$promise.then(
                 function (data) {
+                    if(data!=null)
                     $scope.listOfFiles = data;
                 },
                 function (error) {

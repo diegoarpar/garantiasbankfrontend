@@ -286,7 +286,7 @@ function getMenu(){
                  ,{href:"product-list-recepcion-garantia-contenido",label:"2. Validación de completitud",image:"",controller:""}
                  ,{href:"product-list-recepcion-garantia-idoneidad",label:"3. Validación de idoneidad",image:"",controller:""}
                  ,{href:"product-list-recepcion-garantia-datos",label:"4. Validación de datos",image:"",controller:""}
-                 ,{href:"administrar-ubicacion-bodega",label:"5. Ubicación en bodega y préstamos",image:"",controller:""}
+                 ,{href:"ubicar-contenido-bodega",label:"5. Ubicación en la bodega y préstamos",image:"",controller:""}
 
                  ];
     data.nodes[1].nodes[2].nodes=[
@@ -311,6 +311,7 @@ function getMenu(){
                  ,{href:"organigrama",label:"Administrar Organigrama",image:"",controller:""}
                  ,{href:"regionales",label:"Administrar Regionales",image:"",controller:""}
                  ,{href:"administrador-reportes",label:"Administrar Reportes",image:"",controller:""}
+                 ,{href:"administrar-ubicacion-bodega",label:"Administrar Ubicaciones Bodega",image:"",controller:""}
                  ];
 
                  return data;

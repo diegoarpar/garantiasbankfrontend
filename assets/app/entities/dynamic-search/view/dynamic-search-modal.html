@@ -8,6 +8,9 @@
 
     <div class="modal-body">
         <!--div class="row"-->
+
+        <h4 >Datos del Documento</h4>
+        <div  class="form-horizontal">
             <div>
 
                 <button class="btn" ng-click="modalBarCodeIn(entity)">Código de Ingreso</button>
@@ -21,7 +24,7 @@
                 </div>
 
             </div>
-
+        </div>
             <h4 ng-if="entity.ubicacionbodega!=null">Datos Ubicación</h4>
             <div ng-if="entity.ubicacionbodega!=null" class="form-horizontal">
                 <div class="form-group">
@@ -34,6 +37,16 @@
                         </div>
 
                     </div>
+
+                    <div ng-repeat ="c in metadataContainer"  class="col-sm-6"  >
+
+                        <label  >{{c.value}}</label>
+                        <div  >
+                            <input disabled="true" class="form-control" ng-model="entity.ubicacionbodega.container[c.key]" />
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         <!--/div-->

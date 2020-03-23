@@ -1,11 +1,11 @@
 <div class="d-flex">
-    <div class="bg-light border-right" id="sidebar-wrapper">
+    <!--div class="bg-light border-right" id="sidebar-wrapper">
         <div  ng-include src="'assets/app/entities/garantias/bodega/view/menu_modega.html'"></div>
-    </div>
+    </div-->
 
     <!-- Dark Overlay element -->
     <div id="page-wrapper">
-        <h3 ng-click="cambiarColapsoContenedor()"> Administración de Bodega - Contenedores </h3>
+        <h3 ng-click="cambiarColapsoContenedor()"> Administración de Bodega - Grandes Estantes </h3>
         <div class="expandcollapse-item">
 
             <div class="slideDown" ng-hide="colapsoContenedor">
@@ -54,7 +54,7 @@
 
 
 
-    <h3 ng-click="cambiarColapsoContenedorUbicaciones()"> Administración de Bodega - Ubicaciones finales {{paraAsociar!=null?" Asociar a "+descripcionAsociar:""}} </h3>
+    <h3 ng-if="paraAsociar!=null" ng-click="cambiarColapsoContenedorUbicaciones()"> Administración de Bodega - Ubicaciones finales {{paraAsociar!=null?" Asociar a "+descripcionAsociar:""}} </h3>
     <div class="expandcollapse-item">
 
         <div class="slideDown" ng-hide="colapsoContenedorUbicaciones">

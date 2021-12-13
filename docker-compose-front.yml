@@ -5,4 +5,21 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
+      - "8081:8081"
       - "80:80"
+    restart: always
+    networks:
+      - db
+      - auth
+      - gar
+
+networks:
+  db:
+    external:
+      name: db_default
+  auth:
+    external:
+      name: auth_default
+  gar:
+    external:
+      name: gar_default
